@@ -2984,11 +2984,258 @@ body.dark-mode .checkbox-pill input:checked + span {
     color: var(--text-primary);
 }
 
-.empty-storage-row td {
-    text-align: center;
-    color: var(--text-muted);
-    padding: 2rem !important;
-    font-style: italic;
+/* =========================================================================
+   ADVANCED CSS DEMONSTRATIONS (Experiment 05: Requirements 25 to 32)
+   ========================================================================= */
+
+/* --- 25. CSS PSEUDO ELEMENTS (::before, ::after, ::first-letter, ::first-line, ::selection) --- */
+::selection {
+    background-color: var(--primary-green);
+    color: #FFFFFF;
+}
+
+::-moz-selection {
+    background-color: var(--primary-green);
+    color: #FFFFFF;
+}
+
+/* ::first-letter drop cap on intro text */
+.intro-dropcap::first-letter {
+    font-size: 2.8rem;
+    font-weight: 800;
+    float: left;
+    line-height: 0.9;
+    margin-right: 12px;
+    color: var(--primary-green);
+    font-family: 'Poppins', sans-serif;
+    text-shadow: 2px 2px 0px rgba(46, 125, 50, 0.15);
+}
+
+/* ::first-line emphasis */
+.intro-dropcap::first-line {
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    color: var(--text-primary);
+}
+
+/* ::before & ::after decorative indicators */
+.section-title-adorned {
+    position: relative;
+    display: inline-block;
+}
+
+.section-title-adorned::before {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 48px;
+    height: 4px;
+    background-color: var(--primary-green);
+    border-radius: var(--radius-pill);
+}
+
+.section-title-adorned::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 54px;
+    width: 12px;
+    height: 4px;
+    background-color: var(--warm-amber);
+    border-radius: var(--radius-pill);
+}
+
+/* --- 26. CSS TRANSFORMATIONS (translate, rotate, scale, skew) --- */
+.transform-demo-box {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin: 1.5rem 0;
+}
+
+.transform-card {
+    padding: 1rem 1.4rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+}
+
+/* skew() effect */
+.skew-pill {
+    transform: skewX(-12deg);
+    background: linear-gradient(135deg, var(--primary-green), var(--primary-hover));
+    color: #FFFFFF;
+    border: none;
+}
+.skew-pill span {
+    transform: skewX(12deg);
+    display: inline-block;
+}
+.skew-pill:hover {
+    transform: skewX(0deg) scale(1.06);
+    box-shadow: var(--shadow-hover);
+}
+
+/* rotate() effect */
+.rotate-hover:hover {
+    transform: rotate(-6deg) scale(1.05);
+    box-shadow: var(--shadow-hover);
+}
+
+/* scale() effect */
+.scale-hover:hover {
+    transform: scale(1.08);
+    box-shadow: var(--shadow-hover);
+}
+
+/* translate() effect */
+.translate-hover:hover {
+    transform: translateY(-8px) translateX(4px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* --- 28. CSS ICONS (Font Awesome with hover animations) --- */
+.feature-icon-box i,
+.stat-icon-wrapper i,
+.contact-icon i {
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.35s ease;
+}
+
+.feature-item:hover .feature-icon-box i {
+    transform: scale(1.25) rotate(8deg);
+    filter: drop-shadow(0 4px 8px rgba(46, 125, 50, 0.3));
+}
+
+.contact-card:hover .contact-icon i {
+    transform: scale(1.2) rotate(-8deg);
+}
+
+/* --- 29. IMAGE HOVER EFFECTS (Zoom, Grayscale, Blur, Opacity, Overlay using CSS only) --- */
+.machinery-card-media {
+    overflow: hidden;
+    position: relative;
+}
+
+.machinery-vector {
+    transition: transform 0.45s ease, filter 0.45s ease;
+}
+
+.machinery-card:hover .machinery-vector {
+    transform: scale(1.18) rotate(4deg);
+    filter: brightness(1.1) drop-shadow(0 10px 18px rgba(0, 0, 0, 0.25));
+}
+
+.machinery-card-media::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.3) 100%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+
+.machinery-card:hover .machinery-card-media::after {
+    opacity: 1;
+}
+
+/* --- 30. CSS POSITIONING (relative, absolute, fixed, sticky) --- */
+/* Sticky Topbar: position: sticky; top: 0; */
+/* Fixed Scroll-to-Top: position: fixed; bottom: 28px; right: 28px; */
+/* Relative Card: position: relative; */
+/* Absolute Badges: position: absolute; top: 12px; right: 12px; */
+
+/* --- 31. CSS PROGRESS BAR (Animations using keyframes) --- */
+@keyframes progressStripes {
+    0% { background-position: 0 0; }
+    100% { background-position: 40px 0; }
+}
+
+.progress-fill {
+    background-image: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.2) 75%,
+        transparent 75%,
+        transparent
+    );
+    background-size: 32px 32px;
+    animation: progressStripes 2s linear infinite;
+    transition: width 1s ease-in-out;
+}
+
+/* --- 32. CSS TOOLTIP (Display tooltips using ONLY CSS on buttons or icons) --- */
+.tooltip {
+    position: relative;
+}
+
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -34px;
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background-color: #1C252C;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 5px 9px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip::before {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #1C252C transparent;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 9999;
+}
+
+.tooltip:hover::after,
+.tooltip:hover::before {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+body.dark-mode .tooltip::after {
+    background-color: #F0FDF4;
+    color: #0F1713;
+}
+
+body.dark-mode .tooltip::before {
+    border-color: transparent transparent #F0FDF4 transparent;
 }
 
 /* --- RESPONSIVE MEDIA QUERIES --- */

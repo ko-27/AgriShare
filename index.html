@@ -11,8 +11,95 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons 6.5.1 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Custom Stylesheet -->
+    <!-- 1. External Stylesheet (Experiment 05: External Style Sheet Demonstration) -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- 2. Internal Stylesheet (Experiment 05: Internal Style Sheet Demonstration) -->
+    <style>
+        /* Internal CSS Rule: Custom theme architecture banner */
+        .css-architecture-banner {
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.08), rgba(25, 118, 210, 0.08));
+            border: 1.5px dashed var(--primary-green);
+            border-radius: var(--radius-md);
+            padding: 1.25rem 1.6rem;
+            margin: 1.2rem 0 1.8rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .css-arch-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .css-arch-title i {
+            font-size: 1.6rem;
+            color: var(--primary-green);
+        }
+
+        .css-arch-title h4 {
+            font-size: 1.05rem;
+            margin-bottom: 2px;
+            color: var(--text-primary);
+        }
+
+        .css-arch-title p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .css-badges-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        /* Internal CSS demonstration badge with skew transform */
+        .badge-internal-css {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #1976D2, #0D47A1);
+            color: #FFFFFF;
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            transform: skewX(-10deg);
+            box-shadow: 0 4px 10px rgba(25, 118, 210, 0.25);
+            transition: transform 0.3s ease;
+        }
+        .badge-internal-css span {
+            transform: skewX(10deg);
+            display: inline-block;
+        }
+        .badge-internal-css:hover {
+            transform: skewX(0deg) scale(1.05);
+        }
+
+        .badge-external-css {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #2E7D32, #1B5E20);
+            color: #FFFFFF;
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.25);
+            transition: transform 0.3s ease;
+        }
+        .badge-external-css:hover {
+            transform: translateY(-2px) scale(1.03);
+        }
+    </style>
 </head>
 <body class="light-mode">
 
@@ -287,6 +374,35 @@
             </div>
 
             <!-- =========================================================================
+                 EXPERIMENT 05: INLINE, INTERNAL & EXTERNAL STYLESHEET DEMONSTRATION
+                 ========================================================================= -->
+            <div class="css-architecture-banner">
+                <div class="css-arch-title">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <div>
+                        <h4>Advanced CSS Styling Architecture (Experiment 05)</h4>
+                        <p>Demonstrating Inline, Internal, and External Style Sheets with advanced CSS rules</p>
+                    </div>
+                </div>
+                <div class="css-badges-row">
+                    <!-- 1. External CSS demonstration badge -->
+                    <span class="badge-external-css tooltip" data-tooltip="Loaded via external style.css file">
+                        <i class="fa-solid fa-file-code"></i> External CSS
+                    </span>
+
+                    <!-- 2. Internal CSS demonstration badge with skewX transform -->
+                    <span class="badge-internal-css tooltip" data-tooltip="Defined inside &lt;style&gt; block in &lt;head&gt;">
+                        <i class="fa-solid fa-code"></i> <span>Internal CSS (skewX)</span>
+                    </span>
+
+                    <!-- 3. Inline CSS demonstration badge with inline style attribute -->
+                    <span class="tooltip" data-tooltip="Applied directly via HTML style attribute" style="display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #EF6C00, #E65100); color: #FFFFFF; padding: 6px 14px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; box-shadow: 0 4px 10px rgba(239, 108, 0, 0.25); cursor: pointer;">
+                        <i class="fa-solid fa-paintbrush"></i> Inline CSS (style="")
+                    </span>
+                </div>
+            </div>
+
+            <!-- =========================================================================
                  WELCOME BANNER (Hero Section with Animations) [<section>]
                  ========================================================================= -->
             <section id="home" class="welcome-banner-section fade-in">
@@ -374,7 +490,7 @@
                     <article class="about-article hover-lift">
                         <div class="article-badge"><i class="fa-solid fa-seedling"></i> Project Scope</div>
                         <h3>Transforming Agricultural Machinery Access</h3>
-                        <p>
+                        <p class="intro-dropcap">
                             Modern agriculture demands heavy farm mechanization to achieve optimal crop yields, yet over 82% of farmers in India operate on small and marginal landholdings where purchasing tractors (₹7–12 Lakhs) or combine harvesters (₹25–35 Lakhs) is financially prohibitive. AgriShare provides an on-demand, peer-to-peer equipment sharing infrastructure that enables machinery owners to monetize idle machinery during off-season periods while giving local farmers access to top-tier equipment at transparent hourly rental rates.
                         </p>
                         <div class="article-highlights">
