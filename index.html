@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgriShare – Interactive Farmer Equipment Sharing & Rental Dashboard</title>
+    <meta name="description" content="AgriShare – Advanced Farmer Equipment Sharing & Rental Portal featuring modern HTML5 Form Elements, CSS Grid, and JS Animations">
+    <title>AgriShare – Farmer Equipment Sharing & Rental Portal</title>
     <!-- Google Fonts: Inter & Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome Icons -->
+    <!-- Font Awesome Icons 6.5.1 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="style.css">
@@ -16,7 +17,7 @@
 <body class="light-mode">
 
     <!-- =========================================================================
-         11. NOTIFICATION PANEL (Slide-In Drawer)
+         11. NOTIFICATION PANEL (Slide-In Drawer) [<aside>]
          ========================================================================= -->
     <aside id="notification-panel" class="notification-panel" aria-label="Notifications Drawer">
         <div class="notification-header">
@@ -70,7 +71,7 @@
     <div id="overlay" class="overlay"></div>
 
     <!-- =========================================================================
-         LOGIN & AUTH MODAL (Interactive Component)
+         LOGIN & AUTH MODAL DIALOG
          ========================================================================= -->
     <div id="login-modal" class="modal-backdrop">
         <div class="modal-card">
@@ -93,7 +94,7 @@
                     <label class="checkbox-container">
                         <input type="checkbox" checked> Remember this device
                     </label>
-                    <a href="#contact" class="forgot-link">Need Help?</a>
+                    <a href="#help" class="forgot-link">Need Help?</a>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block bounce">
                     <i class="fa-solid fa-right-to-bracket"></i> Authenticate & Enter
@@ -104,7 +105,7 @@
     </div>
 
     <!-- =========================================================================
-         TOP STICKY NAVIGATION BAR
+         2. HTML5 HEADER (<header> with application title, logo, and short tagline)
          ========================================================================= -->
     <header class="topbar" id="topbar">
         <div class="topbar-left">
@@ -117,7 +118,7 @@
                 </div>
                 <div class="brand-text">
                     <span class="brand-name">AgriShare</span>
-                    <span class="brand-subtitle">Smart Agriculture Portal</span>
+                    <span class="brand-subtitle">Smart Agriculture Equipment Sharing Portal</span>
                 </div>
             </a>
         </div>
@@ -131,12 +132,12 @@
         </div>
 
         <div class="topbar-right">
-            <!-- Theme Switcher (10. Theme Switcher) -->
+            <!-- Theme Switcher (Light / Dark Mode) -->
             <button id="theme-toggle" class="icon-btn tooltip" data-tooltip="Toggle Dark / Light Mode" aria-label="Toggle Dark Mode">
                 <i class="fa-solid fa-moon"></i>
             </button>
 
-            <!-- Notification Bell (11. Notification Panel) -->
+            <!-- Notification Bell -->
             <button id="notification-bell" class="icon-btn tooltip has-badge" data-tooltip="View Announcements & Alerts" aria-label="View Notifications">
                 <i class="fa-solid fa-bell"></i>
                 <span class="badge-dot"></span>
@@ -149,7 +150,7 @@
                 </div>
                 <div class="user-meta">
                     <span class="student-name">Kohila M</span>
-                    <span class="student-reg">2303717620522027 • IT</span>
+                    <span class="student-reg">2303717620522027 • CIT IT</span>
                 </div>
                 <button class="profile-auth-btn" id="open-login-btn" title="Authentication Status">
                     <i class="fa-solid fa-shield-halved"></i>
@@ -163,15 +164,21 @@
          ========================================================================= -->
     <div class="app-layout">
         
-        <!-- 2. NAVIGATION BAR (Collapsible Sidebar with Smooth Scroll & Active Highlight) -->
+        <!-- 3. NAVIGATION MENU (<nav> containing Home, About, Services, Registration, Contact, and Help) -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-heading">NAVIGATION MENU</div>
-            <nav class="sidebar-nav">
+            <nav class="sidebar-nav" aria-label="Main Application Navigation">
                 <ul>
                     <li>
                         <a href="#home" class="nav-item active">
                             <i class="fa-solid fa-house"></i>
                             <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#about" class="nav-item">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>About</span>
                         </a>
                     </li>
                     <li>
@@ -183,7 +190,7 @@
                     <li>
                         <a href="#equipment-slider" class="nav-item">
                             <i class="fa-solid fa-tractor"></i>
-                            <span>Machinery Catalog</span>
+                            <span>Machinery</span>
                         </a>
                     </li>
                     <li>
@@ -201,25 +208,31 @@
                     <li>
                         <a href="#reports" class="nav-item">
                             <i class="fa-solid fa-chart-column"></i>
-                            <span>Reports & Analytics</span>
+                            <span>Reports</span>
                         </a>
                     </li>
                     <li>
                         <a href="#register" class="nav-item">
-                            <i class="fa-solid fa-user-plus"></i>
-                            <span>Register Farmer</span>
+                            <i class="fa-solid fa-id-card"></i>
+                            <span>Registration</span>
                         </a>
                     </li>
                     <li>
                         <a href="#modules" class="nav-item">
                             <i class="fa-solid fa-cubes"></i>
-                            <span>Application Modules</span>
+                            <span>Modules</span>
                         </a>
                     </li>
                     <li>
                         <a href="#contact" class="nav-item">
-                            <i class="fa-solid fa-headset"></i>
+                            <i class="fa-solid fa-address-book"></i>
                             <span>Contact</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#help" class="nav-item">
+                            <i class="fa-solid fa-circle-question"></i>
+                            <span>Help</span>
                         </a>
                     </li>
                     <li class="sidebar-divider"></li>
@@ -235,16 +248,16 @@
             <div class="sidebar-footer-card">
                 <div class="card-icon"><i class="fa-solid fa-leaf"></i></div>
                 <div class="card-text">
-                    <strong>23IT721 Lab Project</strong>
-                    <p>Placement Ready Portfolio</p>
+                    <strong>Advanced HTML5 Forms</strong>
+                    <p>Coimbatore Institute of Tech</p>
                 </div>
             </div>
         </aside>
 
-        <!-- MAIN DASHBOARD CONTENT -->
+        <!-- MAIN CONTENT (<main>) -->
         <main class="main-content" id="main-content">
             
-            <!-- 9. LATEST ANNOUNCEMENTS TICKER (<marquee>) -->
+            <!-- ANNOUNCEMENT MARQUEE (<marquee>) -->
             <div class="announcement-bar">
                 <div class="announcement-tag">
                     <i class="fa-solid fa-bullhorn"></i>
@@ -262,7 +275,7 @@
             </div>
 
             <!-- =========================================================================
-                 3. WELCOME BANNER (Hero Section with Animations & Typing Effect)
+                 WELCOME BANNER (Hero Section with Animations) [<section>]
                  ========================================================================= -->
             <section id="home" class="welcome-banner-section fade-in">
                 <div class="hero-banner">
@@ -278,7 +291,7 @@
                             <span class="typing-text" id="typing-tagline">Empowering Farmers Through Shared Resources</span>
                         </p>
                         <p class="hero-description">
-                            AgriShare is an enterprise smart agriculture equipment rental portal bridging the gap between equipment owners and farmers. Instead of investing heavy capital into purchasing costly machinery, farmers can seamlessly browse, book, and utilize precision agricultural tools at subsidized rental rates, boosting crop yield and maximizing machinery utilization.
+                            AgriShare is a next-generation smart agriculture equipment rental portal bridging the gap between equipment owners and farmers. Instead of investing heavy capital into purchasing costly machinery, farmers can seamlessly browse, book, and utilize precision agricultural tools at subsidized rental rates, boosting crop yield and maximizing machinery utilization.
                         </p>
 
                         <!-- Vision & Mission Cards -->
@@ -299,16 +312,16 @@
                             </div>
                         </div>
 
-                        <!-- Action Buttons (15. Action Buttons) -->
+                        <!-- Action Buttons -->
                         <div class="hero-cta-group">
-                            <a href="#equipment-slider" class="btn btn-primary bounce">
+                            <a href="#register" class="btn btn-primary bounce">
+                                <i class="fa-solid fa-id-card"></i> Register as Farmer / Owner
+                            </a>
+                            <a href="#equipment-slider" class="btn btn-secondary">
                                 <i class="fa-solid fa-tractor"></i> Explore Equipment Catalog
                             </a>
-                            <a href="#register" class="btn btn-secondary">
-                                <i class="fa-solid fa-user-plus"></i> Join as Farmer / Owner
-                            </a>
-                            <a href="#reports" class="btn btn-outline">
-                                <i class="fa-solid fa-chart-line"></i> View Portal Analytics
+                            <a href="#about" class="btn btn-outline">
+                                <i class="fa-solid fa-circle-info"></i> Learn About AgriShare
                             </a>
                         </div>
                     </div>
@@ -334,7 +347,49 @@
             </section>
 
             <!-- =========================================================================
-                 4. DASHBOARD CARDS & 5. DYNAMIC STATISTICS (JS Animated Counters)
+                 4. INTRODUCTION SECTION (<section> and <article>)
+                 ========================================================================= -->
+            <section id="about" class="about-section section-padding">
+                <div class="section-header">
+                    <div>
+                        <span class="sub-heading">PLATFORM INTRODUCTION</span>
+                        <h2 class="section-title">About AgriShare Portal</h2>
+                    </div>
+                </div>
+
+                <div class="about-grid">
+                    <!-- Semantic <article> 1: Overview -->
+                    <article class="about-article hover-lift">
+                        <div class="article-badge"><i class="fa-solid fa-seedling"></i> Project Scope</div>
+                        <h3>Transforming Agricultural Machinery Access</h3>
+                        <p>
+                            Modern agriculture demands heavy farm mechanization to achieve optimal crop yields, yet over 82% of farmers in India operate on small and marginal landholdings where purchasing tractors (₹7–12 Lakhs) or combine harvesters (₹25–35 Lakhs) is financially prohibitive. AgriShare provides an on-demand, peer-to-peer equipment sharing infrastructure that enables machinery owners to monetize idle machinery during off-season periods while giving local farmers access to top-tier equipment at transparent hourly rental rates.
+                        </p>
+                        <div class="article-highlights">
+                            <div class="highlight-item"><i class="fa-solid fa-check"></i> 40% reduction in farming machinery expenditure</div>
+                            <div class="highlight-item"><i class="fa-solid fa-check"></i> Guaranteed availability during peak sowing & harvest windows</div>
+                            <div class="highlight-item"><i class="fa-solid fa-check"></i> Fully insured equipment with trained operator support</div>
+                        </div>
+                    </article>
+
+                    <!-- Semantic <article> 2: Technical Architecture -->
+                    <article class="about-article hover-lift">
+                        <div class="article-badge"><i class="fa-solid fa-code"></i> HTML5 Standards</div>
+                        <h3>Engineered with Modern Web Standards</h3>
+                        <p>
+                            This web application demonstrates the integration of advanced HTML5 semantic elements (<code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;footer&gt;</code>) paired with comprehensive HTML5 form controls (<code>type="email"</code>, <code>type="tel"</code>, <code>type="date"</code>, <code>type="time"</code>, <code>type="number"</code>, <code>contenteditable</code>, <code>spellcheck</code>). The responsive layout leverages CSS Grid and Flexbox architectures for cross-device compatibility.
+                        </p>
+                        <div class="article-highlights">
+                            <div class="highlight-item"><i class="fa-solid fa-check"></i> Native HTML5 client-side input validation controls</div>
+                            <div class="highlight-item"><i class="fa-solid fa-check"></i> Interactive editable notes box with spellcheck enabled</div>
+                            <div class="highlight-item"><i class="fa-solid fa-check"></i> Designed for accessibility, responsiveness, and performance</div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- =========================================================================
+                 DASHBOARD CARDS & DYNAMIC STATISTICS
                  ========================================================================= -->
             <section id="dashboard" class="dashboard-section section-padding">
                 <div class="section-header">
@@ -350,7 +405,6 @@
                 </div>
 
                 <div class="stats-grid">
-                    <!-- Stat Card 1 -->
                     <div class="stat-card hover-lift">
                         <div class="stat-icon-wrapper bg-green-gradient">
                             <i class="fa-solid fa-users"></i>
@@ -367,7 +421,6 @@
                         </div>
                     </div>
 
-                    <!-- Stat Card 2 -->
                     <div class="stat-card hover-lift">
                         <div class="stat-icon-wrapper bg-brown-gradient">
                             <i class="fa-solid fa-user-tie"></i>
@@ -384,7 +437,6 @@
                         </div>
                     </div>
 
-                    <!-- Stat Card 3 -->
                     <div class="stat-card hover-lift">
                         <div class="stat-icon-wrapper bg-blue-gradient">
                             <i class="fa-solid fa-tractor"></i>
@@ -401,7 +453,6 @@
                         </div>
                     </div>
 
-                    <!-- Stat Card 4 -->
                     <div class="stat-card hover-lift">
                         <div class="stat-icon-wrapper bg-orange-gradient">
                             <i class="fa-solid fa-calendar-check"></i>
@@ -418,7 +469,6 @@
                         </div>
                     </div>
 
-                    <!-- Stat Card 5 -->
                     <div class="stat-card hover-lift">
                         <div class="stat-icon-wrapper bg-red-gradient">
                             <i class="fa-solid fa-hourglass-half"></i>
@@ -435,7 +485,6 @@
                         </div>
                     </div>
 
-                    <!-- Stat Card 6 -->
                     <div class="stat-card hover-lift">
                         <div class="stat-icon-wrapper bg-emerald-gradient">
                             <i class="fa-solid fa-hand-holding-dollar"></i>
@@ -512,7 +561,7 @@
             </section>
 
             <!-- =========================================================================
-                 8. IMAGE / BANNER SLIDER (Interactive Agriculture Equipment Carousel)
+                 IMAGE / BANNER SLIDER (Equipment Carousel)
                  ========================================================================= -->
             <section id="equipment-slider" class="carousel-section section-padding">
                 <div class="section-header">
@@ -781,12 +830,11 @@
             </section>
 
             <!-- =========================================================================
-                 6. FEATURES SECTION (Using Semantic <ul> & <li>) & 
-                 7. SERVICES SECTION (Using Semantic <ol> & <li>)
+                 FEATURES SECTION (<ul> & <li>) & SERVICES SECTION (<ol> & <li>)
                  ========================================================================= -->
             <div class="grid-2-col section-padding">
                 
-                <!-- 6. Features Section (<ul> and <li> as mandated) -->
+                <!-- Features Section -->
                 <section id="features" class="features-block">
                     <div class="section-header">
                         <div>
@@ -841,7 +889,7 @@
                     </ul>
                 </section>
 
-                <!-- 7. Services Section (<ol> and <li> as mandated) -->
+                <!-- Services Section -->
                 <section id="services" class="services-block">
                     <div class="section-header">
                         <div>
@@ -899,7 +947,7 @@
             </div>
 
             <!-- =========================================================================
-                 REPORTS & ANALYTICS SECTION (Interactive CSS Visualizations)
+                 REPORTS & ANALYTICS SECTION
                  ========================================================================= -->
             <section id="reports" class="reports-section section-padding">
                 <div class="section-header">
@@ -1173,13 +1221,13 @@
             </div>
 
             <!-- =========================================================================
-                 12. REGISTRATION FORM & 13. FORM VALIDATION
+                 5. REGISTRATION FORM (With Advanced HTML5 Form Elements Requirements 5-17)
                  ========================================================================= -->
             <section id="register" class="register-section section-padding">
                 <div class="section-header">
                     <div>
-                        <span class="sub-heading">ONBOARDING PORTAL</span>
-                        <h2 class="section-title">Farmer & Machinery Owner Registration</h2>
+                        <span class="sub-heading">ONBOARDING & RESERVATION PORTAL</span>
+                        <h2 class="section-title">Farmer & Machinery Owner Registration Form</h2>
                     </div>
                 </div>
 
@@ -1188,32 +1236,32 @@
                         <div class="intro-icon"><i class="fa-solid fa-file-signature"></i></div>
                         <div>
                             <h3>Create Your Verified AgriShare Account</h3>
-                            <p>Fill out the registration details below to start renting or listing agricultural machinery across Tamil Nadu.</p>
+                            <p>Fill out the advanced HTML5 registration form below with personal details, equipment interests, and preferred appointment timing.</p>
                         </div>
                     </div>
 
                     <form id="registration-form" class="responsive-form" novalidate>
                         
-                        <!-- Row 1: Name & Email -->
+                        <!-- Row 1: 6. Name Field & 7. Email Field -->
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="reg-name"><i class="fa-solid fa-user"></i> Full Name <span class="required-star">*</span></label>
-                                <input type="text" id="reg-name" name="name" placeholder="Enter your full name (e.g. Kohila M)" required>
+                                <input type="text" id="reg-name" name="name" placeholder="Enter your full name (e.g., Kohila M)" required autofocus>
                                 <span class="error-msg" id="err-name"></span>
                             </div>
 
                             <div class="form-group">
                                 <label for="reg-email"><i class="fa-solid fa-envelope"></i> Email Address <span class="required-star">*</span></label>
-                                <input type="email" id="reg-email" name="email" placeholder="example@agrishare.com" required>
+                                <input type="email" id="reg-email" name="email" placeholder="farmer@agrishare.com" required>
                                 <span class="error-msg" id="err-email"></span>
                             </div>
                         </div>
 
-                        <!-- Row 2: Phone & Password -->
+                        <!-- Row 2: 8. Phone Number (tel & pattern) & Password -->
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="reg-phone"><i class="fa-solid fa-phone"></i> 10-Digit Phone Number <span class="required-star">*</span></label>
-                                <input type="tel" id="reg-phone" name="phone" placeholder="9876543210" maxlength="10" required>
+                                <input type="tel" id="reg-phone" name="phone" placeholder="9876543210" pattern="[6-9][0-9]{9}" maxlength="10" required>
                                 <span class="error-msg" id="err-phone"></span>
                             </div>
 
@@ -1227,7 +1275,7 @@
                             </div>
                         </div>
 
-                        <!-- Row 3: Gender & DOB -->
+                        <!-- Row 3: 15. Gender (Radio Buttons) & 11. Age (number with min/max) -->
                         <div class="form-row">
                             <div class="form-group">
                                 <label><i class="fa-solid fa-venus-mars"></i> Gender <span class="required-star">*</span></label>
@@ -1249,26 +1297,86 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="reg-age"><i class="fa-solid fa-id-badge"></i> Age (Years) <span class="required-star">*</span></label>
+                                <input type="number" id="reg-age" name="age" min="18" max="100" placeholder="e.g., 24 (Min: 18, Max: 100)" required>
+                                <span class="error-msg" id="err-age"></span>
+                            </div>
+                        </div>
+
+                        <!-- Row 4: 9. Date of Birth (date) & 10. Preferred Appointment Time (time) -->
+                        <div class="form-row">
+                            <div class="form-group">
                                 <label for="reg-dob"><i class="fa-solid fa-calendar"></i> Date of Birth <span class="required-star">*</span></label>
                                 <input type="date" id="reg-dob" name="dob" required>
                                 <span class="error-msg" id="err-dob"></span>
                             </div>
+
+                            <div class="form-group">
+                                <label for="reg-time"><i class="fa-solid fa-clock"></i> Preferred Appointment / Pickup Time <span class="required-star">*</span></label>
+                                <input type="time" id="reg-time" name="preferred_time" required>
+                                <span class="error-msg" id="err-time"></span>
+                            </div>
                         </div>
 
-                        <!-- Row 4: Address -->
+                        <!-- 16. Skills / Interests (Checkboxes for selecting multiple items) -->
                         <div class="form-group">
-                            <label for="reg-address"><i class="fa-solid fa-location-pin"></i> Residential & Farm Address <span class="required-star">*</span></label>
-                            <textarea id="reg-address" name="address" rows="3" placeholder="Enter door number, street, village, taluk, and district..." required></textarea>
+                            <label><i class="fa-solid fa-screwdriver-wrench"></i> Agricultural Skills & Equipment Interests <span class="required-star">*</span></label>
+                            <p class="field-subtitle">Select the farm machinery and services you are interested in renting or operating:</p>
+                            <div class="skills-checkbox-grid">
+                                <label class="checkbox-pill">
+                                    <input type="checkbox" name="skills" value="Tractor Operation">
+                                    <span><i class="fa-solid fa-tractor"></i> Tractor Operation & Tillage</span>
+                                </label>
+                                <label class="checkbox-pill">
+                                    <input type="checkbox" name="skills" value="Combine Harvesting">
+                                    <span><i class="fa-solid fa-wheat-awn"></i> Combine Harvesting</span>
+                                </label>
+                                <label class="checkbox-pill">
+                                    <input type="checkbox" name="skills" value="Micro Irrigation">
+                                    <span><i class="fa-solid fa-water"></i> Micro & Drip Irrigation</span>
+                                </label>
+                                <label class="checkbox-pill">
+                                    <input type="checkbox" name="skills" value="Precision Seeding">
+                                    <span><i class="fa-solid fa-seedling"></i> Precision Seed Drilling</span>
+                                </label>
+                                <label class="checkbox-pill">
+                                    <input type="checkbox" name="skills" value="Rotavator Soil Prep">
+                                    <span><i class="fa-solid fa-gears"></i> Rotavator Soil Conditioning</span>
+                                </label>
+                                <label class="checkbox-pill">
+                                    <input type="checkbox" name="skills" value="Solar Farm Pumps">
+                                    <span><i class="fa-solid fa-solar-panel"></i> Solar Powered Water Pumps</span>
+                                </label>
+                            </div>
+                            <span class="error-msg" id="err-skills"></span>
+                        </div>
+
+                        <!-- 14. Address (<textarea>) & 13. Spell Check (spellcheck="true") -->
+                        <div class="form-group">
+                            <label for="reg-address"><i class="fa-solid fa-location-pin"></i> Farm & Residential Address <span class="required-star">*</span></label>
+                            <textarea id="reg-address" name="address" rows="3" placeholder="Enter door number, street name, village, taluk, and district..." required spellcheck="true"></textarea>
                             <span class="error-msg" id="err-address"></span>
                         </div>
 
-                        <!-- Form Actions (Submit & Reset buttons) -->
+                        <!-- 12. Editable Area (contenteditable="true") & 13. Spell Check (spellcheck="true") -->
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-pen-to-square"></i> Additional Farmer Notes & Special Delivery Requests (HTML5 Editable Area)</label>
+                            <div id="editable-notes" class="editable-content-box" contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true">
+                                Click directly inside this box to type customized notes, field access instructions, soil conditions, or crop harvest details. This area demonstrates the HTML5 contenteditable and spellcheck attributes in action.
+                            </div>
+                            <small class="field-hint"><i class="fa-solid fa-circle-info"></i> HTML5 <code>contenteditable="true"</code> enables inline in-place typing with real-time browser spell check.</small>
+                        </div>
+
+                        <!-- 17. Form Controls (Submit, Reset, and Cancel buttons) -->
                         <div class="form-btn-group">
                             <button type="submit" class="btn btn-primary btn-lg bounce" id="submit-btn">
                                 <i class="fa-solid fa-check-circle"></i> Submit Registration
                             </button>
                             <button type="reset" class="btn btn-outline btn-lg" id="reset-btn">
                                 <i class="fa-solid fa-arrow-rotate-left"></i> Reset Form
+                            </button>
+                            <button type="button" class="btn btn-secondary btn-lg" id="cancel-btn">
+                                <i class="fa-solid fa-ban"></i> Cancel
                             </button>
                         </div>
 
@@ -1279,7 +1387,7 @@
             </section>
 
             <!-- =========================================================================
-                 11. APPLICATION MODULES TABLE (Semantic <table>, <thead>, <tbody>)
+                 APPLICATION MODULES TABLE (Semantic <table>, <thead>, <tbody>)
                  ========================================================================= -->
             <section id="modules" class="modules-section section-padding">
                 <div class="section-header">
@@ -1347,7 +1455,45 @@
             </section>
 
             <!-- =========================================================================
-                 17. CONTACT SECTION (Email, Phone, Address, Social Media Links)
+                 HELP & SUPPORT SECTION (<section id="help">)
+                 ========================================================================= -->
+            <section id="help" class="help-section section-padding">
+                <div class="section-header">
+                    <div>
+                        <span class="sub-heading">KNOWLEDGE BASE & GUIDELINES</span>
+                        <h2 class="section-title">Help Center & Farmer FAQs</h2>
+                    </div>
+                </div>
+
+                <div class="help-grid">
+                    <div class="help-card hover-lift">
+                        <div class="help-icon bg-green"><i class="fa-solid fa-circle-question"></i></div>
+                        <h4>How do I rent equipment?</h4>
+                        <p>Complete the Registration form above, browse the catalog, select your required date and hours, and click <em>Rent Machinery</em> to send a booking request to the verified owner.</p>
+                    </div>
+
+                    <div class="help-card hover-lift">
+                        <div class="help-icon bg-blue"><i class="fa-solid fa-shield-halved"></i></div>
+                        <h4>Is security deposit required?</h4>
+                        <p>No mandatory advance deposit is required for verified local farmers. All registered machinery carries insurance coverage against accidental field breakdowns.</p>
+                    </div>
+
+                    <div class="help-card hover-lift">
+                        <div class="help-icon bg-orange"><i class="fa-solid fa-user-gear"></i></div>
+                        <h4>Are trained drivers included?</h4>
+                        <p>Yes, heavy machinery such as Combine Harvesters and Laser Levelers include certified operators at standard hourly wage increments.</p>
+                    </div>
+
+                    <div class="help-card hover-lift">
+                        <div class="help-icon bg-emerald"><i class="fa-solid fa-headset"></i></div>
+                        <h4>24/7 Farmer Helpline</h4>
+                        <p>Facing difficulty in booking or equipment mobilization? Call our toll-free regional help desk at <strong>+91 800 123 4567</strong> anytime.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================================
+                 CONTACT SECTION (Email, Phone, Address, Social Media Links)
                  ========================================================================= -->
             <section id="contact" class="contact-section section-padding">
                 <div class="section-header">
@@ -1358,8 +1504,6 @@
                 </div>
 
                 <div class="contact-grid">
-                    
-                    <!-- Contact Cards -->
                     <div class="contact-info-panel">
                         <div class="contact-card hover-lift">
                             <div class="contact-icon bg-green"><i class="fa-solid fa-envelope"></i></div>
@@ -1387,7 +1531,7 @@
                             </div>
                         </div>
 
-                        <!-- Social Media Links (as mandated) -->
+                        <!-- Social Media Links -->
                         <div class="social-channels-box">
                             <h4>Follow AgriShare On Social Media</h4>
                             <div class="social-links-row">
@@ -1428,7 +1572,6 @@
                             </button>
                         </form>
                     </div>
-
                 </div>
             </section>
 
@@ -1436,7 +1579,7 @@
     </div>
 
     <!-- =========================================================================
-         18. FOOTER (Copyright, Application Name, Student Name, Social Icons)
+         18. HTML5 FOOTER (<footer> containing copyright, student name, institution name, and contact details)
          ========================================================================= -->
     <footer class="main-footer">
         <div class="footer-top-grid">
@@ -1455,31 +1598,37 @@
                 <h4>Quick Navigation</h4>
                 <ul class="footer-links">
                     <li><a href="#home"><i class="fa-solid fa-angle-right"></i> Home Portal</a></li>
-                    <li><a href="#dashboard"><i class="fa-solid fa-angle-right"></i> Operational Dashboard</a></li>
-                    <li><a href="#equipment-slider"><i class="fa-solid fa-angle-right"></i> Machinery Catalog</a></li>
-                    <li><a href="#features"><i class="fa-solid fa-angle-right"></i> System Features</a></li>
+                    <li><a href="#about"><i class="fa-solid fa-angle-right"></i> About AgriShare</a></li>
                     <li><a href="#services"><i class="fa-solid fa-angle-right"></i> Portal Services</a></li>
+                    <li><a href="#register"><i class="fa-solid fa-angle-right"></i> Registration Form</a></li>
+                    <li><a href="#contact"><i class="fa-solid fa-angle-right"></i> Support & Contact</a></li>
+                    <li><a href="#help"><i class="fa-solid fa-angle-right"></i> Farmer Help Center</a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
-                <h4>Academic Details</h4>
+                <h4>Academic & Student Details</h4>
                 <ul class="footer-meta-list">
-                    <li><strong>Course:</strong> 23IT721 – Full Stack Development Lab</li>
                     <li><strong>Student Name:</strong> Kohila M</li>
                     <li><strong>Register Number:</strong> 2303717620522027</li>
+                    <li><strong>Institution Name:</strong> Coimbatore Institute of Technology</li>
                     <li><strong>Department:</strong> Department of Information Technology</li>
-                    <li><strong>Semester:</strong> Laboratory Practical Examination</li>
+                    <li><strong>Course:</strong> Full Stack Development Laboratory (23IT721)</li>
                 </ul>
             </div>
 
             <div class="footer-col">
-                <h4>Deployment Links</h4>
-                <div class="deployment-badge-box">
-                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="deploy-pill">
+                <h4>Contact Details & Source</h4>
+                <ul class="footer-meta-list">
+                    <li><strong>Helpline:</strong> <a href="tel:+918001234567" style="color:var(--light-green);">+91 800 123 4567</a></li>
+                    <li><strong>Email:</strong> <a href="mailto:support@agrishare.portal.in" style="color:var(--light-green);">support@agrishare.portal.in</a></li>
+                    <li><strong>Address:</strong> Technology Park, Chennai, India</li>
+                </ul>
+                <div class="deployment-badge-box" style="margin-top:12px;">
+                    <a href="https://github.com/ko-27/AgriShare" target="_blank" rel="noopener noreferrer" class="deploy-pill">
                         <i class="fa-brands fa-github"></i> GitHub Source Code
                     </a>
-                    <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" class="deploy-pill">
+                    <a href="https://agri-share-ashen.vercel.app/" target="_blank" rel="noopener noreferrer" class="deploy-pill">
                         <i class="fa-solid fa-cloud-arrow-up"></i> Vercel Live Deployment
                     </a>
                 </div>
@@ -1487,13 +1636,11 @@
         </div>
 
         <div class="footer-bottom-bar">
-            <p>&copy; 2026 <strong>AgriShare</strong>. All Rights Reserved. Designed & Developed by <strong>Kohila M</strong> (Reg No: 2303717620522027), Department of Information Technology.</p>
+            <p>&copy; 2026 <strong>AgriShare</strong>. All Rights Reserved. Designed & Developed by <strong>Kohila M</strong> (Reg No: 2303717620522027), Department of Information Technology, <strong>Coimbatore Institute of Technology</strong>.</p>
         </div>
     </footer>
 
-    <!-- =========================================================================
-         16. SCROLL-TO-TOP BUTTON (Floating with smooth JavaScript scroll)
-         ========================================================================= -->
+    <!-- SCROLL-TO-TOP BUTTON -->
     <button id="scrollToTopBtn" class="scroll-top-btn" aria-label="Back to Top of Page" title="Back to Top">
         <i class="fa-solid fa-arrow-up"></i>
     </button>

@@ -392,15 +392,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* =========================================================================
-       8. REGISTRATION FORM VALIDATION (Requirements 12 & 13)
+       8. ADVANCED HTML5 FORM VALIDATION (Requirements 5-17)
        ========================================================================= */
     const regForm = document.getElementById('registration-form');
     const nameInput = document.getElementById('reg-name');
     const emailInput = document.getElementById('reg-email');
     const phoneInput = document.getElementById('reg-phone');
     const passwordInput = document.getElementById('reg-password');
+    const ageInput = document.getElementById('reg-age');
     const dobInput = document.getElementById('reg-dob');
+    const timeInput = document.getElementById('reg-time');
     const addressInput = document.getElementById('reg-address');
+    const cancelBtn = document.getElementById('cancel-btn');
     const meterFill = document.getElementById('meter-fill');
     const formAlertBox = document.getElementById('form-alert-box');
 
@@ -444,8 +447,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function clearAllFormErrors() {
-        const errorIds = ['err-name', 'err-email', 'err-phone', 'err-password', 'err-gender', 'err-dob', 'err-address'];
-        const fieldIds = ['reg-name', 'reg-email', 'reg-phone', 'reg-password', 'reg-dob', 'reg-address'];
+        const errorIds = ['err-name', 'err-email', 'err-phone', 'err-password', 'err-gender', 'err-age', 'err-dob', 'err-time', 'err-skills', 'err-address'];
+        const fieldIds = ['reg-name', 'reg-email', 'reg-phone', 'reg-password', 'reg-age', 'reg-dob', 'reg-time', 'reg-address'];
 
         errorIds.forEach(id => {
             const el = document.getElementById(id);
@@ -470,26 +473,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let isValid = true;
 
-            // 1. Name Validation
+            // 1. Name Validation (Requirement 6)
             const nameVal = nameInput ? nameInput.value.trim() : '';
             if (!nameVal || nameVal.length < 3) {
-                setFieldError('reg-name', 'err-name', 'Please enter a valid full name (minimum 3 characters).');
+                setFieldError('reg-name', 'err-name', 'Please enter your full name (minimum 3 characters).');
                 isValid = false;
             } else {
                 clearFieldError('reg-name', 'err-name');
             }
 
-            // 2. Email Validation
+            // 2. Email Validation (Requirement 7)
             const emailVal = emailInput ? emailInput.value.trim() : '';
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailVal || !emailRegex.test(emailVal)) {
-                setFieldError('reg-email', 'err-email', 'Please enter a valid email address (e.g. name@domain.com).');
+                setFieldError('reg-email', 'err-email', 'Please enter a valid email address (e.g., name@domain.com).');
                 isValid = false;
             } else {
                 clearFieldError('reg-email', 'err-email');
             }
 
-            // 3. Phone Validation (10 digits)
+            // 3. Phone Validation with Pattern (Requirement 8)
             const phoneVal = phoneInput ? phoneInput.value.trim() : '';
             const phoneRegex = /^[6-9]\d{9}$/;
             if (!phoneVal || !phoneRegex.test(phoneVal)) {
@@ -511,38 +514,58 @@ document.addEventListener('DOMContentLoaded', () => {
                 clearFieldError('reg-password', 'err-password');
             }
 
-            // 5. Gender Validation
+            // 5. Gender Radio Buttons (Requirement 15)
             const genderChecked = document.querySelector('input[name="gender"]:checked');
             if (!genderChecked) {
                 const errGender = document.getElementById('err-gender');
-                if (errGender) errGender.textContent = 'Please select a gender option.';
+                if (errGender) errGender.textContent = 'Please select your gender.';
                 isValid = false;
             } else {
                 const errGender = document.getElementById('err-gender');
                 if (errGender) errGender.textContent = '';
             }
 
-            // 6. Date of Birth Validation
+            // 6. Age Validation (Requirement 11 - Number min/max)
+            const ageVal = ageInput ? parseInt(ageInput.value, 10) : 0;
+            if (!ageVal || isNaN(ageVal) || ageVal < 18 || ageVal > 100) {
+                setFieldError('reg-age', 'err-age', 'Please enter a valid age between 18 and 100.');
+                isValid = false;
+            } else {
+                clearFieldError('reg-age', 'err-age');
+            }
+
+            // 7. Date of Birth (Requirement 9)
             const dobVal = dobInput ? dobInput.value : '';
             if (!dobVal) {
                 setFieldError('reg-dob', 'err-dob', 'Please select your date of birth.');
                 isValid = false;
             } else {
-                const birthDate = new Date(dobVal);
-                const today = new Date();
-                const age = today.getFullYear() - birthDate.getFullYear();
-                if (age < 18) {
-                    setFieldError('reg-dob', 'err-dob', 'Farmer/Owner must be at least 18 years of age.');
-                    isValid = false;
-                } else {
-                    clearFieldError('reg-dob', 'err-dob');
-                }
+                clearFieldError('reg-dob', 'err-dob');
             }
 
-            // 7. Address Validation
+            // 8. Preferred Time (Requirement 10)
+            const timeVal = timeInput ? timeInput.value : '';
+            if (!timeVal) {
+                setFieldError('reg-time', 'err-time', 'Please select a preferred appointment or equipment pickup time.');
+                isValid = false;
+            } else {
+                clearFieldError('reg-time', 'err-time');
+            }
+
+            // 9. Skills / Interests Checkboxes (Requirement 16)
+            const checkedSkills = document.querySelectorAll('input[name="skills"]:checked');
+            const errSkills = document.getElementById('err-skills');
+            if (checkedSkills.length === 0) {
+                if (errSkills) errSkills.textContent = 'Please select at least one agricultural machinery skill or interest.';
+                isValid = false;
+            } else {
+                if (errSkills) errSkills.textContent = '';
+            }
+
+            // 10. Address Validation (Requirement 14)
             const addressVal = addressInput ? addressInput.value.trim() : '';
             if (!addressVal || addressVal.length < 10) {
-                setFieldError('reg-address', 'err-address', 'Please provide a complete address (minimum 10 characters).');
+                setFieldError('reg-address', 'err-address', 'Please provide a complete farm address (minimum 10 characters).');
                 isValid = false;
             } else {
                 clearFieldError('reg-address', 'err-address');
@@ -550,10 +573,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Final Response Feedback
             if (isValid) {
+                const selectedSkillsList = Array.from(checkedSkills).map(cb => cb.value).join(', ');
                 if (formAlertBox) {
                     formAlertBox.innerHTML = `
                         <i class="fa-solid fa-circle-check"></i> 
-                        <strong>Registration Successful!</strong> Welcome to AgriShare, <strong>${nameVal}</strong>. Your account has been verified and registered for 2026 farm machinery bookings.
+                        <strong>Registration Completed Successfully!</strong><br>
+                        Welcome to AgriShare, <strong>${nameVal}</strong> (Age: ${ageVal}). Preferred Slot: <strong>${timeVal}</strong>.<br>
+                        Registered Interests: <em>${selectedSkillsList}</em>.<br>
+                        Your farmer credentials have been validated according to HTML5 standards.
                     `;
                     formAlertBox.className = 'form-submission-alert success';
                     formAlertBox.style.display = 'block';
@@ -568,7 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (formAlertBox) {
                     formAlertBox.innerHTML = `
                         <i class="fa-solid fa-triangle-exclamation"></i> 
-                        <strong>Validation Error:</strong> Please correct the highlighted fields above before submitting.
+                        <strong>Validation Error:</strong> Please fill in all required HTML5 fields correctly.
                     `;
                     formAlertBox.className = 'form-submission-alert error';
                     formAlertBox.style.display = 'block';
@@ -576,10 +603,29 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // 17. Form Controls: Reset Button
         regForm.addEventListener('reset', () => {
             clearAllFormErrors();
             if (meterFill) meterFill.style.width = '0%';
         });
+
+        // 17. Form Controls: Cancel Button
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', () => {
+                const confirmCancel = confirm('Are you sure you want to cancel the registration process? All entered fields will be cleared.');
+                if (confirmCancel) {
+                    regForm.reset();
+                    clearAllFormErrors();
+                    if (meterFill) meterFill.style.width = '0%';
+                    if (formAlertBox) {
+                        formAlertBox.innerHTML = '<i class="fa-solid fa-circle-info"></i> Registration form input has been cancelled.';
+                        formAlertBox.className = 'form-submission-alert error';
+                        formAlertBox.style.display = 'block';
+                        setTimeout(() => { formAlertBox.style.display = 'none'; }, 3000);
+                    }
+                }
+            });
+        }
     }
 
 
