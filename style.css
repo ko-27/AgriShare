@@ -2672,9 +2672,323 @@ body.dark-mode .checkbox-pill input:checked + span {
 }
 
 .help-card p {
+/* --- HTML5 DRAG AND DROP STYLES --- */
+.drag-drop-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.drag-drop-intro {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.drag-drop-intro code {
+    background-color: var(--bg-card-subtle);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--primary-green);
+    border: 1px solid var(--border-color);
+}
+
+.drag-drop-container {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 2rem;
+}
+
+.drag-sources-panel,
+.drop-target-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.drag-sources-panel h4,
+.drop-target-panel h4 {
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.panel-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.drag-items-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.draggable-machinery-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.9rem 1rem;
+    background-color: var(--bg-card-subtle);
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    cursor: grab;
+    user-select: none;
+    transition: var(--transition);
+}
+
+.draggable-machinery-pill:hover {
+    border-color: var(--primary-green);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.draggable-machinery-pill:active {
+    cursor: grabbing;
+}
+
+.draggable-machinery-pill.dragging {
+    opacity: 0.45;
+    border: 2px dashed var(--primary-green);
+    transform: scale(0.98);
+}
+
+.draggable-machinery-pill i:first-child {
+    font-size: 1.3rem;
+    color: var(--primary-green);
+}
+
+.drag-pill-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.drag-pill-info strong {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+.drag-pill-info small {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.grip-icon {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* Drop Target Box */
+.drop-target-box {
+    border: 2px dashed var(--primary-green);
+    background-color: rgba(46, 125, 50, 0.04);
+    border-radius: var(--radius-md);
+    min-height: 240px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    position: relative;
+}
+
+.drop-target-box.drag-over {
+    background-color: rgba(46, 125, 50, 0.14);
+    border-color: var(--primary-green);
+    border-style: solid;
+    transform: scale(1.01);
+    box-shadow: 0 0 16px rgba(46, 125, 50, 0.25);
+}
+
+.drop-target-placeholder {
+    text-align: center;
+    color: var(--text-muted);
+    transition: var(--transition);
+}
+
+.drop-icon {
+    font-size: 2.5rem;
+    color: var(--primary-green);
+    margin-bottom: 0.75rem;
+}
+
+.drop-target-placeholder h5 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.drop-target-placeholder p {
+    font-size: 0.82rem;
+    max-width: 260px;
+}
+
+.dropped-items-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 2;
+}
+
+.dropped-item-pill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--primary-green);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.dropped-item-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dropped-item-left i {
+    color: var(--primary-green);
+    font-size: 1.1rem;
+}
+
+.dropped-item-left strong {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.dropped-remove-btn {
+    background: none;
+    border: none;
+    color: var(--alert-red);
+    cursor: pointer;
     font-size: 0.88rem;
+    padding: 4px;
+}
+
+.drop-status-msg {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    min-height: 20px;
+    color: var(--primary-green);
+    display: none;
+}
+
+.drop-actions-bar {
+    margin-top: 8px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* --- HTML5 WEB STORAGE STYLES --- */
+.storage-btn-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-danger {
+    background-color: var(--alert-red);
+    color: #FFFFFF;
+    border: 1px solid var(--alert-red);
+}
+
+.btn-danger:hover {
+    background-color: #B71C1C;
+    border-color: #B71C1C;
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.25);
+}
+
+.storage-intro-box {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--sky-blue);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    font-size: 0.9rem;
     color: var(--text-secondary);
     line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.storage-table-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.storage-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.storage-card-header.local-header {
+    background: linear-gradient(135deg, rgba(46, 125, 50, 0.1), transparent);
+}
+
+.storage-card-header.session-header {
+    background: linear-gradient(135deg, rgba(2, 119, 189, 0.1), transparent);
+}
+
+.storage-card-header .header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.storage-card-header .header-left i {
+    font-size: 1.6rem;
+    color: var(--primary-green);
+}
+
+.storage-card-header.session-header .header-left i {
+    color: var(--sky-blue);
+}
+
+.storage-card-header h3 {
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.storage-card-header span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.storage-count-badge {
+    background-color: var(--bg-card-subtle);
+    border: 1px solid var(--border-color);
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.empty-storage-row td {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 2rem !important;
+    font-style: italic;
 }
 
 /* --- RESPONSIVE MEDIA QUERIES --- */

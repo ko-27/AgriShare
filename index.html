@@ -218,6 +218,18 @@
                         </a>
                     </li>
                     <li>
+                        <a href="#drag-drop" class="nav-item">
+                            <i class="fa-solid fa-arrows-up-down-left-right"></i>
+                            <span>Drag & Drop</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#storage" class="nav-item">
+                            <i class="fa-solid fa-database"></i>
+                            <span>Storage</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="#modules" class="nav-item">
                             <i class="fa-solid fa-cubes"></i>
                             <span>Modules</span>
@@ -1448,6 +1460,198 @@
                                     <td><strong>Central Admin Dashboard</strong></td>
                                     <td>Provides overarching administrative monitoring, user suspension controls, dispute mediation, and security compliance oversight.</td>
                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================================
+                 HTML5 DRAG AND DROP DEMONSTRATION (<section id="drag-drop">)
+                 ========================================================================= -->
+            <section id="drag-drop" class="drag-drop-section section-padding">
+                <div class="section-header">
+                    <div>
+                        <span class="sub-heading">INTERACTIVE HTML5 APIS</span>
+                        <h2 class="section-title">HTML5 Drag and Drop Equipment Scheduler</h2>
+                    </div>
+                </div>
+
+                <div class="drag-drop-card">
+                    <div class="drag-drop-intro">
+                        <p>Demonstrating native HTML5 Drag and Drop API (<code>dragstart</code>, <code>dragover</code>, <code>drop</code>, and <code>dragleave</code> events). Drag any machinery item from the source palette and drop it into the designated reservation target box.</p>
+                    </div>
+
+                    <div class="drag-drop-container">
+                        <!-- Drag Sources (Item 5: Draggable image or colored box) -->
+                        <div class="drag-sources-panel">
+                            <h4><i class="fa-solid fa-hand-pointer"></i> Available Machinery (Drag Source)</h4>
+                            <p class="panel-subtitle">Click and drag any machinery unit below:</p>
+                            
+                            <div class="drag-items-grid" id="drag-items-grid">
+                                <div class="draggable-machinery-pill" draggable="true" id="drag-tractor" data-machinery="Mahindra 575 DI Tractor" data-icon="fa-tractor">
+                                    <i class="fa-solid fa-tractor"></i>
+                                    <div class="drag-pill-info">
+                                        <strong>Mahindra 575 DI Tractor</strong>
+                                        <small>45 HP • Heavy Tillage</small>
+                                    </div>
+                                    <i class="fa-solid fa-grip-vertical grip-icon"></i>
+                                </div>
+
+                                <div class="draggable-machinery-pill" draggable="true" id="drag-harvester" data-machinery="John Deere W70 Harvester" data-icon="fa-wheat-awn">
+                                    <i class="fa-solid fa-wheat-awn"></i>
+                                    <div class="drag-pill-info">
+                                        <strong>John Deere W70 Harvester</strong>
+                                        <small>Multi-Crop Combine</small>
+                                    </div>
+                                    <i class="fa-solid fa-grip-vertical grip-icon"></i>
+                                </div>
+
+                                <div class="draggable-machinery-pill" draggable="true" id="drag-pump" data-machinery="Kirloskar 10HP Diesel Pump" data-icon="fa-water">
+                                    <i class="fa-solid fa-water"></i>
+                                    <div class="drag-pill-info">
+                                        <strong>Kirloskar 10HP Pump</strong>
+                                        <small>High Discharge Water Pump</small>
+                                    </div>
+                                    <i class="fa-solid fa-grip-vertical grip-icon"></i>
+                                </div>
+
+                                <div class="draggable-machinery-pill" draggable="true" id="drag-rotavator" data-machinery="Shaktiman Rotavator" data-icon="fa-gears">
+                                    <i class="fa-solid fa-gears"></i>
+                                    <div class="drag-pill-info">
+                                        <strong>Shaktiman Rotavator</strong>
+                                        <small>6ft Soil Cultivator</small>
+                                    </div>
+                                    <i class="fa-solid fa-grip-vertical grip-icon"></i>
+                                </div>
+
+                                <div class="draggable-machinery-pill" draggable="true" id="drag-seeder" data-machinery="National 9-Row Seed Drill" data-icon="fa-seedling">
+                                    <i class="fa-solid fa-seedling"></i>
+                                    <div class="drag-pill-info">
+                                        <strong>National Seed Drill</strong>
+                                        <small>9-Row Precision Sowing</small>
+                                    </div>
+                                    <i class="fa-solid fa-grip-vertical grip-icon"></i>
+                                </div>
+
+                                <div class="draggable-machinery-pill" draggable="true" id="drag-tiller" data-machinery="11-Tyne Spring Tiller" data-icon="fa-toolbox">
+                                    <i class="fa-solid fa-toolbox"></i>
+                                    <div class="drag-pill-info">
+                                        <strong>11-Tyne Spring Tiller</strong>
+                                        <small>Field Conditioning Tiller</small>
+                                    </div>
+                                    <i class="fa-solid fa-grip-vertical grip-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Drop Target (Item 6: Drop area where object can be dropped) -->
+                        <div class="drop-target-panel">
+                            <h4><i class="fa-solid fa-calendar-check"></i> Rental Schedule Box (Drop Target)</h4>
+                            <p class="panel-subtitle">Drop selected equipment below to schedule:</p>
+
+                            <div id="drop-target-box" class="drop-target-box" aria-label="Drop machinery here">
+                                <div class="drop-target-placeholder" id="drop-placeholder">
+                                    <i class="fa-solid fa-cloud-arrow-down drop-icon"></i>
+                                    <h5>Drop Equipment Here</h5>
+                                    <p>Drag any machinery unit from the left and drop here to assign to current rental session</p>
+                                </div>
+                                <div class="dropped-items-list" id="dropped-items-list"></div>
+                            </div>
+
+                            <div id="drop-status-msg" class="drop-status-msg"></div>
+                            <div class="drop-actions-bar">
+                                <button class="btn btn-sm btn-outline" id="clear-drop-btn">
+                                    <i class="fa-solid fa-rotate-left"></i> Reset Drop Schedule
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================================
+                 HTML5 WEB STORAGE: LOCAL STORAGE & SESSION STORAGE (<section id="storage">)
+                 ========================================================================= -->
+            <section id="storage" class="storage-section section-padding">
+                <div class="section-header">
+                    <div>
+                        <span class="sub-heading">CLIENT-SIDE PERSISTENCE</span>
+                        <h2 class="section-title">HTML5 Web Storage Demonstration</h2>
+                    </div>
+                    <div class="storage-btn-group">
+                        <button id="retrieve-storage-btn" class="btn btn-primary bounce">
+                            <i class="fa-solid fa-database"></i> Retrieve Data
+                        </button>
+                        <button id="clear-storage-btn" class="btn btn-danger">
+                            <i class="fa-solid fa-trash-can"></i> Clear Stored Data
+                        </button>
+                    </div>
+                </div>
+
+                <div class="storage-intro-box">
+                    <p>This section demonstrates <strong>localStorage</strong> (permanent client storage across browser sessions) and <strong>sessionStorage</strong> (temporary tab-isolated storage). All registrations submitted above or machinery dropped into the scheduler are saved into these storage APIs.</p>
+                </div>
+
+                <!-- Table 1: LOCAL STORAGE (All Registered User Details) -->
+                <div class="storage-table-card">
+                    <div class="storage-card-header local-header">
+                        <div class="header-left">
+                            <i class="fa-solid fa-hard-drive"></i>
+                            <div>
+                                <h3>LOCAL STORAGE (All Registered User Details)</h3>
+                                <span>Persistent Storage via HTML5 localStorage API</span>
+                            </div>
+                        </div>
+                        <span class="storage-count-badge" id="local-count-badge">0 Records</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="styled-table storage-table" id="local-storage-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Gender</th>
+                                    <th>Age</th>
+                                    <th>DOB</th>
+                                    <th>Time</th>
+                                    <th>Machinery / Interests</th>
+                                    <th>Address</th>
+                                </tr>
+                            </thead>
+                            <tbody id="local-storage-tbody">
+                                <!-- Populated dynamically by script.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Table 2: SESSION STORAGE (Current User) -->
+                <div class="storage-table-card" style="margin-top: 2rem;">
+                    <div class="storage-card-header session-header">
+                        <div class="header-left">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            <div>
+                                <h3>SESSION STORAGE (Current User)</h3>
+                                <span>Temporary Tab Session via HTML5 sessionStorage API</span>
+                            </div>
+                        </div>
+                        <span class="storage-count-badge" id="session-count-badge">0 Active Session</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="styled-table storage-table" id="session-storage-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Gender</th>
+                                    <th>Scheduled Machinery</th>
+                                </tr>
+                            </thead>
+                            <tbody id="session-storage-tbody">
+                                <!-- Populated dynamically by script.js -->
                             </tbody>
                         </table>
                     </div>

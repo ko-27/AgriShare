@@ -784,4 +784,362 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
+    /* =========================================================================
+       13. HTML5 DRAG AND DROP IMPLEMENTATION (Assignment 4: Items 5, 6, 7)
+       ========================================================================= */
+    const draggablePills = document.querySelectorAll('.draggable-machinery-pill');
+    const dropTargetBox = document.getElementById('drop-target-box');
+    const dropPlaceholder = document.getElementById('drop-placeholder');
+    const droppedItemsList = document.getElementById('dropped-items-list');
+    const dropStatusMsg = document.getElementById('drop-status-msg');
+    const clearDropBtn = document.getElementById('clear-drop-btn');
+
+    let draggedItemData = null;
+
+    draggablePills.forEach(pill => {
+        // Dragstart Event (Requirement 7)
+        pill.addEventListener('dragstart', (e) => {
+            draggedItemData = {
+                id: pill.id,
+                name: pill.getAttribute('data-machinery') || 'Machinery Unit',
+                icon: pill.getAttribute('data-icon') || 'fa-tractor'
+            };
+            e.dataTransfer.setData('text/plain', JSON.stringify(draggedItemData));
+            e.dataTransfer.effectAllowed = 'copy';
+            pill.classList.add('dragging');
+        });
+
+        // Dragend Event
+        pill.addEventListener('dragend', () => {
+            pill.classList.remove('dragging');
+        });
+    });
+
+    if (dropTargetBox) {
+        // Dragover Event (Requirement 7)
+        dropTargetBox.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'copy';
+            dropTargetBox.classList.add('drag-over');
+        });
+
+        // Dragleave Event
+        dropTargetBox.addEventListener('dragleave', () => {
+            dropTargetBox.classList.remove('drag-over');
+        });
+
+        // Drop Event (Requirement 7)
+        dropTargetBox.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropTargetBox.classList.remove('drag-over');
+
+            let itemData = draggedItemData;
+            try {
+                const textData = e.dataTransfer.getData('text/plain');
+                if (textData) itemData = JSON.parse(textData);
+            } catch (err) {
+                // Use draggedItemData fallback
+            }
+
+            if (!itemData || !itemData.name) return;
+
+            // Hide placeholder
+            if (dropPlaceholder) dropPlaceholder.style.display = 'none';
+
+            // Check if already in list
+            const existing = droppedItemsList ? droppedItemsList.querySelector(`[data-dropped-name="${itemData.name}"]`) : null;
+            if (existing) {
+                if (dropStatusMsg) {
+                    dropStatusMsg.textContent = `${itemData.name} is already in the reservation schedule!`;
+                    dropStatusMsg.style.color = 'var(--alert-orange)';
+                    dropStatusMsg.style.display = 'block';
+                    setTimeout(() => { dropStatusMsg.style.display = 'none'; }, 2500);
+                }
+                return;
+            }
+
+            // Create dropped item pill
+            const itemPill = document.createElement('div');
+            itemPill.className = 'dropped-item-pill';
+            itemPill.setAttribute('data-dropped-name', itemData.name);
+            itemPill.innerHTML = `
+                <div class="dropped-item-left">
+                    <i class="fa-solid ${itemData.icon}"></i>
+                    <strong>${itemData.name}</strong>
+                </div>
+                <button type="button" class="dropped-remove-btn" title="Remove from schedule">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            `;
+
+            // Remove button inside pill
+            itemPill.querySelector('.dropped-remove-btn').addEventListener('click', () => {
+                itemPill.remove();
+                if (droppedItemsList && droppedItemsList.children.length === 0) {
+                    if (dropPlaceholder) dropPlaceholder.style.display = 'block';
+                }
+                updateSessionStorageFromDrop();
+            });
+
+            if (droppedItemsList) droppedItemsList.appendChild(itemPill);
+
+            if (dropStatusMsg) {
+                dropStatusMsg.textContent = `✔ Successfully scheduled: ${itemData.name}`;
+                dropStatusMsg.style.color = 'var(--primary-green)';
+                dropStatusMsg.style.display = 'block';
+                setTimeout(() => { dropStatusMsg.style.display = 'none'; }, 2500);
+            }
+
+            // Update Session Storage with scheduled machinery
+            updateSessionStorageFromDrop();
+        });
+    }
+
+    if (clearDropBtn) {
+        clearDropBtn.addEventListener('click', () => {
+            if (droppedItemsList) droppedItemsList.innerHTML = '';
+            if (dropPlaceholder) dropPlaceholder.style.display = 'block';
+            if (dropStatusMsg) {
+                dropStatusMsg.textContent = 'Drop schedule reset.';
+                dropStatusMsg.style.color = 'var(--text-muted)';
+                dropStatusMsg.style.display = 'block';
+                setTimeout(() => { dropStatusMsg.style.display = 'none'; }, 2000);
+            }
+            updateSessionStorageFromDrop();
+        });
+    }
+
+    function updateSessionStorageFromDrop() {
+        const droppedItems = droppedItemsList ? Array.from(droppedItemsList.querySelectorAll('.dropped-item-pill')).map(el => el.getAttribute('data-dropped-name')) : [];
+        const currentSession = getSessionStorageUser();
+        currentSession.machinery = droppedItems.length > 0 ? droppedItems.join(', ') : 'None Scheduled';
+        sessionStorage.setItem('agrishare_current_user', JSON.stringify(currentSession));
+        renderWebStorageTables();
+    }
+
+
+    /* =========================================================================
+       14. HTML5 WEB STORAGE IMPLEMENTATION (Assignment 4: Items 8, 9, 10, 11)
+       ========================================================================= */
+    const retrieveStorageBtn = document.getElementById('retrieve-storage-btn');
+    const clearStorageBtn = document.getElementById('clear-storage-btn');
+    const localTbody = document.getElementById('local-storage-tbody');
+    const sessionTbody = document.getElementById('session-storage-tbody');
+    const localCountBadge = document.getElementById('local-count-badge');
+    const sessionCountBadge = document.getElementById('session-count-badge');
+
+    // Default Seed Data for Local Storage (Requirement 8)
+    const defaultLocalUsers = [
+        {
+            name: "Kohila M",
+            email: "kohila.it@agrishare.com",
+            phone: "9876543210",
+            gender: "Female",
+            age: 24,
+            dob: "2002-05-14",
+            time: "09:30",
+            machinery: "Mahindra 575 DI Tractor, Rotavator Soil Conditioning",
+            address: "Avinashi Road, Coimbatore"
+        },
+        {
+            name: "Ramesh K.",
+            email: "ramesh.farmer@gmail.com",
+            phone: "9842109876",
+            gender: "Male",
+            age: 38,
+            dob: "1988-11-20",
+            time: "10:00",
+            machinery: "John Deere W70 Harvester, Precision Seeding",
+            address: "Main Road, Gobichettipalayam, Erode"
+        },
+        {
+            name: "Madhumitha P.",
+            email: "madhu.agro@gmail.com",
+            phone: "8788767651",
+            gender: "Female",
+            age: 21,
+            dob: "2005-09-03",
+            time: "14:15",
+            machinery: "Kirloskar 10HP Diesel Pump, Solar Farm Equipment",
+            address: "Thiruchengode, Namakkal"
+        }
+    ];
+
+    function getLocalStorageUsers() {
+        const stored = localStorage.getItem('agrishare_registered_users');
+        if (!stored) {
+            localStorage.setItem('agrishare_registered_users', JSON.stringify(defaultLocalUsers));
+            return defaultLocalUsers;
+        }
+        try {
+            return JSON.parse(stored) || [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function getSessionStorageUser() {
+        const stored = sessionStorage.getItem('agrishare_current_user');
+        if (!stored) {
+            const defaultSession = {
+                name: "Kohila M",
+                email: "kohila.it@agrishare.com",
+                phone: "9876543210",
+                gender: "Female",
+                machinery: "Mahindra 575 DI Tractor"
+            };
+            sessionStorage.setItem('agrishare_current_user', JSON.stringify(defaultSession));
+            return defaultSession;
+        }
+        try {
+            return JSON.parse(stored) || { name: "Guest", email: "-", phone: "-", gender: "-", machinery: "None" };
+        } catch (e) {
+            return { name: "Guest", email: "-", phone: "-", gender: "-", machinery: "None" };
+        }
+    }
+
+    // 10. Retrieve and Display Stored Data on Button Click & Page Load
+    function renderWebStorageTables() {
+        // Render Local Storage Table
+        if (localTbody) {
+            const users = getLocalStorageUsers();
+            if (localCountBadge) localCountBadge.textContent = `${users.length} Records`;
+
+            if (users.length === 0) {
+                localTbody.innerHTML = `
+                    <tr class="empty-storage-row">
+                        <td colspan="9">No user records currently stored in localStorage. Complete the Registration Form to add records.</td>
+                    </tr>
+                `;
+            } else {
+                localTbody.innerHTML = users.map(user => `
+                    <tr>
+                        <td><strong>${escapeHtml(user.name)}</strong></td>
+                        <td>${escapeHtml(user.email)}</td>
+                        <td>${escapeHtml(user.phone)}</td>
+                        <td><span class="badge ${user.gender === 'Female' ? 'badge-primary' : 'badge-info'}">${escapeHtml(user.gender)}</span></td>
+                        <td>${user.age || '-'}</td>
+                        <td>${escapeHtml(user.dob || '-')}</td>
+                        <td>${escapeHtml(user.time || '-')}</td>
+                        <td>${escapeHtml(user.machinery || '-')}</td>
+                        <td><small>${escapeHtml(user.address || '-')}</small></td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        // Render Session Storage Table
+        if (sessionTbody) {
+            const currentSession = getSessionStorageUser();
+            const hasSession = currentSession && currentSession.name && currentSession.name !== '-';
+            if (sessionCountBadge) sessionCountBadge.textContent = hasSession ? "1 Active Session" : "0 Active Session";
+
+            if (!hasSession) {
+                sessionTbody.innerHTML = `
+                    <tr class="empty-storage-row">
+                        <td colspan="5">No active temporary session stored in sessionStorage.</td>
+                    </tr>
+                `;
+            } else {
+                sessionTbody.innerHTML = `
+                    <tr>
+                        <td><strong>${escapeHtml(currentSession.name)}</strong></td>
+                        <td>${escapeHtml(currentSession.email)}</td>
+                        <td>${escapeHtml(currentSession.phone)}</td>
+                        <td><span class="badge ${currentSession.gender === 'Female' ? 'badge-primary' : 'badge-info'}">${escapeHtml(currentSession.gender)}</span></td>
+                        <td><span class="badge badge-success"><i class="fa-solid fa-tractor"></i> ${escapeHtml(currentSession.machinery)}</span></td>
+                    </tr>
+                `;
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    // 10. Retrieve Data Button Event
+    if (retrieveStorageBtn) {
+        retrieveStorageBtn.addEventListener('click', () => {
+            renderWebStorageTables();
+            alert('Web Storage data retrieved and refreshed successfully!');
+        });
+    }
+
+    // 11. Clear Data Button Event (Requirement 11: Alert "All data cleared successfully.")
+    if (clearStorageBtn) {
+        clearStorageBtn.addEventListener('click', () => {
+            localStorage.removeItem('agrishare_registered_users');
+            sessionStorage.removeItem('agrishare_current_user');
+            
+            if (localTbody) {
+                localTbody.innerHTML = `
+                    <tr class="empty-storage-row">
+                        <td colspan="9">All localStorage user records cleared.</td>
+                    </tr>
+                `;
+            }
+            if (sessionTbody) {
+                sessionTbody.innerHTML = `
+                    <tr class="empty-storage-row">
+                        <td colspan="5">All sessionStorage data cleared.</td>
+                    </tr>
+                `;
+            }
+            if (localCountBadge) localCountBadge.textContent = '0 Records';
+            if (sessionCountBadge) sessionCountBadge.textContent = '0 Active Session';
+
+            // Match exact screenshot from sample output
+            alert('All data cleared successfully.');
+        });
+    }
+
+    // Connect Registration Form Submission to Local & Session Storage
+    if (regForm) {
+        regForm.addEventListener('submit', () => {
+            setTimeout(() => {
+                if (formAlertBox && formAlertBox.classList.contains('success')) {
+                    const checkedSkills = Array.from(document.querySelectorAll('input[name="skills"]:checked')).map(cb => cb.value).join(', ');
+                    const newUser = {
+                        name: nameInput ? nameInput.value.trim() : 'Anonymous',
+                        email: emailInput ? emailInput.value.trim() : '',
+                        phone: phoneInput ? phoneInput.value.trim() : '',
+                        gender: document.querySelector('input[name="gender"]:checked') ? document.querySelector('input[name="gender"]:checked').value : 'Not specified',
+                        age: ageInput ? parseInt(ageInput.value, 10) : 24,
+                        dob: dobInput ? dobInput.value : '',
+                        time: timeInput ? timeInput.value : '',
+                        machinery: checkedSkills || 'General Farm Machinery',
+                        address: addressInput ? addressInput.value.trim() : ''
+                    };
+
+                    // Add to Local Storage
+                    const currentLocal = getLocalStorageUsers();
+                    currentLocal.unshift(newUser);
+                    localStorage.setItem('agrishare_registered_users', JSON.stringify(currentLocal));
+
+                    // Set as active Session Storage
+                    sessionStorage.setItem('agrishare_current_user', JSON.stringify({
+                        name: newUser.name,
+                        email: newUser.email,
+                        phone: newUser.phone,
+                        gender: newUser.gender,
+                        machinery: newUser.machinery
+                    }));
+
+                    // Refresh table displays
+                    renderWebStorageTables();
+                }
+            }, 100);
+        });
+    }
+
+    // Initial render of Web Storage tables on page load
+    renderWebStorageTables();
+
 });
