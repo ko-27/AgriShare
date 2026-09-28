@@ -391,245 +391,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    /* =========================================================================
-       8. ADVANCED HTML5 FORM VALIDATION (Requirements 5-17)
+        /* =========================================================================
+       8. PASSWORD STRENGTH METER
        ========================================================================= */
-    const regForm = document.getElementById('registration-form');
-    const nameInput = document.getElementById('reg-name');
-    const emailInput = document.getElementById('reg-email');
-    const phoneInput = document.getElementById('reg-phone');
-    const passwordInput = document.getElementById('reg-password');
-    const ageInput = document.getElementById('reg-age');
-    const dobInput = document.getElementById('reg-dob');
-    const timeInput = document.getElementById('reg-time');
-    const addressInput = document.getElementById('reg-address');
-    const cancelBtn = document.getElementById('cancel-btn');
-    const meterFill = document.getElementById('meter-fill');
-    const formAlertBox = document.getElementById('form-alert-box');
+    const passwordInputEl = document.getElementById('reg-password');
+    const meterFillEl = document.getElementById('meter-fill');
 
-    // Password Strength Meter
-    if (passwordInput && meterFill) {
-        passwordInput.addEventListener('input', () => {
-            const val = passwordInput.value;
+    if (passwordInputEl && meterFillEl) {
+        passwordInputEl.addEventListener('input', () => {
+            const val = passwordInputEl.value;
             let score = 0;
-
             if (val.length >= 8) score += 25;
             if (/[A-Z]/.test(val)) score += 25;
             if (/[0-9]/.test(val)) score += 25;
             if (/[^A-Za-z0-9]/.test(val)) score += 25;
 
-            meterFill.style.width = score + '%';
+            meterFillEl.style.width = score + '%';
 
             if (score <= 25) {
-                meterFill.style.backgroundColor = 'var(--alert-red)';
+                meterFillEl.style.backgroundColor = 'var(--alert-red)';
             } else if (score <= 50) {
-                meterFill.style.backgroundColor = 'var(--alert-orange)';
+                meterFillEl.style.backgroundColor = 'var(--alert-orange)';
             } else if (score <= 75) {
-                meterFill.style.backgroundColor = 'var(--sky-blue)';
+                meterFillEl.style.backgroundColor = 'var(--sky-blue)';
             } else {
-                meterFill.style.backgroundColor = 'var(--primary-green)';
+                meterFillEl.style.backgroundColor = 'var(--primary-green)';
             }
         });
     }
 
-    function setFieldError(fieldId, errorId, message) {
-        const field = document.getElementById(fieldId);
-        const errSpan = document.getElementById(errorId);
-        if (field) field.closest('.form-group')?.classList.add('has-error');
-        if (errSpan) errSpan.textContent = message;
-    }
-
-    function clearFieldError(fieldId, errorId) {
-        const field = document.getElementById(fieldId);
-        const errSpan = document.getElementById(errorId);
-        if (field) field.closest('.form-group')?.classList.remove('has-error');
-        if (errSpan) errSpan.textContent = '';
-    }
-
-    function clearAllFormErrors() {
-        const errorIds = ['err-name', 'err-email', 'err-phone', 'err-password', 'err-gender', 'err-age', 'err-dob', 'err-time', 'err-skills', 'err-address'];
-        const fieldIds = ['reg-name', 'reg-email', 'reg-phone', 'reg-password', 'reg-age', 'reg-dob', 'reg-time', 'reg-address'];
-
-        errorIds.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.textContent = '';
-        });
-
-        fieldIds.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.closest('.form-group')?.classList.remove('has-error');
-        });
-
-        if (formAlertBox) {
-            formAlertBox.className = 'form-submission-alert';
-            formAlertBox.style.display = 'none';
-        }
-    }
-
-    if (regForm) {
-        regForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            clearAllFormErrors();
-
-            let isValid = true;
-
-            // 1. Name Validation (Requirement 6)
-            const nameVal = nameInput ? nameInput.value.trim() : '';
-            if (!nameVal || nameVal.length < 3) {
-                setFieldError('reg-name', 'err-name', 'Please enter your full name (minimum 3 characters).');
-                isValid = false;
-            } else {
-                clearFieldError('reg-name', 'err-name');
-            }
-
-            // 2. Email Validation (Requirement 7)
-            const emailVal = emailInput ? emailInput.value.trim() : '';
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailVal || !emailRegex.test(emailVal)) {
-                setFieldError('reg-email', 'err-email', 'Please enter a valid email address (e.g., name@domain.com).');
-                isValid = false;
-            } else {
-                clearFieldError('reg-email', 'err-email');
-            }
-
-            // 3. Phone Validation with Pattern (Requirement 8)
-            const phoneVal = phoneInput ? phoneInput.value.trim() : '';
-            const phoneRegex = /^[6-9]\d{9}$/;
-            if (!phoneVal || !phoneRegex.test(phoneVal)) {
-                setFieldError('reg-phone', 'err-phone', 'Enter a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9.');
-                isValid = false;
-            } else {
-                clearFieldError('reg-phone', 'err-phone');
-            }
-
-            // 4. Password Validation
-            const passVal = passwordInput ? passwordInput.value : '';
-            if (!passVal || passVal.length < 8) {
-                setFieldError('reg-password', 'err-password', 'Password must be at least 8 characters long.');
-                isValid = false;
-            } else if (!/[A-Z]/.test(passVal) || !/[0-9]/.test(passVal)) {
-                setFieldError('reg-password', 'err-password', 'Password must contain at least 1 uppercase letter and 1 numeric digit.');
-                isValid = false;
-            } else {
-                clearFieldError('reg-password', 'err-password');
-            }
-
-            // 5. Gender Radio Buttons (Requirement 15)
-            const genderChecked = document.querySelector('input[name="gender"]:checked');
-            if (!genderChecked) {
-                const errGender = document.getElementById('err-gender');
-                if (errGender) errGender.textContent = 'Please select your gender.';
-                isValid = false;
-            } else {
-                const errGender = document.getElementById('err-gender');
-                if (errGender) errGender.textContent = '';
-            }
-
-            // 6. Age Validation (Requirement 11 - Number min/max)
-            const ageVal = ageInput ? parseInt(ageInput.value, 10) : 0;
-            if (!ageVal || isNaN(ageVal) || ageVal < 18 || ageVal > 100) {
-                setFieldError('reg-age', 'err-age', 'Please enter a valid age between 18 and 100.');
-                isValid = false;
-            } else {
-                clearFieldError('reg-age', 'err-age');
-            }
-
-            // 7. Date of Birth (Requirement 9)
-            const dobVal = dobInput ? dobInput.value : '';
-            if (!dobVal) {
-                setFieldError('reg-dob', 'err-dob', 'Please select your date of birth.');
-                isValid = false;
-            } else {
-                clearFieldError('reg-dob', 'err-dob');
-            }
-
-            // 8. Preferred Time (Requirement 10)
-            const timeVal = timeInput ? timeInput.value : '';
-            if (!timeVal) {
-                setFieldError('reg-time', 'err-time', 'Please select a preferred appointment or equipment pickup time.');
-                isValid = false;
-            } else {
-                clearFieldError('reg-time', 'err-time');
-            }
-
-            // 9. Skills / Interests Checkboxes (Requirement 16)
-            const checkedSkills = document.querySelectorAll('input[name="skills"]:checked');
-            const errSkills = document.getElementById('err-skills');
-            if (checkedSkills.length === 0) {
-                if (errSkills) errSkills.textContent = 'Please select at least one agricultural machinery skill or interest.';
-                isValid = false;
-            } else {
-                if (errSkills) errSkills.textContent = '';
-            }
-
-            // 10. Address Validation (Requirement 14)
-            const addressVal = addressInput ? addressInput.value.trim() : '';
-            if (!addressVal || addressVal.length < 10) {
-                setFieldError('reg-address', 'err-address', 'Please provide a complete farm address (minimum 10 characters).');
-                isValid = false;
-            } else {
-                clearFieldError('reg-address', 'err-address');
-            }
-
-            // Final Response Feedback
-            if (isValid) {
-                const selectedSkillsList = Array.from(checkedSkills).map(cb => cb.value).join(', ');
-                if (formAlertBox) {
-                    formAlertBox.innerHTML = `
-                        <i class="fa-solid fa-circle-check"></i> 
-                        <strong>Registration Completed Successfully!</strong><br>
-                        Welcome to AgriShare, <strong>${nameVal}</strong> (Age: ${ageVal}). Preferred Slot: <strong>${timeVal}</strong>.<br>
-                        Registered Interests: <em>${selectedSkillsList}</em>.<br>
-                        Your farmer credentials have been validated according to HTML5 standards.
-                    `;
-                    formAlertBox.className = 'form-submission-alert success';
-                    formAlertBox.style.display = 'block';
-                }
-
-                regForm.reset();
-                if (meterFill) meterFill.style.width = '0%';
-
-                // Smooth scroll to alert
-                formAlertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } else {
-                if (formAlertBox) {
-                    formAlertBox.innerHTML = `
-                        <i class="fa-solid fa-triangle-exclamation"></i> 
-                        <strong>Validation Error:</strong> Please fill in all required HTML5 fields correctly.
-                    `;
-                    formAlertBox.className = 'form-submission-alert error';
-                    formAlertBox.style.display = 'block';
-                }
-            }
-        });
-
-        // 17. Form Controls: Reset Button
-        regForm.addEventListener('reset', () => {
-            clearAllFormErrors();
-            if (meterFill) meterFill.style.width = '0%';
-        });
-
-        // 17. Form Controls: Cancel Button
-        if (cancelBtn) {
-            cancelBtn.addEventListener('click', () => {
-                const confirmCancel = confirm('Are you sure you want to cancel the registration process? All entered fields will be cleared.');
-                if (confirmCancel) {
-                    regForm.reset();
-                    clearAllFormErrors();
-                    if (meterFill) meterFill.style.width = '0%';
-                    if (formAlertBox) {
-                        formAlertBox.innerHTML = '<i class="fa-solid fa-circle-info"></i> Registration form input has been cancelled.';
-                        formAlertBox.className = 'form-submission-alert error';
-                        formAlertBox.style.display = 'block';
-                        setTimeout(() => { formAlertBox.style.display = 'none'; }, 3000);
-                    }
-                }
-            });
-        }
-    }
-
-
-    /* =========================================================================
+/* =========================================================================
        9. FLOATING SCROLL TO TOP BUTTON (Requirement 16)
        ========================================================================= */
     const scrollToTopBtn = document.getElementById('scrollToTopBtn');
@@ -713,15 +504,122 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    /* =========================================================================
-       12. LOGIN & AUTH MODAL LOGIC
+        /* =========================================================================
+       12. USER ROLES & AUTHENTICATION (Farmer vs Administrator)
        ========================================================================= */
     const loginModal = document.getElementById('login-modal');
     const openLoginBtn = document.getElementById('open-login-btn');
     const closeLoginBtn = document.getElementById('close-login-modal');
     const sidebarLogoutBtn = document.getElementById('sidebar-logout-btn');
+    const sidebarRoleToggleBtn = document.getElementById('sidebar-role-toggle-btn');
+    const sidebarRoleText = document.getElementById('sidebar-role-text');
     const modalLoginForm = document.getElementById('modal-login-form');
     const modalAlert = document.getElementById('modal-alert');
+    const tabFarmerBtn = document.getElementById('tab-farmer-btn');
+    const tabAdminBtn = document.getElementById('tab-admin-btn');
+    const farmerFields = document.getElementById('farmer-fields');
+    const adminFields = document.getElementById('admin-fields');
+    const modalSubmitBtn = document.getElementById('modal-submit-btn');
+    const topbarUserAvatar = document.getElementById('topbar-user-avatar');
+    const currentUserName = document.getElementById('current-user-name');
+    const currentUserRoleBadge = document.getElementById('current-user-role-badge');
+    const adminSidebarNavItem = document.getElementById('admin-sidebar-nav-item');
+    const adminRestrictedView = document.getElementById('admin-restricted-view');
+    const adminStorageView = document.getElementById('admin-storage-view');
+    const reportsSection = document.getElementById('reports');
+    const switchToAdminFromCard = document.getElementById('switch-to-admin-from-card');
+
+    let currentRole = localStorage.getItem('agrishare_user_role') || 'farmer';
+    let modalActiveTab = 'farmer';
+
+    function setRole(newRole) {
+        currentRole = newRole;
+        localStorage.setItem('agrishare_user_role', currentRole);
+        applyRoleUI();
+    }
+
+    function applyRoleUI() {
+        const isAdmin = currentRole === 'admin';
+
+        // Update Topbar
+        if (currentUserName) {
+            currentUserName.textContent = isAdmin ? 'AgriShare Administrator' : 'Ramesh Kumar';
+        }
+        if (currentUserRoleBadge) {
+            currentUserRoleBadge.innerHTML = isAdmin 
+                ? '<i class="fa-solid fa-shield-halved"></i> Administrator' 
+                : '<i class="fa-solid fa-seedling"></i> Farmer Account';
+            currentUserRoleBadge.className = 'user-role-tag' + (isAdmin ? ' admin-tag' : '');
+        }
+        if (topbarUserAvatar) {
+            topbarUserAvatar.innerHTML = isAdmin 
+                ? '<i class="fa-solid fa-user-shield"></i>' 
+                : '<i class="fa-solid fa-wheat-awn"></i>';
+        }
+
+        // Update Sidebar
+        if (sidebarRoleText) {
+            sidebarRoleText.textContent = isAdmin ? 'Switch to Farmer Mode' : 'Switch to Admin Mode';
+        }
+        if (adminSidebarNavItem) {
+            adminSidebarNavItem.style.display = isAdmin ? 'block' : 'none';
+        }
+
+        // Update Reports Section Visibility (Only visible for Admins!)
+        if (reportsSection) {
+            reportsSection.style.display = isAdmin ? 'block' : 'none';
+        }
+
+        // Update Storage View (Storage only visible for Admins!)
+        if (adminRestrictedView && adminStorageView) {
+            if (isAdmin) {
+                adminRestrictedView.style.display = 'none';
+                adminStorageView.style.display = 'block';
+                renderWebStorageTables();
+            } else {
+                adminRestrictedView.style.display = 'flex';
+                adminStorageView.style.display = 'none';
+            }
+        }
+    }
+
+    // Role tabs in modal
+    if (tabFarmerBtn && tabAdminBtn) {
+        tabFarmerBtn.addEventListener('click', () => {
+            modalActiveTab = 'farmer';
+            tabFarmerBtn.classList.add('active');
+            tabAdminBtn.classList.remove('active');
+            if (farmerFields) farmerFields.style.display = 'block';
+            if (adminFields) adminFields.style.display = 'none';
+            if (modalSubmitBtn) modalSubmitBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login as Farmer';
+        });
+
+        tabAdminBtn.addEventListener('click', () => {
+            modalActiveTab = 'admin';
+            tabAdminBtn.classList.add('active');
+            tabFarmerBtn.classList.remove('active');
+            if (farmerFields) farmerFields.style.display = 'none';
+            if (adminFields) adminFields.style.display = 'block';
+            if (modalSubmitBtn) modalSubmitBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login as Administrator';
+        });
+    }
+
+    // Quick Switch to Admin from restricted storage card
+    if (switchToAdminFromCard) {
+        switchToAdminFromCard.addEventListener('click', () => {
+            setRole('admin');
+            alert('Switched to Administrator Workspace. You now have full access to Web Storage tables and reports.');
+        });
+    }
+
+    // Toggle Role from Sidebar
+    if (sidebarRoleToggleBtn) {
+        sidebarRoleToggleBtn.addEventListener('click', () => {
+            const nextRole = currentRole === 'farmer' ? 'admin' : 'farmer';
+            setRole(nextRole);
+            alert(`Switched mode to: ${nextRole.toUpperCase()}`);
+        });
+    }
 
     function openLoginModal() {
         if (loginModal) loginModal.classList.add('active');
@@ -733,10 +631,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (openLoginBtn) openLoginBtn.addEventListener('click', openLoginModal);
     if (closeLoginBtn) closeLoginBtn.addEventListener('click', closeLoginModal);
+
     if (sidebarLogoutBtn) {
         sidebarLogoutBtn.addEventListener('click', () => {
-            const confirmed = confirm('Are you sure you want to log out of AgriShare?');
+            const confirmed = confirm('Are you sure you want to sign out?');
             if (confirmed) {
+                setRole('farmer');
                 openLoginModal();
             }
         });
@@ -745,8 +645,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (modalLoginForm) {
         modalLoginForm.addEventListener('submit', (e) => {
             e.preventDefault();
+            setRole(modalActiveTab);
             if (modalAlert) {
-                modalAlert.innerHTML = '<i class="fa-solid fa-circle-check"></i> Authenticated successfully as Kohila M!';
+                modalAlert.innerHTML = `<i class="fa-solid fa-circle-check"></i> Authenticated successfully as ${modalActiveTab === 'admin' ? 'Administrator' : 'Farmer'}!`;
                 modalAlert.style.display = 'block';
                 modalAlert.style.backgroundColor = 'rgba(46, 125, 50, 0.15)';
                 modalAlert.style.color = 'var(--primary-green)';
@@ -754,22 +655,22 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 closeLoginModal();
                 if (modalAlert) modalAlert.style.display = 'none';
-            }, 1200);
+            }, 1000);
         });
     }
 
-    // Equipment "Rent Machinery" Quick Action Trigger
+    // Apply role UI on initial page load
+    applyRoleUI();
+
+    // Equipment "Book Machinery" Quick Action Trigger from Services & Catalog
     document.querySelectorAll('.book-now-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
             const machineName = btn.getAttribute('data-machine') || 'Machinery';
             const registerSection = document.getElementById('register');
             if (registerSection) {
                 registerSection.scrollIntoView({ behavior: 'smooth' });
-                const addressBox = document.getElementById('reg-address');
-                if (addressBox) {
-                    addressBox.placeholder = `Booking Request for: ${machineName}. Please enter your delivery address...`;
-                    addressBox.focus();
-                }
+                // Add to dropped equipment automatically
+                addMachineToDropZone(machineName, 'fa-tractor', 'Included in Booking');
             }
         });
     });
@@ -785,39 +686,116 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    /* =========================================================================
-       13. HTML5 DRAG AND DROP IMPLEMENTATION (Assignment 4: Items 5, 6, 7)
+        /* =========================================================================
+       13. INTEGRATED HTML5 DRAG AND DROP WITH PICTURES & HOURLY RATES
        ========================================================================= */
-    const draggablePills = document.querySelectorAll('.draggable-machinery-pill');
+    const draggableItems = document.querySelectorAll('.machinery-drag-item');
     const dropTargetBox = document.getElementById('drop-target-box');
     const dropPlaceholder = document.getElementById('drop-placeholder');
     const droppedItemsList = document.getElementById('dropped-items-list');
     const dropStatusMsg = document.getElementById('drop-status-msg');
     const clearDropBtn = document.getElementById('clear-drop-btn');
+    const selectedMachineryInput = document.getElementById('selected-machinery-input');
+    const selectedMachineryPrice = document.getElementById('selected-machinery-price');
+    const equipNameField = document.getElementById('equipment-name-field');
+    const equipPriceField = document.getElementById('equipment-price-field');
+    const errMachinery = document.getElementById('err-machinery');
 
     let draggedItemData = null;
 
-    draggablePills.forEach(pill => {
-        // Dragstart Event (Requirement 7)
-        pill.addEventListener('dragstart', (e) => {
+    draggableItems.forEach(item => {
+        // Dragstart Event
+        item.addEventListener('dragstart', (e) => {
             draggedItemData = {
-                id: pill.id,
-                name: pill.getAttribute('data-machinery') || 'Machinery Unit',
-                icon: pill.getAttribute('data-icon') || 'fa-tractor'
+                id: item.id,
+                name: item.getAttribute('data-machinery') || 'Machinery Unit',
+                category: item.getAttribute('data-category') || 'Farm Equipment',
+                price: item.getAttribute('data-price') || '350',
+                rate: item.getAttribute('data-rate') || '₹350 / hour',
+                img: item.getAttribute('data-img') || ''
             };
             e.dataTransfer.setData('text/plain', JSON.stringify(draggedItemData));
             e.dataTransfer.effectAllowed = 'copy';
-            pill.classList.add('dragging');
+            item.classList.add('dragging');
         });
 
         // Dragend Event
-        pill.addEventListener('dragend', () => {
-            pill.classList.remove('dragging');
+        item.addEventListener('dragend', () => {
+            item.classList.remove('dragging');
+        });
+
+        // Click fallback (mobile & quick selection)
+        item.addEventListener('click', () => {
+            const data = {
+                id: item.id,
+                name: item.getAttribute('data-machinery') || 'Machinery Unit',
+                category: item.getAttribute('data-category') || 'Farm Equipment',
+                price: item.getAttribute('data-price') || '350',
+                rate: item.getAttribute('data-rate') || '₹350 / hour',
+                img: item.getAttribute('data-img') || ''
+            };
+            addMachineToDropZone(data);
         });
     });
 
+    function addMachineToDropZone(data) {
+        if (!droppedItemsList || !data || !data.name) return;
+
+        // Clear existing slot for clean 1-machine focus (or replace)
+        droppedItemsList.innerHTML = '';
+
+        if (dropPlaceholder) dropPlaceholder.style.display = 'none';
+        if (clearDropBtn) clearDropBtn.style.display = 'inline-flex';
+
+        const itemPill = document.createElement('div');
+        itemPill.className = 'booked-machine-pill';
+        itemPill.setAttribute('data-dropped-name', data.name);
+        itemPill.innerHTML = `
+            <div class="dropped-photo-card">
+                ${data.img ? `<img src="${data.img}" alt="${data.name}" class="dropped-photo-preview">` : '<i class="fa-solid fa-tractor"></i>'}
+                <div class="machine-info">
+                    <strong>${data.name}</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-muted); margin: 2px 0;">${data.category}</div>
+                    <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ${data.rate}</span>
+                </div>
+            </div>
+            <button type="button" class="remove-machine-btn" title="Remove picture & reset">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        `;
+
+        itemPill.querySelector('.remove-machine-btn').addEventListener('click', () => {
+            itemPill.remove();
+            if (dropPlaceholder) dropPlaceholder.style.display = 'flex';
+            if (clearDropBtn) clearDropBtn.style.display = 'none';
+            if (equipNameField) equipNameField.value = '';
+            if (equipPriceField) equipPriceField.value = '';
+            if (selectedMachineryInput) selectedMachineryInput.value = '';
+            if (selectedMachineryPrice) selectedMachineryPrice.value = '';
+            syncSelectedMachinery();
+        });
+
+        droppedItemsList.appendChild(itemPill);
+
+        // Auto-fill form input fields
+        if (equipNameField) equipNameField.value = data.name;
+        if (equipPriceField) equipPriceField.value = data.price;
+        if (selectedMachineryInput) selectedMachineryInput.value = `${data.name} (${data.rate})`;
+        if (selectedMachineryPrice) selectedMachineryPrice.value = data.price;
+
+        if (dropStatusMsg) {
+            dropStatusMsg.textContent = `✔ Equipment picture assigned: ${data.name} at ${data.rate}`;
+            dropStatusMsg.style.color = 'var(--primary-green)';
+            dropStatusMsg.style.display = 'block';
+            setTimeout(() => { dropStatusMsg.style.display = 'none'; }, 3000);
+        }
+
+        if (errMachinery) errMachinery.style.display = 'none';
+        syncSelectedMachinery();
+    }
+
     if (dropTargetBox) {
-        // Dragover Event (Requirement 7)
+        // Dragover Event
         dropTargetBox.addEventListener('dragover', (e) => {
             e.preventDefault();
             e.dataTransfer.dropEffect = 'copy';
@@ -829,7 +807,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dropTargetBox.classList.remove('drag-over');
         });
 
-        // Drop Event (Requirement 7)
+        // Drop Event
         dropTargetBox.addEventListener('drop', (e) => {
             e.preventDefault();
             dropTargetBox.classList.remove('drag-over');
@@ -839,88 +817,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 const textData = e.dataTransfer.getData('text/plain');
                 if (textData) itemData = JSON.parse(textData);
             } catch (err) {
-                // Use draggedItemData fallback
+                // fallback
             }
 
             if (!itemData || !itemData.name) return;
-
-            // Hide placeholder
-            if (dropPlaceholder) dropPlaceholder.style.display = 'none';
-
-            // Check if already in list
-            const existing = droppedItemsList ? droppedItemsList.querySelector(`[data-dropped-name="${itemData.name}"]`) : null;
-            if (existing) {
-                if (dropStatusMsg) {
-                    dropStatusMsg.textContent = `${itemData.name} is already in the reservation schedule!`;
-                    dropStatusMsg.style.color = 'var(--alert-orange)';
-                    dropStatusMsg.style.display = 'block';
-                    setTimeout(() => { dropStatusMsg.style.display = 'none'; }, 2500);
-                }
-                return;
-            }
-
-            // Create dropped item pill
-            const itemPill = document.createElement('div');
-            itemPill.className = 'dropped-item-pill';
-            itemPill.setAttribute('data-dropped-name', itemData.name);
-            itemPill.innerHTML = `
-                <div class="dropped-item-left">
-                    <i class="fa-solid ${itemData.icon}"></i>
-                    <strong>${itemData.name}</strong>
-                </div>
-                <button type="button" class="dropped-remove-btn" title="Remove from schedule">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            `;
-
-            // Remove button inside pill
-            itemPill.querySelector('.dropped-remove-btn').addEventListener('click', () => {
-                itemPill.remove();
-                if (droppedItemsList && droppedItemsList.children.length === 0) {
-                    if (dropPlaceholder) dropPlaceholder.style.display = 'block';
-                }
-                updateSessionStorageFromDrop();
-            });
-
-            if (droppedItemsList) droppedItemsList.appendChild(itemPill);
-
-            if (dropStatusMsg) {
-                dropStatusMsg.textContent = `✔ Successfully scheduled: ${itemData.name}`;
-                dropStatusMsg.style.color = 'var(--primary-green)';
-                dropStatusMsg.style.display = 'block';
-                setTimeout(() => { dropStatusMsg.style.display = 'none'; }, 2500);
-            }
-
-            // Update Session Storage with scheduled machinery
-            updateSessionStorageFromDrop();
+            addMachineToDropZone(itemData);
         });
     }
 
     if (clearDropBtn) {
         clearDropBtn.addEventListener('click', () => {
             if (droppedItemsList) droppedItemsList.innerHTML = '';
-            if (dropPlaceholder) dropPlaceholder.style.display = 'block';
-            if (dropStatusMsg) {
-                dropStatusMsg.textContent = 'Drop schedule reset.';
-                dropStatusMsg.style.color = 'var(--text-muted)';
-                dropStatusMsg.style.display = 'block';
-                setTimeout(() => { dropStatusMsg.style.display = 'none'; }, 2000);
-            }
-            updateSessionStorageFromDrop();
+            if (dropPlaceholder) dropPlaceholder.style.display = 'flex';
+            if (clearDropBtn) clearDropBtn.style.display = 'none';
+            if (equipNameField) equipNameField.value = '';
+            if (equipPriceField) equipPriceField.value = '';
+            if (selectedMachineryInput) selectedMachineryInput.value = '';
+            if (selectedMachineryPrice) selectedMachineryPrice.value = '';
+            syncSelectedMachinery();
         });
     }
 
-    function updateSessionStorageFromDrop() {
-        const droppedItems = droppedItemsList ? Array.from(droppedItemsList.querySelectorAll('.dropped-item-pill')).map(el => el.getAttribute('data-dropped-name')) : [];
+    function syncSelectedMachinery() {
+        const item = droppedItemsList ? droppedItemsList.querySelector('.booked-machine-pill') : null;
         const currentSession = getSessionStorageUser();
-        currentSession.machinery = droppedItems.length > 0 ? droppedItems.join(', ') : 'None Scheduled';
+        currentSession.machinery = item ? item.getAttribute('data-dropped-name') : 'None Selected';
         sessionStorage.setItem('agrishare_current_user', JSON.stringify(currentSession));
-        renderWebStorageTables();
     }
 
 
     /* =========================================================================
-       14. HTML5 WEB STORAGE IMPLEMENTATION (Assignment 4: Items 8, 9, 10, 11)
+       14. HTML5 WEB STORAGE IMPLEMENTATION (Referencing FS_exp4 Sample Output)
        ========================================================================= */
     const retrieveStorageBtn = document.getElementById('retrieve-storage-btn');
     const clearStorageBtn = document.getElementById('clear-storage-btn');
@@ -929,40 +856,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const localCountBadge = document.getElementById('local-count-badge');
     const sessionCountBadge = document.getElementById('session-count-badge');
 
-    // Default Seed Data for Local Storage (Requirement 8)
+    // Default Seed Data for Local Storage (Matching FS_exp4 Structure)
     const defaultLocalUsers = [
         {
-            name: "Kohila M",
-            email: "kohila.it@agrishare.com",
-            phone: "9876543210",
-            gender: "Female",
-            age: 24,
-            dob: "2002-05-14",
-            time: "09:30",
-            machinery: "Mahindra 575 DI Tractor, Rotavator Soil Conditioning",
-            address: "Avinashi Road, Coimbatore"
-        },
-        {
-            name: "Ramesh K.",
+            name: "Ramesh Kumar",
             email: "ramesh.farmer@gmail.com",
             phone: "9842109876",
             gender: "Male",
             age: 38,
-            dob: "1988-11-20",
-            time: "10:00",
-            machinery: "John Deere W70 Harvester, Precision Seeding",
+            dob: "2026-07-15",
+            time: "07:00",
+            machinery: "Mahindra 575 DI Tractor (₹350/hr)",
             address: "Main Road, Gobichettipalayam, Erode"
         },
         {
-            name: "Madhumitha P.",
-            email: "madhu.agro@gmail.com",
-            phone: "8788767651",
+            name: "Muthusamy V.",
+            email: "muthu.farm@gmail.com",
+            phone: "9786543210",
+            gender: "Male",
+            age: 44,
+            dob: "2026-07-18",
+            time: "08:30",
+            machinery: "John Deere W70 Harvester (₹1,200/hr)",
+            address: "Karamadai, Coimbatore"
+        },
+        {
+            name: "Selvi R.",
+            email: "selvi.organic@gmail.com",
+            phone: "9443210987",
             gender: "Female",
-            age: 21,
-            dob: "2005-09-03",
-            time: "14:15",
-            machinery: "Kirloskar 10HP Diesel Pump, Solar Farm Equipment",
-            address: "Thiruchengode, Namakkal"
+            age: 32,
+            dob: "2026-07-20",
+            time: "06:30",
+            machinery: "Kirloskar 10HP Pump (₹150/hr)",
+            address: "Anthiyur, Bhavani Taluk"
         }
     ];
 
@@ -983,11 +910,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const stored = sessionStorage.getItem('agrishare_current_user');
         if (!stored) {
             const defaultSession = {
-                name: "Kohila M",
-                email: "kohila.it@agrishare.com",
-                phone: "9876543210",
-                gender: "Female",
-                machinery: "Mahindra 575 DI Tractor"
+                name: "Ramesh Kumar",
+                email: "ramesh.farmer@gmail.com",
+                phone: "9842109876",
+                gender: "Male",
+                machinery: "Mahindra 575 DI Tractor (₹350/hr)"
             };
             sessionStorage.setItem('agrishare_current_user', JSON.stringify(defaultSession));
             return defaultSession;
@@ -999,9 +926,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 10. Retrieve and Display Stored Data on Button Click & Page Load
     function renderWebStorageTables() {
-        // Render Local Storage Table
+        // Render Local Storage Table (FS_exp4 columns)
         if (localTbody) {
             const users = getLocalStorageUsers();
             if (localCountBadge) localCountBadge.textContent = `${users.length} Records`;
@@ -1009,7 +935,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (users.length === 0) {
                 localTbody.innerHTML = `
                     <tr class="empty-storage-row">
-                        <td colspan="9">No user records currently stored in localStorage. Complete the Registration Form to add records.</td>
+                        <td colspan="9" style="text-align: center; color: var(--text-muted); padding: 2rem;">No user records currently stored in localStorage.</td>
                     </tr>
                 `;
             } else {
@@ -1022,14 +948,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td>${user.age || '-'}</td>
                         <td>${escapeHtml(user.dob || '-')}</td>
                         <td>${escapeHtml(user.time || '-')}</td>
-                        <td>${escapeHtml(user.machinery || '-')}</td>
+                        <td><span class="badge badge-success"><i class="fa-solid fa-tractor"></i> ${escapeHtml(user.machinery || '-')}</span></td>
                         <td><small>${escapeHtml(user.address || '-')}</small></td>
                     </tr>
                 `).join('');
             }
         }
 
-        // Render Session Storage Table
+        // Render Session Storage Table (FS_exp4 columns)
         if (sessionTbody) {
             const currentSession = getSessionStorageUser();
             const hasSession = currentSession && currentSession.name && currentSession.name !== '-';
@@ -1038,7 +964,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!hasSession) {
                 sessionTbody.innerHTML = `
                     <tr class="empty-storage-row">
-                        <td colspan="5">No active temporary session stored in sessionStorage.</td>
+                        <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem;">No active temporary session stored in sessionStorage.</td>
                     </tr>
                 `;
             } else {
@@ -1047,8 +973,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td><strong>${escapeHtml(currentSession.name)}</strong></td>
                         <td>${escapeHtml(currentSession.email)}</td>
                         <td>${escapeHtml(currentSession.phone)}</td>
-                        <td><span class="badge ${currentSession.gender === 'Female' ? 'badge-primary' : 'badge-info'}">${escapeHtml(currentSession.gender)}</span></td>
-                        <td><span class="badge badge-success"><i class="fa-solid fa-tractor"></i> ${escapeHtml(currentSession.machinery)}</span></td>
+                        <td><span class="badge badge-primary">${escapeHtml(currentSession.gender || 'Male')}</span></td>
+                        <td><span class="badge badge-success"><i class="fa-solid fa-check"></i> ${escapeHtml(currentSession.machinery || 'None')}</span></td>
                     </tr>
                 `;
             }
@@ -1064,7 +990,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/"/g, '&quot;');
     }
 
-    // 10. Retrieve Data Button Event
+    // Retrieve Data Button Event
     if (retrieveStorageBtn) {
         retrieveStorageBtn.addEventListener('click', () => {
             renderWebStorageTables();
@@ -1072,7 +998,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 11. Clear Data Button Event (Requirement 11: Alert "All data cleared successfully.")
+    // Clear Data Button Event (Matches sample output in PDF: Alert "All data cleared successfully.")
     if (clearStorageBtn) {
         clearStorageBtn.addEventListener('click', () => {
             localStorage.removeItem('agrishare_registered_users');
@@ -1081,65 +1007,254 @@ document.addEventListener('DOMContentLoaded', () => {
             if (localTbody) {
                 localTbody.innerHTML = `
                     <tr class="empty-storage-row">
-                        <td colspan="9">All localStorage user records cleared.</td>
+                        <td colspan="9" style="text-align: center; color: var(--text-muted); padding: 2rem;">All localStorage user records cleared.</td>
                     </tr>
                 `;
             }
             if (sessionTbody) {
                 sessionTbody.innerHTML = `
                     <tr class="empty-storage-row">
-                        <td colspan="5">All sessionStorage data cleared.</td>
+                        <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem;">All sessionStorage data cleared.</td>
                     </tr>
                 `;
             }
             if (localCountBadge) localCountBadge.textContent = '0 Records';
             if (sessionCountBadge) sessionCountBadge.textContent = '0 Active Session';
 
-            // Match exact screenshot from sample output
             alert('All data cleared successfully.');
         });
     }
 
-    // Connect Registration Form Submission to Local & Session Storage
+
+    /* =========================================================================
+       15. FORM VALIDATION & BOOKING SUBMISSION LOGIC
+       ========================================================================= */
+    const regForm = document.getElementById('registration-form');
+    const nameInput = document.getElementById('reg-name');
+    const emailInput = document.getElementById('reg-email');
+    const phoneInput = document.getElementById('reg-phone');
+    const passwordInput = document.getElementById('reg-password');
+    const ageInput = document.getElementById('reg-age');
+    const dobInput = document.getElementById('reg-dob');
+    const timeInput = document.getElementById('reg-time');
+    const addressInput = document.getElementById('reg-address');
+    const formAlertBox = document.getElementById('form-alert-box');
+
+    function setFieldError(fieldId, errId, msg) {
+        const field = document.getElementById(fieldId);
+        const err = document.getElementById(errId);
+        if (field) {
+            field.closest('.form-group')?.classList.add('has-error');
+        }
+        if (err) {
+            err.textContent = msg;
+            err.style.display = 'block';
+        }
+    }
+
+    function clearFieldError(fieldId, errId) {
+        const field = document.getElementById(fieldId);
+        const err = document.getElementById(errId);
+        if (field) {
+            field.closest('.form-group')?.classList.remove('has-error');
+        }
+        if (err) {
+            err.textContent = '';
+            err.style.display = 'none';
+        }
+    }
+
     if (regForm) {
-        regForm.addEventListener('submit', () => {
-            setTimeout(() => {
-                if (formAlertBox && formAlertBox.classList.contains('success')) {
-                    const checkedSkills = Array.from(document.querySelectorAll('input[name="skills"]:checked')).map(cb => cb.value).join(', ');
-                    const newUser = {
-                        name: nameInput ? nameInput.value.trim() : 'Anonymous',
-                        email: emailInput ? emailInput.value.trim() : '',
-                        phone: phoneInput ? phoneInput.value.trim() : '',
-                        gender: document.querySelector('input[name="gender"]:checked') ? document.querySelector('input[name="gender"]:checked').value : 'Not specified',
-                        age: ageInput ? parseInt(ageInput.value, 10) : 24,
-                        dob: dobInput ? dobInput.value : '',
-                        time: timeInput ? timeInput.value : '',
-                        machinery: checkedSkills || 'General Farm Machinery',
-                        address: addressInput ? addressInput.value.trim() : ''
-                    };
+        regForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
 
-                    // Add to Local Storage
-                    const currentLocal = getLocalStorageUsers();
-                    currentLocal.unshift(newUser);
-                    localStorage.setItem('agrishare_registered_users', JSON.stringify(currentLocal));
+            // 1. Name
+            const nameVal = nameInput ? nameInput.value.trim() : '';
+            if (!nameVal || nameVal.length < 3) {
+                setFieldError('reg-name', 'err-name', 'Please enter your full name (at least 3 characters).');
+                isValid = false;
+            } else {
+                clearFieldError('reg-name', 'err-name');
+            }
 
-                    // Set as active Session Storage
-                    sessionStorage.setItem('agrishare_current_user', JSON.stringify({
-                        name: newUser.name,
-                        email: newUser.email,
-                        phone: newUser.phone,
-                        gender: newUser.gender,
-                        machinery: newUser.machinery
-                    }));
+            // 2. Email
+            const emailVal = emailInput ? emailInput.value.trim() : '';
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailVal || !emailRegex.test(emailVal)) {
+                setFieldError('reg-email', 'err-email', 'Please provide a valid email address.');
+                isValid = false;
+            } else {
+                clearFieldError('reg-email', 'err-email');
+            }
 
-                    // Refresh table displays
-                    renderWebStorageTables();
+            // 3. Phone
+            const phoneVal = phoneInput ? phoneInput.value.trim() : '';
+            const phoneRegex = /^[6-9][0-9]{9}$/;
+            if (!phoneVal || !phoneRegex.test(phoneVal)) {
+                setFieldError('reg-phone', 'err-phone', 'Enter a valid 10-digit Indian mobile number starting with 6-9.');
+                isValid = false;
+            } else {
+                clearFieldError('reg-phone', 'err-phone');
+            }
+
+            // 4. Equipment Name & Price
+            const equipNameVal = equipNameField ? equipNameField.value.trim() : '';
+            const equipPriceVal = equipPriceField ? equipPriceField.value.trim() : '';
+            if (!equipNameVal) {
+                setFieldError('equipment-name-field', 'err-equip-name', 'Please drag an equipment picture or type the equipment model.');
+                isValid = false;
+            } else {
+                clearFieldError('equipment-name-field', 'err-equip-name');
+            }
+
+            if (!equipPriceVal || parseInt(equipPriceVal, 10) < 50) {
+                setFieldError('equipment-price-field', 'err-price', 'Please specify a valid hourly rental rate (min ₹50/hr).');
+                isValid = false;
+            } else {
+                clearFieldError('equipment-price-field', 'err-price');
+            }
+
+            // 5. Password
+            const passVal = passwordInput ? passwordInput.value : '';
+            if (!passVal || passVal.length < 8) {
+                setFieldError('reg-password', 'err-password', 'Password must be at least 8 characters long.');
+                isValid = false;
+            } else {
+                clearFieldError('reg-password', 'err-password');
+            }
+
+            // 6. Gender
+            const genderChecked = document.querySelector('input[name="gender"]:checked');
+            if (!genderChecked) {
+                const errGender = document.getElementById('err-gender');
+                if (errGender) errGender.textContent = 'Please select your gender.';
+                isValid = false;
+            } else {
+                const errGender = document.getElementById('err-gender');
+                if (errGender) errGender.textContent = '';
+            }
+
+            // 7. Age
+            const ageVal = ageInput ? parseInt(ageInput.value, 10) : 0;
+            if (!ageVal || isNaN(ageVal) || ageVal < 18 || ageVal > 100) {
+                setFieldError('reg-age', 'err-age', 'Please enter a valid age between 18 and 100.');
+                isValid = false;
+            } else {
+                clearFieldError('reg-age', 'err-age');
+            }
+
+            // 8. Date
+            const dobVal = dobInput ? dobInput.value : '';
+            if (!dobVal) {
+                setFieldError('reg-dob', 'err-dob', 'Please select an available rental date.');
+                isValid = false;
+            } else {
+                clearFieldError('reg-dob', 'err-dob');
+            }
+
+            // 9. Time
+            const timeVal = timeInput ? timeInput.value : '';
+            if (!timeVal) {
+                setFieldError('reg-time', 'err-time', 'Please select an operating shift time.');
+                isValid = false;
+            } else {
+                clearFieldError('reg-time', 'err-time');
+            }
+
+            // 10. Address
+            const addressVal = addressInput ? addressInput.value.trim() : '';
+            if (!addressVal || addressVal.length < 8) {
+                setFieldError('reg-address', 'err-address', 'Please provide farm location / station (minimum 8 characters).');
+                isValid = false;
+            } else {
+                clearFieldError('reg-address', 'err-address');
+            }
+
+            if (isValid) {
+                const bookingId = '#AGRI-' + Math.floor(1000 + Math.random() * 9000);
+                const genderVal = genderChecked ? genderChecked.value : 'Male';
+                const machinerySummary = `${equipNameVal} (₹${equipPriceVal}/hr)`;
+
+                // Save to localStorage
+                const newUser = {
+                    name: nameVal,
+                    email: emailVal,
+                    phone: phoneVal,
+                    gender: genderVal,
+                    age: ageVal,
+                    dob: dobVal,
+                    time: timeVal,
+                    machinery: machinerySummary,
+                    address: addressVal
+                };
+                const currentLocal = getLocalStorageUsers();
+                currentLocal.unshift(newUser);
+                localStorage.setItem('agrishare_registered_users', JSON.stringify(currentLocal));
+
+                // Save to sessionStorage
+                sessionStorage.setItem('agrishare_current_user', JSON.stringify({
+                    name: nameVal,
+                    email: emailVal,
+                    phone: phoneVal,
+                    gender: genderVal,
+                    machinery: machinerySummary
+                }));
+
+                // Show confirmation
+                if (formAlertBox) {
+                    formAlertBox.innerHTML = `
+                        <i class="fa-solid fa-circle-check"></i> 
+                        <strong>Rental Listing Submitted Successfully!</strong><br>
+                        Listing Reference: <strong>${bookingId}</strong> for <strong>${nameVal}</strong>.<br>
+                        Registered Equipment: <strong>${machinerySummary}</strong>. Available: <strong>${dobVal} at ${timeVal}</strong>.<br>
+                        Your machinery has been added to AgriShare inventory and saved to client-side Web Storage.
+                    `;
+                    formAlertBox.className = 'form-submission-alert success';
+                    formAlertBox.style.display = 'block';
+                    formAlertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
-            }, 100);
+
+                // Reset drop target
+                if (droppedItemsList) droppedItemsList.innerHTML = '';
+                if (dropPlaceholder) dropPlaceholder.style.display = 'flex';
+                if (clearDropBtn) clearDropBtn.style.display = 'none';
+
+                // Refresh Web Storage tables
+                renderWebStorageTables();
+            } else {
+                if (formAlertBox) {
+                    formAlertBox.innerHTML = `
+                        <i class="fa-solid fa-triangle-exclamation"></i> 
+                        <strong>Validation Error:</strong> Please fill in all required fields and specify equipment details.
+                    `;
+                    formAlertBox.className = 'form-submission-alert error';
+                    formAlertBox.style.display = 'block';
+                    formAlertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            }
         });
     }
 
-    // Initial render of Web Storage tables on page load
+
+    /* =========================================================================
+       16. HELP CENTER INTERACTIVE ACCORDION
+       ========================================================================= */
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const questionBtn = item.querySelector('.faq-question');
+        if (questionBtn) {
+            questionBtn.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(other => other.classList.remove('active'));
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        }
+    });
+
+    // Default seed initialization
     renderWebStorageTables();
 
 });

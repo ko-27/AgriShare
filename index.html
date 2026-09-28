@@ -11,93 +11,46 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons 6.5.1 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- 1. External Stylesheet (Experiment 05: External Style Sheet Demonstration) -->
+    <!-- External Stylesheet: Global Design System & Components -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- 2. Internal Stylesheet (Experiment 05: Internal Style Sheet Demonstration) -->
+        <!-- Internal Stylesheet: Specialized interactive components & animations -->
     <style>
-        /* Internal CSS Rule: Custom theme architecture banner */
-        .css-architecture-banner {
-            background: linear-gradient(135deg, rgba(46, 125, 50, 0.08), rgba(25, 118, 210, 0.08));
-            border: 1.5px dashed var(--primary-green);
-            border-radius: var(--radius-md);
-            padding: 1.25rem 1.6rem;
-            margin: 1.2rem 0 1.8rem 0;
-            display: flex;
+        /* Interactive Drop Zone Pulse */
+        @keyframes dropZonePulse {
+            0% { box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.2); }
+            70% { box-shadow: 0 0 0 10px rgba(46, 125, 50, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(46, 125, 50, 0); }
+        }
+
+        .rental-drop-target:hover {
+            animation: dropZonePulse 1.8s infinite;
+        }
+
+        /* Pure CSS Tooltip Styling */
+        .tooltip {
+            position: relative;
+        }
+
+        /* Role Switcher in Topbar */
+        .role-switch-pill {
+            display: inline-flex;
             align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1.2rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .css-arch-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .css-arch-title i {
-            font-size: 1.6rem;
-            color: var(--primary-green);
-        }
-
-        .css-arch-title h4 {
-            font-size: 1.05rem;
-            margin-bottom: 2px;
+            gap: 6px;
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.12), rgba(25, 118, 210, 0.08));
+            border: 1px solid var(--border-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.76rem;
+            font-weight: 700;
             color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .css-arch-title p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .css-badges-row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        /* Internal CSS demonstration badge with skew transform */
-        .badge-internal-css {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: linear-gradient(135deg, #1976D2, #0D47A1);
-            color: #FFFFFF;
-            padding: 6px 14px;
-            border-radius: 4px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            transform: skewX(-10deg);
-            box-shadow: 0 4px 10px rgba(25, 118, 210, 0.25);
-            transition: transform 0.3s ease;
-        }
-        .badge-internal-css span {
-            transform: skewX(10deg);
-            display: inline-block;
-        }
-        .badge-internal-css:hover {
-            transform: skewX(0deg) scale(1.05);
-        }
-
-        .badge-external-css {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: linear-gradient(135deg, #2E7D32, #1B5E20);
-            color: #FFFFFF;
-            padding: 6px 14px;
-            border-radius: 4px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.25);
-            transition: transform 0.3s ease;
-        }
-        .badge-external-css:hover {
-            transform: translateY(-2px) scale(1.03);
+        .role-switch-pill:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-1px);
         }
     </style>
 </head>
@@ -157,34 +110,59 @@
     </aside>
     <div id="overlay" class="overlay"></div>
 
-    <!-- =========================================================================
-         LOGIN & AUTH MODAL DIALOG
+        <!-- =========================================================================
+         PORTAL AUTHENTICATION MODAL (Farmer vs Administrator Login)
          ========================================================================= -->
     <div id="login-modal" class="modal-backdrop">
         <div class="modal-card">
             <button class="modal-close" id="close-login-modal"><i class="fa-solid fa-xmark"></i></button>
             <div class="modal-header">
-                <div class="modal-logo"><i class="fa-solid fa-tractor"></i></div>
-                <h2>Farmer & Owner Portal</h2>
-                <p>Sign in to manage equipment listings, rentals, and payments</p>
+                <div class="modal-logo"><i class="fa-solid fa-shield-halved"></i></div>
+                <h2>AgriShare Portal Authentication</h2>
+                <p>Select your profile role to access tailored equipment rental or management tools</p>
             </div>
+            
+            <div class="modal-role-tabs">
+                <button type="button" class="role-tab-btn active" id="tab-farmer-btn">
+                    <i class="fa-solid fa-tractor"></i> Farmer Account
+                </button>
+                <button type="button" class="role-tab-btn admin-tab" id="tab-admin-btn">
+                    <i class="fa-solid fa-user-shield"></i> Administrator
+                </button>
+            </div>
+
             <form id="modal-login-form" class="modal-form">
-                <div class="form-group">
-                    <label for="modal-email"><i class="fa-solid fa-envelope"></i> Email or Mobile Number</label>
-                    <input type="text" id="modal-email" placeholder="farmer@agrishare.com" value="kohila.it@agrishare.com" required>
+                <div id="farmer-fields">
+                    <div class="form-group">
+                        <label for="modal-farmer-name"><i class="fa-solid fa-user"></i> Farmer Name</label>
+                        <input type="text" id="modal-farmer-name" value="Ramesh Kumar" placeholder="Enter full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-farmer-phone"><i class="fa-solid fa-phone"></i> Registered Mobile</label>
+                        <input type="tel" id="modal-farmer-phone" value="9842109876" placeholder="10-digit phone">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="modal-password"><i class="fa-solid fa-lock"></i> Security Password</label>
-                    <input type="password" id="modal-password" placeholder="Enter password" value="AgriShare@2026" required>
+
+                <div id="admin-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="modal-admin-email"><i class="fa-solid fa-envelope"></i> Administrator Email</label>
+                        <input type="email" id="modal-admin-email" value="admin@agrishare.portal.in" placeholder="admin@agrishare.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-admin-pass"><i class="fa-solid fa-key"></i> Security Key</label>
+                        <input type="password" id="modal-admin-pass" value="Admin@Agri2026" placeholder="Enter admin password">
+                    </div>
                 </div>
+
                 <div class="form-options">
                     <label class="checkbox-container">
-                        <input type="checkbox" checked> Remember this device
+                        <input type="checkbox" checked> Remember session on this browser
                     </label>
-                    <a href="#help" class="forgot-link">Need Help?</a>
+                    <a href="#help" class="forgot-link">Help & FAQs</a>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block bounce">
-                    <i class="fa-solid fa-right-to-bracket"></i> Authenticate & Enter
+
+                <button type="submit" class="btn btn-primary btn-block bounce" id="modal-submit-btn">
+                    <i class="fa-solid fa-right-to-bracket"></i> Login as Farmer
                 </button>
                 <div id="modal-alert" class="form-alert"></div>
             </form>
@@ -251,7 +229,7 @@
          ========================================================================= -->
     <div class="app-layout">
         
-        <!-- 3. NAVIGATION MENU (<nav> containing Home, About, Services, Registration, Contact, and Help) -->
+                <!-- 3. NAVIGATION MENU -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-heading">NAVIGATION MENU</div>
             <nav class="sidebar-nav" aria-label="Main Application Navigation">
@@ -265,7 +243,7 @@
                     <li>
                         <a href="#about" class="nav-item">
                             <i class="fa-solid fa-circle-info"></i>
-                            <span>About</span>
+                            <span>About Us</span>
                         </a>
                     </li>
                     <li>
@@ -277,13 +255,7 @@
                     <li>
                         <a href="#equipment-slider" class="nav-item">
                             <i class="fa-solid fa-tractor"></i>
-                            <span>Machinery</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#features" class="nav-item">
-                            <i class="fa-solid fa-star"></i>
-                            <span>Features</span>
+                            <span>Machinery Fleet</span>
                         </a>
                     </li>
                     <li>
@@ -293,33 +265,22 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#reports" class="nav-item">
-                            <i class="fa-solid fa-chart-column"></i>
-                            <span>Reports</span>
-                        </a>
-                    </li>
-                    <li>
                         <a href="#register" class="nav-item">
-                            <i class="fa-solid fa-id-card"></i>
-                            <span>Registration</span>
+                            <i class="fa-solid fa-calendar-check"></i>
+                            <span>Rent Machinery</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#drag-drop" class="nav-item">
-                            <i class="fa-solid fa-arrows-up-down-left-right"></i>
-                            <span>Drag & Drop</span>
-                        </a>
-                    </li>
-                    <li>
+                    <li id="admin-sidebar-nav-item" style="display: none;">
                         <a href="#storage" class="nav-item">
                             <i class="fa-solid fa-database"></i>
-                            <span>Storage</span>
+                            <span>Admin Storage & Reports</span>
+                            <span class="admin-indicator-pill">Admin</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#modules" class="nav-item">
-                            <i class="fa-solid fa-cubes"></i>
-                            <span>Modules</span>
+                        <a href="#help" class="nav-item">
+                            <i class="fa-solid fa-circle-question"></i>
+                            <span>Help Center</span>
                         </a>
                     </li>
                     <li>
@@ -328,17 +289,17 @@
                             <span>Contact</span>
                         </a>
                     </li>
+                    <li class="sidebar-divider"></li>
                     <li>
-                        <a href="#help" class="nav-item">
-                            <i class="fa-solid fa-circle-question"></i>
-                            <span>Help</span>
+                        <a href="javascript:void(0)" id="sidebar-role-toggle-btn" class="nav-item role-toggle-link">
+                            <i class="fa-solid fa-user-shield"></i>
+                            <span id="sidebar-role-text">Switch to Admin Mode</span>
                         </a>
                     </li>
-                    <li class="sidebar-divider"></li>
                     <li>
                         <a href="javascript:void(0)" id="sidebar-logout-btn" class="nav-item logout-link">
                             <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                            <span>Logout</span>
+                            <span>Sign Out</span>
                         </a>
                     </li>
                 </ul>
@@ -347,8 +308,8 @@
             <div class="sidebar-footer-card">
                 <div class="card-icon"><i class="fa-solid fa-leaf"></i></div>
                 <div class="card-text">
-                    <strong>Advanced HTML5 Forms</strong>
-                    <p>Coimbatore Institute of Tech</p>
+                    <strong>AgriShare Portal</strong>
+                    <p>CIT IT Department • 2026</p>
                 </div>
             </div>
         </aside>
@@ -373,17 +334,7 @@
                 </marquee>
             </div>
 
-            <!-- =========================================================================
-                 EXPERIMENT 05: INLINE, INTERNAL & EXTERNAL STYLESHEET DEMONSTRATION
-                 ========================================================================= -->
-            <div class="css-architecture-banner">
-                <div class="css-arch-title">
-                    <i class="fa-solid fa-layer-group"></i>
-                    <div>
-                        <h4>Advanced CSS Styling Architecture (Experiment 05)</h4>
-                        <p>Demonstrating Inline, Internal, and External Style Sheets with advanced CSS rules</p>
-                    </div>
-                </div>
+            
                 <div class="css-badges-row">
                     <!-- 1. External CSS demonstration badge -->
                     <span class="badge-external-css tooltip" data-tooltip="Loaded via external style.css file">
@@ -474,44 +425,71 @@
                 </div>
             </section>
 
-            <!-- =========================================================================
-                 4. INTRODUCTION SECTION (<section> and <article>)
+                        <!-- =========================================================================
+                 ABOUT SECTION (<section id="about"> and <article>)
                  ========================================================================= -->
             <section id="about" class="about-section section-padding">
                 <div class="section-header">
                     <div>
-                        <span class="sub-heading">PLATFORM INTRODUCTION</span>
-                        <h2 class="section-title">About AgriShare Portal</h2>
+                        <span class="sub-heading">OUR MISSION & IMPACT</span>
+                        <h2 class="section-title">About AgriShare Agricultural Ecosystem</h2>
                     </div>
                 </div>
 
-                <div class="about-grid">
-                    <!-- Semantic <article> 1: Overview -->
-                    <article class="about-article hover-lift">
-                        <div class="article-badge"><i class="fa-solid fa-seedling"></i> Project Scope</div>
-                        <h3>Transforming Agricultural Machinery Access</h3>
+                <!-- Story & Live Impact Stats -->
+                <div class="about-hero-grid">
+                    <article class="about-story-card hover-lift">
+                        <div class="article-badge"><i class="fa-solid fa-seedling"></i> Transforming Rural Mechanization</div>
+                        <h3>Bridging the Farm Equipment Gap</h3>
                         <p class="intro-dropcap">
                             Modern agriculture demands heavy farm mechanization to achieve optimal crop yields, yet over 82% of farmers in India operate on small and marginal landholdings where purchasing tractors (₹7–12 Lakhs) or combine harvesters (₹25–35 Lakhs) is financially prohibitive. AgriShare provides an on-demand, peer-to-peer equipment sharing infrastructure that enables machinery owners to monetize idle machinery during off-season periods while giving local farmers access to top-tier equipment at transparent hourly rental rates.
                         </p>
+                        <p>
+                            Through our community-driven platform, farmers book inspected agricultural implements with certified field drivers, eliminating expensive bank loans and machine maintenance downtime.
+                        </p>
                         <div class="article-highlights">
-                            <div class="highlight-item"><i class="fa-solid fa-check"></i> 40% reduction in farming machinery expenditure</div>
-                            <div class="highlight-item"><i class="fa-solid fa-check"></i> Guaranteed availability during peak sowing & harvest windows</div>
-                            <div class="highlight-item"><i class="fa-solid fa-check"></i> Fully insured equipment with trained operator support</div>
+                            <div class="highlight-item"><i class="fa-solid fa-circle-check"></i> <strong>40% Cost Savings:</strong> Cut equipment rental costs significantly compared to commercial agents.</div>
+                            <div class="highlight-item"><i class="fa-solid fa-circle-check"></i> <strong>Guaranteed Sowing Windows:</strong> On-time field dispatch during critical monsoon prep.</div>
+                            <div class="highlight-item"><i class="fa-solid fa-circle-check"></i> <strong>100% Insured Protection:</strong> Accidental breakdown coverage with mobile mechanic support.</div>
                         </div>
                     </article>
 
-                    <!-- Semantic <article> 2: Technical Architecture -->
-                    <article class="about-article hover-lift">
-                        <div class="article-badge"><i class="fa-solid fa-code"></i> HTML5 Standards</div>
-                        <h3>Engineered with Modern Web Standards</h3>
-                        <p>
-                            This web application demonstrates the integration of advanced HTML5 semantic elements (<code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;footer&gt;</code>) paired with comprehensive HTML5 form controls (<code>type="email"</code>, <code>type="tel"</code>, <code>type="date"</code>, <code>type="time"</code>, <code>type="number"</code>, <code>contenteditable</code>, <code>spellcheck</code>). The responsive layout leverages CSS Grid and Flexbox architectures for cross-device compatibility.
-                        </p>
-                        <div class="article-highlights">
-                            <div class="highlight-item"><i class="fa-solid fa-check"></i> Native HTML5 client-side input validation controls</div>
-                            <div class="highlight-item"><i class="fa-solid fa-check"></i> Interactive editable notes box with spellcheck enabled</div>
-                            <div class="highlight-item"><i class="fa-solid fa-check"></i> Designed for accessibility, responsiveness, and performance</div>
+                    <div class="about-stats-panel">
+                        <div class="about-stat-box">
+                            <span class="stat-num">12,500+</span>
+                            <span class="stat-lbl">Acres Cultivated</span>
                         </div>
+                        <div class="about-stat-box">
+                            <span class="stat-num">1,850+</span>
+                            <span class="stat-lbl">Active Farmers</span>
+                        </div>
+                        <div class="about-stat-box">
+                            <span class="stat-num">420+</span>
+                            <span class="stat-lbl">Verified Machines</span>
+                        </div>
+                        <div class="about-stat-box">
+                            <span class="stat-num">₹1.8 Cr+</span>
+                            <span class="stat-lbl">Farmer Savings</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3 Strategic Pillars -->
+                <div class="pillars-grid">
+                    <article class="pillar-card">
+                        <div class="pillar-icon"><i class="fa-solid fa-tractor"></i></div>
+                        <h4>Affordable Mechanization</h4>
+                        <p>On-demand hourly and daily equipment rentals make heavy industrial tillage, rotavation, and harvesting accessible to every smallholder farmer.</p>
+                    </article>
+                    <article class="pillar-card">
+                        <div class="pillar-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <h4>Insured & Certified Fleet</h4>
+                        <p>Every tractor, rotary tiller, and solar pump undergoes multi-point safety inspections and carries accidental breakdown warranty coverage.</p>
+                    </article>
+                    <article class="pillar-card">
+                        <div class="pillar-icon"><i class="fa-solid fa-users-gear"></i></div>
+                        <h4>Trained Operator Support</h4>
+                        <p>Need experienced hands? Book precision combine harvesters and drone sprayers with state-certified agricultural equipment operators.</p>
                     </article>
                 </div>
             </section>
@@ -957,122 +935,79 @@
                 </div>
             </section>
 
-            <!-- =========================================================================
-                 FEATURES SECTION (<ul> & <li>) & SERVICES SECTION (<ol> & <li>)
+                        <!-- =========================================================================
+                 SERVICES SECTION (<section id="services">)
                  ========================================================================= -->
-            <div class="grid-2-col section-padding">
-                
-                <!-- Features Section -->
-                <section id="features" class="features-block">
-                    <div class="section-header">
-                        <div>
-                            <span class="sub-heading">CORE CAPABILITIES</span>
-                            <h2 class="section-title">Key Platform Features</h2>
-                        </div>
+            <section id="services" class="services-block section-padding">
+                <div class="section-header">
+                    <div>
+                        <span class="sub-heading">COMPREHENSIVE AGRICULTURAL OFFERINGS</span>
+                        <h2 class="section-title">AgriShare Services & Support</h2>
                     </div>
-                    
-                    <ul class="features-list-styled">
-                        <li class="feature-item hover-lift">
-                            <div class="feature-icon-box"><i class="fa-solid fa-address-card"></i></div>
-                            <div class="feature-text">
-                                <h4>Farmer & Owner Registration</h4>
-                                <p>Simple mobile OTP and Aadhaar/Land document onboarding for secure transactions.</p>
-                            </div>
-                        </li>
-                        <li class="feature-item hover-lift">
-                            <div class="feature-icon-box"><i class="fa-solid fa-list-check"></i></div>
-                            <div class="feature-text">
-                                <h4>Equipment Listing & Catalog</h4>
-                                <p>Owners can list tractors, pumps, and harvesters with horsepower specs and hourly rates.</p>
-                            </div>
-                        </li>
-                        <li class="feature-item hover-lift">
-                            <div class="feature-icon-box"><i class="fa-solid fa-filter"></i></div>
-                            <div class="feature-text">
-                                <h4>Geo-Location Equipment Search</h4>
-                                <p>Locate tractors within a 15 km radius to cut equipment transport and mobilization charges.</p>
-                            </div>
-                        </li>
-                        <li class="feature-item hover-lift">
-                            <div class="feature-icon-box"><i class="fa-solid fa-calendar-check"></i></div>
-                            <div class="feature-text">
-                                <h4>Dynamic Hourly Booking</h4>
-                                <p>Flexible real-time reservation by the hour, day, or season with instant scheduling.</p>
-                            </div>
-                        </li>
-                        <li class="feature-item hover-lift">
-                            <div class="feature-icon-box"><i class="fa-solid fa-map-location-dot"></i></div>
-                            <div class="feature-text">
-                                <h4>Real-Time Rental Tracking</h4>
-                                <p>Live status tracker showing Dispatch, On-Site Operation, and Return phases.</p>
-                            </div>
-                        </li>
-                        <li class="feature-item hover-lift">
-                            <div class="feature-icon-box"><i class="fa-solid fa-star-half-stroke"></i></div>
-                            <div class="feature-text">
-                                <h4>Review & Rating Ecosystem</h4>
-                                <p>Two-way rating system rewarding verified machinery performance and timely returns.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </section>
+                </div>
 
-                <!-- Services Section -->
-                <section id="services" class="services-block">
-                    <div class="section-header">
-                        <div>
-                            <span class="sub-heading">OFFERINGS & MODULES</span>
-                            <h2 class="section-title">AgriShare Services</h2>
+                <div class="services-full-grid">
+                    <div class="service-full-card">
+                        <div class="service-full-header">
+                            <div class="service-full-icon"><i class="fa-solid fa-tractor"></i></div>
+                            <span class="badge badge-success">On-Demand</span>
                         </div>
+                        <h4>Tractor & Heavy Tillage Rental</h4>
+                        <p>Rent high-horsepower tractors (45–75 HP) equipped with multi-speed gearboxes and heavy implements for deep soil conditioning and field levelling.</p>
+                        <a href="#register" class="btn btn-sm btn-outline book-now-btn" data-machine="Mahindra 575 DI Tractor"><i class="fa-solid fa-arrow-right"></i> Book Machinery</a>
                     </div>
-                    
-                    <ol class="services-list-styled">
-                        <li class="service-item hover-lift">
-                            <div class="service-header-row">
-                                <span class="service-number">01</span>
-                                <h4>Register & List Agricultural Machinery</h4>
-                            </div>
-                            <p>Equip machinery owners with custom listing portals to monetize underutilized equipment during off-season cycles.</p>
-                        </li>
-                        <li class="service-item hover-lift">
-                            <div class="service-header-row">
-                                <span class="service-number">02</span>
-                                <h4>Search & Compare Agricultural Tools</h4>
-                            </div>
-                            <p>Multi-parameter filters comparing horsepower, fuel consumption, operator inclusion, and localized pricing.</p>
-                        </li>
-                        <li class="service-item hover-lift">
-                            <div class="service-header-row">
-                                <span class="service-number">03</span>
-                                <h4>Rent Machinery with Operator Support</h4>
-                            </div>
-                            <p>Optionally book trained equipment drivers for specialized tasks like laser leveling and combine harvesting.</p>
-                        </li>
-                        <li class="service-item hover-lift">
-                            <div class="service-header-row">
-                                <span class="service-number">04</span>
-                                <h4>Booking Management & Approvals</h4>
-                            </div>
-                            <p>Centralized console enabling owners to approve, reschedule, or manage pending rental slot requests.</p>
-                        </li>
-                        <li class="service-item hover-lift">
-                            <div class="service-header-row">
-                                <span class="service-number">05</span>
-                                <h4>View Rental History & Audit Logs</h4>
-                            </div>
-                            <p>Complete historical logs of hours operated, fuel consumed, invoices generated, and payments settled.</p>
-                        </li>
-                        <li class="service-item hover-lift">
-                            <div class="service-header-row">
-                                <span class="service-number">06</span>
-                                <h4>Generate Analytical Usage Reports</h4>
-                            </div>
-                            <p>Exportable farm expenditure and revenue analysis summaries for seasonal budget planning.</p>
-                        </li>
-                    </ol>
-                </section>
 
-            </div>
+                    <div class="service-full-card">
+                        <div class="service-full-header">
+                            <div class="service-full-icon"><i class="fa-solid fa-wheat-awn"></i></div>
+                            <span class="badge badge-warning">Seasonal</span>
+                        </div>
+                        <h4>Combine Harvester Booking</h4>
+                        <p>Multi-crop combine harvesters for paddy, maize, and pulses with minimal grain loss, including certified driver and threshing accessories.</p>
+                        <a href="#register" class="btn btn-sm btn-outline book-now-btn" data-machine="John Deere W70 Harvester"><i class="fa-solid fa-arrow-right"></i> Book Machinery</a>
+                    </div>
+
+                    <div class="service-full-card">
+                        <div class="service-full-header">
+                            <div class="service-full-icon"><i class="fa-solid fa-water"></i></div>
+                            <span class="badge badge-info">Solar & Diesel</span>
+                        </div>
+                        <h4>High-Discharge Water Pumps</h4>
+                        <p>Mobile 10HP diesel and solar pumps for emergency irrigation, farm pond filling, and flood-water mitigation across rural farmland.</p>
+                        <a href="#register" class="btn btn-sm btn-outline book-now-btn" data-machine="Kirloskar 10HP Diesel Pump"><i class="fa-solid fa-arrow-right"></i> Book Machinery</a>
+                    </div>
+
+                    <div class="service-full-card">
+                        <div class="service-full-header">
+                            <div class="service-full-icon"><i class="fa-solid fa-gears"></i></div>
+                            <span class="badge badge-primary">Soil Prep</span>
+                        </div>
+                        <h4>Rotary Tiller & Precision Seeding</h4>
+                        <p>Shaktiman rotary tillers and 9-row automatic seed-cum-fertilizer drills ensuring uniform seed depth and optimal germination rates.</p>
+                        <a href="#register" class="btn btn-sm btn-outline book-now-btn" data-machine="Shaktiman Rotavator"><i class="fa-solid fa-arrow-right"></i> Book Machinery</a>
+                    </div>
+
+                    <div class="service-full-card">
+                        <div class="service-full-header">
+                            <div class="service-full-icon"><i class="fa-solid fa-helicopter"></i></div>
+                            <span class="badge badge-success">Smart Tech</span>
+                        </div>
+                        <h4>Precision Agri-Drone Spraying</h4>
+                        <p>16-liter payload agricultural drones providing ultra-low volume foliar nutrient and pest management across 25 acres in a single shift.</p>
+                        <a href="#register" class="btn btn-sm btn-outline book-now-btn" data-machine="Agri-Drone Sprayer"><i class="fa-solid fa-arrow-right"></i> Book Machinery</a>
+                    </div>
+
+                    <div class="service-full-card">
+                        <div class="service-full-header">
+                            <div class="service-full-icon"><i class="fa-solid fa-user-gear"></i></div>
+                            <span class="badge badge-secondary">Certified</span>
+                        </div>
+                        <h4>Experienced Machine Operators</h4>
+                        <p>Hire skilled, insured equipment operators on flexible day rates to operate heavy farm machinery safely and efficiently.</p>
+                        <a href="#register" class="btn btn-sm btn-outline book-now-btn" data-machine="Certified Machine Operator"><i class="fa-solid fa-arrow-right"></i> Book Operator</a>
+                    </div>
+                </div>
+            </section>
 
             <!-- =========================================================================
                  REPORTS & ANALYTICS SECTION
@@ -1348,68 +1283,231 @@
 
             </div>
 
-            <!-- =========================================================================
-                 5. REGISTRATION FORM (With Advanced HTML5 Form Elements Requirements 5-17)
+                                    <!-- =========================================================================
+                 5. FARMER EQUIPMENT LISTING & RENTAL PORTAL (HTML5 Drag & Drop with Photos & Hourly Rates)
                  ========================================================================= -->
             <section id="register" class="register-section section-padding">
                 <div class="section-header">
                     <div>
-                        <span class="sub-heading">ONBOARDING & RESERVATION PORTAL</span>
-                        <h2 class="section-title">Farmer & Machinery Owner Registration Form</h2>
+                        <span class="sub-heading">EQUIPMENT RENTAL & LISTING HUB</span>
+                        <h2 class="section-title">Farmer Equipment Listing & Rental Portal</h2>
                     </div>
                 </div>
 
                 <div class="form-container-card">
                     <div class="form-intro">
-                        <div class="intro-icon"><i class="fa-solid fa-file-signature"></i></div>
+                        <div class="intro-icon"><i class="fa-solid fa-tractor"></i></div>
                         <div>
-                            <h3>Create Your Verified AgriShare Account</h3>
-                            <p>Fill out the advanced HTML5 registration form below with personal details, equipment interests, and preferred appointment timing.</p>
+                            <h3>Rent Out Your Machinery or Book Equipment</h3>
+                            <p>Farmers can list their tractors, pumps, and harvesters for hourly rental, or book verified implements. Drag any equipment photo card below into the booking slot to auto-fill specifications and hourly rates.</p>
                         </div>
                     </div>
 
                     <form id="registration-form" class="responsive-form" novalidate>
                         
-                        <!-- Row 1: 6. Name Field & 7. Email Field -->
+                        <!-- =========================================================================
+                             STEP 1: DRAG & DROP EQUIPMENT PICTURE & HOURLY RATE
+                             ========================================================================= -->
+                        <div class="rental-dnd-section">
+                            <div class="rental-dnd-header">
+                                <h4><i class="fa-solid fa-arrows-up-down-left-right"></i> Step 1: Drag & Drop Machinery Picture & Hourly Rate</h4>
+                                <span class="panel-subtitle">Drag any machine picture into the drop slot, or click to select</span>
+                            </div>
+
+                            <div class="rental-dnd-grid">
+                                <!-- Source Palette: Draggable Equipment Picture Cards -->
+                                <div class="dnd-source-palette">
+                                    <div class="machinery-drag-grid" id="drag-items-grid">
+                                        
+                                        <!-- Item 1: Mahindra Tractor -->
+                                        <div class="machinery-drag-item" draggable="true" id="drag-tractor" 
+                                             data-machinery="Mahindra 575 DI Tractor" 
+                                             data-category="Heavy Tillage Tractor" 
+                                             data-price="350" 
+                                             data-rate="₹350 / hour" 
+                                             data-img="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=300&auto=format&fit=crop&q=80">
+                                            <div class="machinery-drag-left">
+                                                <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=300&auto=format&fit=crop&q=80" alt="Mahindra Tractor" class="machinery-thumb-img">
+                                                <div class="machinery-drag-text">
+                                                    <strong>Mahindra 575 DI Tractor</strong>
+                                                    <small>45 HP • Heavy Tillage</small>
+                                                    <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹350 / hour</span>
+                                                </div>
+                                            </div>
+                                            <i class="fa-solid fa-grip-vertical grip-handle"></i>
+                                        </div>
+
+                                        <!-- Item 2: John Deere Harvester -->
+                                        <div class="machinery-drag-item" draggable="true" id="drag-harvester" 
+                                             data-machinery="John Deere W70 Harvester" 
+                                             data-category="Multi-Crop Combine" 
+                                             data-price="1200" 
+                                             data-rate="₹1,200 / hour" 
+                                             data-img="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=300&auto=format&fit=crop&q=80">
+                                            <div class="machinery-drag-left">
+                                                <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=300&auto=format&fit=crop&q=80" alt="John Deere Harvester" class="machinery-thumb-img">
+                                                <div class="machinery-drag-text">
+                                                    <strong>John Deere W70 Harvester</strong>
+                                                    <small>100 HP • Grain Combine</small>
+                                                    <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹1,200 / hour</span>
+                                                </div>
+                                            </div>
+                                            <i class="fa-solid fa-grip-vertical grip-handle"></i>
+                                        </div>
+
+                                        <!-- Item 3: Kirloskar Pump -->
+                                        <div class="machinery-drag-item" draggable="true" id="drag-pump" 
+                                             data-machinery="Kirloskar 10HP Pump" 
+                                             data-category="High-Discharge Irrigation" 
+                                             data-price="150" 
+                                             data-rate="₹150 / hour" 
+                                             data-img="https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?w=300&auto=format&fit=crop&q=80">
+                                            <div class="machinery-drag-left">
+                                                <img src="https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?w=300&auto=format&fit=crop&q=80" alt="Kirloskar Pump" class="machinery-thumb-img">
+                                                <div class="machinery-drag-text">
+                                                    <strong>Kirloskar 10HP Pump</strong>
+                                                    <small>High Discharge • Diesel/Solar</small>
+                                                    <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹150 / hour</span>
+                                                </div>
+                                            </div>
+                                            <i class="fa-solid fa-grip-vertical grip-handle"></i>
+                                        </div>
+
+                                        <!-- Item 4: Shaktiman Rotavator -->
+                                        <div class="machinery-drag-item" draggable="true" id="drag-rotavator" 
+                                             data-machinery="Shaktiman Rotavator" 
+                                             data-category="Rotary Tillage" 
+                                             data-price="200" 
+                                             data-rate="₹200 / hour" 
+                                             data-img="https://images.unsplash.com/photo-1589923188900-85dae523342b?w=300&auto=format&fit=crop&q=80">
+                                            <div class="machinery-drag-left">
+                                                <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?w=300&auto=format&fit=crop&q=80" alt="Rotavator" class="machinery-thumb-img">
+                                                <div class="machinery-drag-text">
+                                                    <strong>Shaktiman Rotavator</strong>
+                                                    <small>6ft Soil Cultivator</small>
+                                                    <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹200 / hour</span>
+                                                </div>
+                                            </div>
+                                            <i class="fa-solid fa-grip-vertical grip-handle"></i>
+                                        </div>
+
+                                        <!-- Item 5: National Seed Drill -->
+                                        <div class="machinery-drag-item" draggable="true" id="drag-seeder" 
+                                             data-machinery="National 9-Row Seed Drill" 
+                                             data-category="Precision Sowing" 
+                                             data-price="180" 
+                                             data-rate="₹180 / hour" 
+                                             data-img="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=300&auto=format&fit=crop&q=80">
+                                            <div class="machinery-drag-left">
+                                                <img src="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=300&auto=format&fit=crop&q=80" alt="Seed Drill" class="machinery-thumb-img">
+                                                <div class="machinery-drag-text">
+                                                    <strong>National Seed Drill</strong>
+                                                    <small>9-Row Seed & Fertilizer</small>
+                                                    <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹180 / hour</span>
+                                                </div>
+                                            </div>
+                                            <i class="fa-solid fa-grip-vertical grip-handle"></i>
+                                        </div>
+
+                                        <!-- Item 6: Agri-Drone Sprayer -->
+                                        <div class="machinery-drag-item" draggable="true" id="drag-drone" 
+                                             data-machinery="Agri-Drone Sprayer" 
+                                             data-category="Precision Spraying" 
+                                             data-price="500" 
+                                             data-rate="₹500 / hour" 
+                                             data-img="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=300&auto=format&fit=crop&q=80">
+                                            <div class="machinery-drag-left">
+                                                <img src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=300&auto=format&fit=crop&q=80" alt="Agri-Drone" class="machinery-thumb-img">
+                                                <div class="machinery-drag-text">
+                                                    <strong>Agri-Drone Sprayer</strong>
+                                                    <small>16L Tank • Precision UAV</small>
+                                                    <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹500 / hour</span>
+                                                </div>
+                                            </div>
+                                            <i class="fa-solid fa-grip-vertical grip-handle"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Drop Target Box in Form (HTML5 Drop Target) -->
+                                <div class="rental-drop-target" id="drop-target-box" aria-label="Drop equipment picture here">
+                                    <div class="drop-prompt" id="drop-placeholder">
+                                        <i class="fa-solid fa-cloud-arrow-down"></i>
+                                        <h5>Drop Equipment Picture Here</h5>
+                                        <p>Drag any machinery picture from the left and drop here to assign image and auto-fill price/hour</p>
+                                    </div>
+                                    <div class="selected-machinery-basket" id="dropped-items-list"></div>
+                                    <div id="drop-status-msg" class="drop-status-msg" style="display: none; margin-top: 8px; font-weight: 600; font-size: 0.85rem;"></div>
+                                    <button type="button" class="btn btn-sm btn-outline" id="clear-drop-btn" style="margin-top: 10px; display: none;">
+                                        <i class="fa-solid fa-rotate-left"></i> Change Equipment Picture
+                                    </button>
+                                </div>
+                            </div>
+                            <input type="hidden" id="selected-machinery-input" name="selected_machinery" value="">
+                            <input type="hidden" id="selected-machinery-price" name="selected_price" value="">
+                            <span class="error-msg" id="err-machinery" style="display: none; margin-top: 8px; font-weight: 600;"></span>
+                        </div>
+
+                        <!-- =========================================================================
+                             STEP 2: FARMER CONTACT & EQUIPMENT PRICING
+                             ========================================================================= -->
+                        <h4 style="margin: 1.5rem 0 1rem 0; font-size: 1.05rem; color: var(--text-primary);"><i class="fa-solid fa-user-pen"></i> Step 2: Farmer & Rental Listing Details</h4>
+
+                        <!-- Row 1: Name & Mobile -->
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="reg-name"><i class="fa-solid fa-user"></i> Full Name <span class="required-star">*</span></label>
-                                <input type="text" id="reg-name" name="name" placeholder="Enter your full name (e.g., Kohila M)" required autofocus>
+                                <label for="reg-name"><i class="fa-solid fa-user"></i> Farmer / Owner Name <span class="required-star">*</span></label>
+                                <input type="text" id="reg-name" name="name" placeholder="Enter your full name (e.g., Ramesh Kumar)" required>
                                 <span class="error-msg" id="err-name"></span>
                             </div>
 
                             <div class="form-group">
-                                <label for="reg-email"><i class="fa-solid fa-envelope"></i> Email Address <span class="required-star">*</span></label>
-                                <input type="email" id="reg-email" name="email" placeholder="farmer@agrishare.com" required>
-                                <span class="error-msg" id="err-email"></span>
+                                <label for="reg-phone"><i class="fa-solid fa-phone"></i> 10-Digit Mobile Number <span class="required-star">*</span></label>
+                                <input type="tel" id="reg-phone" name="phone" placeholder="9842109876" pattern="[6-9][0-9]{9}" maxlength="10" required>
+                                <span class="error-msg" id="err-phone"></span>
                             </div>
                         </div>
 
-                        <!-- Row 2: 8. Phone Number (tel & pattern) & Password -->
+                        <!-- Row 2: Email & Equipment Model -->
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="reg-phone"><i class="fa-solid fa-phone"></i> 10-Digit Phone Number <span class="required-star">*</span></label>
-                                <input type="tel" id="reg-phone" name="phone" placeholder="9876543210" pattern="[6-9][0-9]{9}" maxlength="10" required>
-                                <span class="error-msg" id="err-phone"></span>
+                                <label for="reg-email"><i class="fa-solid fa-envelope"></i> Email Address <span class="required-star">*</span></label>
+                                <input type="email" id="reg-email" name="email" placeholder="farmer@agrishare.portal.in" required>
+                                <span class="error-msg" id="err-email"></span>
                             </div>
 
                             <div class="form-group">
-                                <label for="reg-password"><i class="fa-solid fa-lock"></i> Security Password <span class="required-star">*</span></label>
-                                <input type="password" id="reg-password" name="password" placeholder="At least 8 chars, 1 uppercase, 1 digit" required>
+                                <label for="equipment-name-field"><i class="fa-solid fa-gear"></i> Equipment Name & Model <span class="required-star">*</span></label>
+                                <input type="text" id="equipment-name-field" name="equipment_name" placeholder="Drag picture above or type (e.g. Mahindra 575 DI)" required>
+                                <span class="error-msg" id="err-equip-name"></span>
+                            </div>
+                        </div>
+
+                        <!-- Row 3: Hourly Rental Rate & Password -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="equipment-price-field"><i class="fa-solid fa-indian-rupee-sign"></i> Rental Price per Hour (₹/hr) <span class="required-star">*</span></label>
+                                <input type="number" id="equipment-price-field" name="price_hour" min="50" max="10000" placeholder="e.g., 350" required>
+                                <span class="error-msg" id="err-price"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="reg-password"><i class="fa-solid fa-lock"></i> Account Password <span class="required-star">*</span></label>
+                                <input type="password" id="reg-password" name="password" placeholder="At least 8 characters" required>
                                 <div class="password-meter-bar">
-                                    <div class="meter-fill" id="meter-fill"></div>
+                                    <div class="meter-fill" id="meter-fill" style="width: 75%;"></div>
                                 </div>
                                 <span class="error-msg" id="err-password"></span>
                             </div>
                         </div>
 
-                        <!-- Row 3: 15. Gender (Radio Buttons) & 11. Age (number with min/max) -->
+                        <!-- Row 4: Gender & Age -->
                         <div class="form-row">
                             <div class="form-group">
                                 <label><i class="fa-solid fa-venus-mars"></i> Gender <span class="required-star">*</span></label>
                                 <div class="radio-pill-group">
                                     <label class="radio-pill">
-                                        <input type="radio" name="gender" value="Male" required>
+                                        <input type="radio" name="gender" value="Male" checked required>
                                         <span><i class="fa-solid fa-person"></i> Male</span>
                                     </label>
                                     <label class="radio-pill">
@@ -1426,388 +1524,275 @@
 
                             <div class="form-group">
                                 <label for="reg-age"><i class="fa-solid fa-id-badge"></i> Age (Years) <span class="required-star">*</span></label>
-                                <input type="number" id="reg-age" name="age" min="18" max="100" placeholder="e.g., 24 (Min: 18, Max: 100)" required>
+                                <input type="number" id="reg-age" name="age" min="18" max="100" value="38" placeholder="e.g., 38" required>
                                 <span class="error-msg" id="err-age"></span>
                             </div>
                         </div>
 
-                        <!-- Row 4: 9. Date of Birth (date) & 10. Preferred Appointment Time (time) -->
+                        <!-- Row 5: Date & Preferred Shift Time -->
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="reg-dob"><i class="fa-solid fa-calendar"></i> Date of Birth <span class="required-star">*</span></label>
+                                <label for="reg-dob"><i class="fa-solid fa-calendar-day"></i> Available From / Rental Date <span class="required-star">*</span></label>
                                 <input type="date" id="reg-dob" name="dob" required>
                                 <span class="error-msg" id="err-dob"></span>
                             </div>
 
                             <div class="form-group">
-                                <label for="reg-time"><i class="fa-solid fa-clock"></i> Preferred Appointment / Pickup Time <span class="required-star">*</span></label>
-                                <input type="time" id="reg-time" name="preferred_time" required>
+                                <label for="reg-time"><i class="fa-solid fa-clock"></i> Preferred Operating Shift Time <span class="required-star">*</span></label>
+                                <input type="time" id="reg-time" name="preferred_time" value="07:00" required>
                                 <span class="error-msg" id="err-time"></span>
                             </div>
                         </div>
 
-                        <!-- 16. Skills / Interests (Checkboxes for selecting multiple items) -->
+                        <!-- Row 6: Included Implements Checkboxes -->
                         <div class="form-group">
-                            <label><i class="fa-solid fa-screwdriver-wrench"></i> Agricultural Skills & Equipment Interests <span class="required-star">*</span></label>
-                            <p class="field-subtitle">Select the farm machinery and services you are interested in renting or operating:</p>
+                            <label><i class="fa-solid fa-list-check"></i> Included Implements & Farm Services</label>
                             <div class="skills-checkbox-grid">
                                 <label class="checkbox-pill">
-                                    <input type="checkbox" name="skills" value="Tractor Operation">
-                                    <span><i class="fa-solid fa-tractor"></i> Tractor Operation & Tillage</span>
+                                    <input type="checkbox" name="skills" value="Certified Tractor Operator">
+                                    <span><i class="fa-solid fa-user-gear"></i> Certified Operator Included</span>
                                 </label>
                                 <label class="checkbox-pill">
-                                    <input type="checkbox" name="skills" value="Combine Harvesting">
-                                    <span><i class="fa-solid fa-wheat-awn"></i> Combine Harvesting</span>
+                                    <input type="checkbox" name="skills" value="Laser Land Leveling">
+                                    <span><i class="fa-solid fa-layer-group"></i> Laser Land Leveler</span>
                                 </label>
                                 <label class="checkbox-pill">
-                                    <input type="checkbox" name="skills" value="Micro Irrigation">
-                                    <span><i class="fa-solid fa-water"></i> Micro & Drip Irrigation</span>
+                                    <input type="checkbox" name="skills" value="Doorstep Trailer Transport">
+                                    <span><i class="fa-solid fa-truck"></i> Doorstep Transport Trailer</span>
                                 </label>
                                 <label class="checkbox-pill">
-                                    <input type="checkbox" name="skills" value="Precision Seeding">
-                                    <span><i class="fa-solid fa-seedling"></i> Precision Seed Drilling</span>
-                                </label>
-                                <label class="checkbox-pill">
-                                    <input type="checkbox" name="skills" value="Rotavator Soil Prep">
-                                    <span><i class="fa-solid fa-gears"></i> Rotavator Soil Conditioning</span>
-                                </label>
-                                <label class="checkbox-pill">
-                                    <input type="checkbox" name="skills" value="Solar Farm Pumps">
-                                    <span><i class="fa-solid fa-solar-panel"></i> Solar Powered Water Pumps</span>
+                                    <input type="checkbox" name="skills" value="Field Agronomy Advisory">
+                                    <span><i class="fa-solid fa-seedling"></i> Fuel & Diesel Policy</span>
                                 </label>
                             </div>
                             <span class="error-msg" id="err-skills"></span>
                         </div>
 
-                        <!-- 14. Address (<textarea>) & 13. Spell Check (spellcheck="true") -->
+                        <!-- Address Field -->
                         <div class="form-group">
-                            <label for="reg-address"><i class="fa-solid fa-location-pin"></i> Farm & Residential Address <span class="required-star">*</span></label>
-                            <textarea id="reg-address" name="address" rows="3" placeholder="Enter door number, street name, village, taluk, and district..." required spellcheck="true"></textarea>
+                            <label for="reg-address"><i class="fa-solid fa-location-dot"></i> Village & Farm Location / Equipment Station <span class="required-star">*</span></label>
+                            <textarea id="reg-address" name="address" rows="3" placeholder="Enter door number, street, village, taluk, and district..." required spellcheck="true"></textarea>
                             <span class="error-msg" id="err-address"></span>
                         </div>
 
-                        <!-- 12. Editable Area (contenteditable="true") & 13. Spell Check (spellcheck="true") -->
+                        <!-- Delivery Notes -->
                         <div class="form-group">
-                            <label><i class="fa-solid fa-pen-to-square"></i> Additional Farmer Notes & Special Delivery Requests (HTML5 Editable Area)</label>
+                            <label><i class="fa-solid fa-pen-to-square"></i> Equipment Specifications & Field Delivery Notes</label>
                             <div id="editable-notes" class="editable-content-box" contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true">
-                                Click directly inside this box to type customized notes, field access instructions, soil conditions, or crop harvest details. This area demonstrates the HTML5 contenteditable and spellcheck attributes in action.
+                                Machine is serviced with dual-clutch transmission and radial tires. Ready for immediate dispatch across district hubs.
                             </div>
-                            <small class="field-hint"><i class="fa-solid fa-circle-info"></i> HTML5 <code>contenteditable="true"</code> enables inline in-place typing with real-time browser spell check.</small>
+                            <small class="field-hint"><i class="fa-solid fa-circle-info"></i> Enter specific implement details or field access landmarks.</small>
                         </div>
 
-                        <!-- 17. Form Controls (Submit, Reset, and Cancel buttons) -->
+                        <!-- Action Buttons -->
                         <div class="form-btn-group">
                             <button type="submit" class="btn btn-primary btn-lg bounce" id="submit-btn">
-                                <i class="fa-solid fa-check-circle"></i> Submit Registration
+                                <i class="fa-solid fa-check-circle"></i> Submit Rental Listing
                             </button>
                             <button type="reset" class="btn btn-outline btn-lg" id="reset-btn">
                                 <i class="fa-solid fa-arrow-rotate-left"></i> Reset Form
                             </button>
-                            <button type="button" class="btn btn-secondary btn-lg" id="cancel-btn">
-                                <i class="fa-solid fa-ban"></i> Cancel
-                            </button>
                         </div>
 
-                        <!-- Alert Box for JavaScript Response -->
                         <div id="form-alert-box" class="form-submission-alert"></div>
                     </form>
                 </div>
             </section>
 
             <!-- =========================================================================
-                 APPLICATION MODULES TABLE (Semantic <table>, <thead>, <tbody>)
-                 ========================================================================= -->
-            <section id="modules" class="modules-section section-padding">
-                <div class="section-header">
-                    <div>
-                        <span class="sub-heading">SYSTEM ARCHITECTURE</span>
-                        <h2 class="section-title">Application Modules Specification</h2>
-                    </div>
-                </div>
-
-                <div class="table-card">
-                    <div class="table-responsive">
-                        <table class="styled-table modules-table">
-                            <thead>
-                                <tr>
-                                    <th style="width: 15%;">Module ID</th>
-                                    <th style="width: 30%;">Module Name</th>
-                                    <th style="width: 55%;">Functional Scope & Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><span class="badge badge-primary">M101</span></td>
-                                    <td><strong>Farmer Management</strong></td>
-                                    <td>Handles farmer registration, profile verification, Aadhaar KYC, mobile authentication, and personalized farm holding records.</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="badge badge-primary">M102</span></td>
-                                    <td><strong>Equipment Management</strong></td>
-                                    <td>Enables machinery owners to upload machinery specifications, horsepower, photos, condition certificates, and hourly pricing.</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="badge badge-primary">M103</span></td>
-                                    <td><strong>Booking & Reservation System</strong></td>
-                                    <td>Coordinates scheduling calendar, duration calculations, operator requests, conflict resolution, and instant booking receipts.</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="badge badge-primary">M104</span></td>
-                                    <td><strong>Rental Dispatch & Tracking</strong></td>
-                                    <td>Monitors field deployment, mobilization check-in, real-time operating hours logged, and return inspection verification.</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="badge badge-primary">M105</span></td>
-                                    <td><strong>Reports & Business Intelligence</strong></td>
-                                    <td>Computes seasonal revenue summaries, utilization rates by machine type, district demand metrics, and operational reports.</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="badge badge-primary">M106</span></td>
-                                    <td><strong>Review & Rating System</strong></td>
-                                    <td>Collects bilateral feedback on equipment operational reliability and prompt return discipline to build community trust.</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="badge badge-primary">M107</span></td>
-                                    <td><strong>Notification & Alert Dispatcher</strong></td>
-                                    <td>Sends automated notifications, SMS alerts for due equipment returns, seasonal offers, and booking approvals.</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="badge badge-primary">M108</span></td>
-                                    <td><strong>Central Admin Dashboard</strong></td>
-                                    <td>Provides overarching administrative monitoring, user suspension controls, dispute mediation, and security compliance oversight.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- =========================================================================
-                 HTML5 DRAG AND DROP DEMONSTRATION (<section id="drag-drop">)
-                 ========================================================================= -->
-            <section id="drag-drop" class="drag-drop-section section-padding">
-                <div class="section-header">
-                    <div>
-                        <span class="sub-heading">INTERACTIVE HTML5 APIS</span>
-                        <h2 class="section-title">HTML5 Drag and Drop Equipment Scheduler</h2>
-                    </div>
-                </div>
-
-                <div class="drag-drop-card">
-                    <div class="drag-drop-intro">
-                        <p>Demonstrating native HTML5 Drag and Drop API (<code>dragstart</code>, <code>dragover</code>, <code>drop</code>, and <code>dragleave</code> events). Drag any machinery item from the source palette and drop it into the designated reservation target box.</p>
-                    </div>
-
-                    <div class="drag-drop-container">
-                        <!-- Drag Sources (Item 5: Draggable image or colored box) -->
-                        <div class="drag-sources-panel">
-                            <h4><i class="fa-solid fa-hand-pointer"></i> Available Machinery (Drag Source)</h4>
-                            <p class="panel-subtitle">Click and drag any machinery unit below:</p>
-                            
-                            <div class="drag-items-grid" id="drag-items-grid">
-                                <div class="draggable-machinery-pill" draggable="true" id="drag-tractor" data-machinery="Mahindra 575 DI Tractor" data-icon="fa-tractor">
-                                    <i class="fa-solid fa-tractor"></i>
-                                    <div class="drag-pill-info">
-                                        <strong>Mahindra 575 DI Tractor</strong>
-                                        <small>45 HP • Heavy Tillage</small>
-                                    </div>
-                                    <i class="fa-solid fa-grip-vertical grip-icon"></i>
-                                </div>
-
-                                <div class="draggable-machinery-pill" draggable="true" id="drag-harvester" data-machinery="John Deere W70 Harvester" data-icon="fa-wheat-awn">
-                                    <i class="fa-solid fa-wheat-awn"></i>
-                                    <div class="drag-pill-info">
-                                        <strong>John Deere W70 Harvester</strong>
-                                        <small>Multi-Crop Combine</small>
-                                    </div>
-                                    <i class="fa-solid fa-grip-vertical grip-icon"></i>
-                                </div>
-
-                                <div class="draggable-machinery-pill" draggable="true" id="drag-pump" data-machinery="Kirloskar 10HP Diesel Pump" data-icon="fa-water">
-                                    <i class="fa-solid fa-water"></i>
-                                    <div class="drag-pill-info">
-                                        <strong>Kirloskar 10HP Pump</strong>
-                                        <small>High Discharge Water Pump</small>
-                                    </div>
-                                    <i class="fa-solid fa-grip-vertical grip-icon"></i>
-                                </div>
-
-                                <div class="draggable-machinery-pill" draggable="true" id="drag-rotavator" data-machinery="Shaktiman Rotavator" data-icon="fa-gears">
-                                    <i class="fa-solid fa-gears"></i>
-                                    <div class="drag-pill-info">
-                                        <strong>Shaktiman Rotavator</strong>
-                                        <small>6ft Soil Cultivator</small>
-                                    </div>
-                                    <i class="fa-solid fa-grip-vertical grip-icon"></i>
-                                </div>
-
-                                <div class="draggable-machinery-pill" draggable="true" id="drag-seeder" data-machinery="National 9-Row Seed Drill" data-icon="fa-seedling">
-                                    <i class="fa-solid fa-seedling"></i>
-                                    <div class="drag-pill-info">
-                                        <strong>National Seed Drill</strong>
-                                        <small>9-Row Precision Sowing</small>
-                                    </div>
-                                    <i class="fa-solid fa-grip-vertical grip-icon"></i>
-                                </div>
-
-                                <div class="draggable-machinery-pill" draggable="true" id="drag-tiller" data-machinery="11-Tyne Spring Tiller" data-icon="fa-toolbox">
-                                    <i class="fa-solid fa-toolbox"></i>
-                                    <div class="drag-pill-info">
-                                        <strong>11-Tyne Spring Tiller</strong>
-                                        <small>Field Conditioning Tiller</small>
-                                    </div>
-                                    <i class="fa-solid fa-grip-vertical grip-icon"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Drop Target (Item 6: Drop area where object can be dropped) -->
-                        <div class="drop-target-panel">
-                            <h4><i class="fa-solid fa-calendar-check"></i> Rental Schedule Box (Drop Target)</h4>
-                            <p class="panel-subtitle">Drop selected equipment below to schedule:</p>
-
-                            <div id="drop-target-box" class="drop-target-box" aria-label="Drop machinery here">
-                                <div class="drop-target-placeholder" id="drop-placeholder">
-                                    <i class="fa-solid fa-cloud-arrow-down drop-icon"></i>
-                                    <h5>Drop Equipment Here</h5>
-                                    <p>Drag any machinery unit from the left and drop here to assign to current rental session</p>
-                                </div>
-                                <div class="dropped-items-list" id="dropped-items-list"></div>
-                            </div>
-
-                            <div id="drop-status-msg" class="drop-status-msg"></div>
-                            <div class="drop-actions-bar">
-                                <button class="btn btn-sm btn-outline" id="clear-drop-btn">
-                                    <i class="fa-solid fa-rotate-left"></i> Reset Drop Schedule
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- =========================================================================
-                 HTML5 WEB STORAGE: LOCAL STORAGE & SESSION STORAGE (<section id="storage">)
+                 ADMIN DATA MANAGEMENT & WEB STORAGE AUDIT (Restricted to Administrators)
                  ========================================================================= -->
             <section id="storage" class="storage-section section-padding">
-                <div class="section-header">
-                    <div>
-                        <span class="sub-heading">CLIENT-SIDE PERSISTENCE</span>
-                        <h2 class="section-title">HTML5 Web Storage Demonstration</h2>
-                    </div>
-                    <div class="storage-btn-group">
-                        <button id="retrieve-storage-btn" class="btn btn-primary bounce">
-                            <i class="fa-solid fa-database"></i> Retrieve Data
-                        </button>
-                        <button id="clear-storage-btn" class="btn btn-danger">
-                            <i class="fa-solid fa-trash-can"></i> Clear Stored Data
-                        </button>
-                    </div>
+                
+                <!-- Restricted Access Banner shown to Farmers -->
+                <div id="admin-restricted-view" class="admin-locked-card" style="display: none;">
+                    <i class="fa-solid fa-shield-halved lock-icon"></i>
+                    <h3>Administrator Access Required</h3>
+                    <p>Web Storage records (localStorage & sessionStorage tables) and system audit reports are restricted to AgriShare platform administrators. Please switch to Administrator Mode to view and manage platform data.</p>
+                    <button type="button" class="btn btn-primary bounce" id="switch-to-admin-from-card">
+                        <i class="fa-solid fa-user-shield"></i> Switch to Administrator Mode
+                    </button>
                 </div>
 
-                <div class="storage-intro-box">
-                    <p>This section demonstrates <strong>localStorage</strong> (permanent client storage across browser sessions) and <strong>sessionStorage</strong> (temporary tab-isolated storage). All registrations submitted above or machinery dropped into the scheduler are saved into these storage APIs.</p>
-                </div>
-
-                <!-- Table 1: LOCAL STORAGE (All Registered User Details) -->
-                <div class="storage-table-card">
-                    <div class="storage-card-header local-header">
-                        <div class="header-left">
-                            <i class="fa-solid fa-hard-drive"></i>
-                            <div>
-                                <h3>LOCAL STORAGE (All Registered User Details)</h3>
-                                <span>Persistent Storage via HTML5 localStorage API</span>
-                            </div>
+                <!-- Admin Management Console (Visible when logged in as Admin) -->
+                <div id="admin-storage-view">
+                    <div class="section-header">
+                        <div>
+                            <span class="sub-heading">ADMINISTRATOR AUDIT CONSOLE</span>
+                            <h2 class="section-title">Web Storage & Booking Records</h2>
                         </div>
-                        <span class="storage-count-badge" id="local-count-badge">0 Records</span>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="styled-table storage-table" id="local-storage-table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Gender</th>
-                                    <th>Age</th>
-                                    <th>DOB</th>
-                                    <th>Time</th>
-                                    <th>Machinery / Interests</th>
-                                    <th>Address</th>
-                                </tr>
-                            </thead>
-                            <tbody id="local-storage-tbody">
-                                <!-- Populated dynamically by script.js -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Table 2: SESSION STORAGE (Current User) -->
-                <div class="storage-table-card" style="margin-top: 2rem;">
-                    <div class="storage-card-header session-header">
-                        <div class="header-left">
-                            <i class="fa-solid fa-clock-rotate-left"></i>
-                            <div>
-                                <h3>SESSION STORAGE (Current User)</h3>
-                                <span>Temporary Tab Session via HTML5 sessionStorage API</span>
-                            </div>
+                        <div class="storage-btn-group">
+                            <button id="retrieve-storage-btn" class="btn btn-primary bounce">
+                                <i class="fa-solid fa-database"></i> Retrieve Data
+                            </button>
+                            <button id="clear-storage-btn" class="btn btn-danger">
+                                <i class="fa-solid fa-trash-can"></i> Clear Stored Data
+                            </button>
                         </div>
-                        <span class="storage-count-badge" id="session-count-badge">0 Active Session</span>
                     </div>
-                    <div class="table-responsive">
-                        <table class="styled-table storage-table" id="session-storage-table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Gender</th>
-                                    <th>Scheduled Machinery</th>
-                                </tr>
-                            </thead>
-                            <tbody id="session-storage-tbody">
-                                <!-- Populated dynamically by script.js -->
-                            </tbody>
-                        </table>
+
+                    <div class="storage-intro-box">
+                        <p>This console provides real-time audit visibility into client-side persistence APIs: <strong>localStorage</strong> (permanent user registrations and equipment bookings) and <strong>sessionStorage</strong> (active browser session state). Data is automatically synchronized when farmers submit bookings via the rental form.</p>
+                    </div>
+
+                    <!-- Table 1: LOCAL STORAGE (All Registered User Details) -->
+                    <div class="storage-table-card">
+                        <div class="storage-card-header local-header">
+                            <div class="header-left">
+                                <i class="fa-solid fa-hard-drive"></i>
+                                <div>
+                                    <h3>LOCAL STORAGE (All Registered Equipment & Farmer Bookings)</h3>
+                                    <span>Persistent Record Store via HTML5 localStorage API</span>
+                                </div>
+                            </div>
+                            <span class="storage-count-badge" id="local-count-badge">0 Records</span>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="styled-table storage-table" id="local-storage-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Gender</th>
+                                        <th>Age</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Selected Equipment</th>
+                                        <th>Farm Location</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="local-storage-tbody">
+                                    <!-- Populated dynamically by script.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Table 2: SESSION STORAGE (Current User) -->
+                    <div class="storage-table-card" style="margin-top: 2rem;">
+                        <div class="storage-card-header session-header">
+                            <div class="header-left">
+                                <i class="fa-solid fa-clock-rotate-left"></i>
+                                <div>
+                                    <h3>SESSION STORAGE (Active Session User & Booking)</h3>
+                                    <span>Isolated Tab State via HTML5 sessionStorage API</span>
+                                </div>
+                            </div>
+                            <span class="storage-count-badge" id="session-count-badge">0 Active Session</span>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="styled-table storage-table" id="session-storage-table">
+                                <thead>
+                                    <tr>
+                                        <th>Active User</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Role</th>
+                                        <th>Selected Equipment</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="session-storage-tbody">
+                                    <!-- Populated dynamically by script.js -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- =========================================================================
-                 HELP & SUPPORT SECTION (<section id="help">)
+                        <!-- =========================================================================
+                 HELP CENTER & FARMER FAQS (<section id="help">)
                  ========================================================================= -->
             <section id="help" class="help-section section-padding">
                 <div class="section-header">
                     <div>
-                        <span class="sub-heading">KNOWLEDGE BASE & GUIDELINES</span>
-                        <h2 class="section-title">Help Center & Farmer FAQs</h2>
+                        <span class="sub-heading">KNOWLEDGE BASE & SUPPORT</span>
+                        <h2 class="section-title">Help Center & Frequently Asked Questions</h2>
                     </div>
                 </div>
 
-                <div class="help-grid">
-                    <div class="help-card hover-lift">
-                        <div class="help-icon bg-green"><i class="fa-solid fa-circle-question"></i></div>
-                        <h4>How do I rent equipment?</h4>
-                        <p>Complete the Registration form above, browse the catalog, select your required date and hours, and click <em>Rent Machinery</em> to send a booking request to the verified owner.</p>
+                <!-- Interactive FAQ Accordion -->
+                <div class="faq-accordion">
+                    <div class="faq-item active">
+                        <button type="button" class="faq-question">
+                            <span><i class="fa-solid fa-circle-question faq-icon"></i> How do I book equipment using the drag-and-drop rental form?</span>
+                            <i class="fa-solid fa-chevron-down faq-chevron"></i>
+                        </button>
+                        <div class="faq-answer">
+                            Simply navigate to the <em>Rent Machinery</em> section, drag your desired equipment card (Tractor, Harvester, Pump, or Tiller) into the booking drop zone, fill in your delivery date and farm location, and click <strong>Confirm Rental Booking</strong>. Our district dispatch hub will contact you within 30 minutes.
+                        </div>
                     </div>
 
-                    <div class="help-card hover-lift">
-                        <div class="help-icon bg-blue"><i class="fa-solid fa-shield-halved"></i></div>
-                        <h4>Is security deposit required?</h4>
-                        <p>No mandatory advance deposit is required for verified local farmers. All registered machinery carries insurance coverage against accidental field breakdowns.</p>
+                    <div class="faq-item">
+                        <button type="button" class="faq-question">
+                            <span><i class="fa-solid fa-shield-halved faq-icon"></i> Is an advance security deposit required for renting tractors?</span>
+                            <i class="fa-solid fa-chevron-down faq-chevron"></i>
+                        </button>
+                        <div class="faq-answer">
+                            No advance security deposit is required for verified local farmers with active AgriShare accounts. All registered machinery carries comprehensive insurance coverage against accidental field breakdowns.
+                        </div>
                     </div>
 
-                    <div class="help-card hover-lift">
-                        <div class="help-icon bg-orange"><i class="fa-solid fa-user-gear"></i></div>
-                        <h4>Are trained drivers included?</h4>
-                        <p>Yes, heavy machinery such as Combine Harvesters and Laser Levelers include certified operators at standard hourly wage increments.</p>
+                    <div class="faq-item">
+                        <button type="button" class="faq-question">
+                            <span><i class="fa-solid fa-user-gear faq-icon"></i> Are certified machine operators and drivers included?</span>
+                            <i class="fa-solid fa-chevron-down faq-chevron"></i>
+                        </button>
+                        <div class="faq-answer">
+                            Yes, heavy machinery such as Combine Harvesters, Drone Sprayers, and Laser Land Levelers include certified operators. For standard tractors, you can choose self-drive or request an operator for a small daily wage supplement.
+                        </div>
                     </div>
 
-                    <div class="help-card hover-lift">
-                        <div class="help-icon bg-emerald"><i class="fa-solid fa-headset"></i></div>
+                    <div class="faq-item">
+                        <button type="button" class="faq-question">
+                            <span><i class="fa-solid fa-cloud-rain faq-icon"></i> What happens if unseasonal rainfall delays farm operations?</span>
+                            <i class="fa-solid fa-chevron-down faq-chevron"></i>
+                        </button>
+                        <div class="faq-answer">
+                            In the event of inclement weather or flooded field conditions, rental bookings can be rescheduled at zero cancellation charge. Simply notify our helpline or equipment owner before the morning dispatch shift.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button type="button" class="faq-question">
+                            <span><i class="fa-solid fa-hand-holding-dollar faq-icon"></i> How can equipment owners list idle machinery to earn income?</span>
+                            <i class="fa-solid fa-chevron-down faq-chevron"></i>
+                        </button>
+                        <div class="faq-answer">
+                            Equipment owners can register their tractors, rotary tillers, or pumps by submitting RC details and horsepower specifications. Owners earn guaranteed rental payouts transferred directly to their bank account every weekend.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Support Channels Grid -->
+                <div class="support-channels-grid">
+                    <div class="support-channel-card">
+                        <div class="support-channel-icon"><i class="fa-solid fa-phone-volume"></i></div>
                         <h4>24/7 Farmer Helpline</h4>
-                        <p>Facing difficulty in booking or equipment mobilization? Call our toll-free regional help desk at <strong>+91 800 123 4567</strong> anytime.</p>
+                        <p>Speak to our regional support coordinators toll-free anytime.</p>
+                        <a href="tel:18001234567"><i class="fa-solid fa-phone"></i> 1800-123-4567</a>
+                    </div>
+
+                    <div class="support-channel-card">
+                        <div class="support-channel-icon" style="background: linear-gradient(135deg, #25D366, #128C7E);"><i class="fa-brands fa-whatsapp"></i></div>
+                        <h4>WhatsApp Support</h4>
+                        <p>Send farm location pins and machinery photos for instant booking.</p>
+                        <a href="https://wa.me/919842109876" target="_blank"><i class="fa-brands fa-whatsapp"></i> +91 98421 09876</a>
+                    </div>
+
+                    <div class="support-channel-card">
+                        <div class="support-channel-icon" style="background: linear-gradient(135deg, #1976D2, #0D47A1);"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                        <h4>Mobile Field Mechanics</h4>
+                        <p>Rapid dispatch service vans stationed across district clusters.</p>
+                        <a href="#contact"><i class="fa-solid fa-location-dot"></i> 25 Hub Locations</a>
+                    </div>
+
+                    <div class="support-channel-card">
+                        <div class="support-channel-icon" style="background: linear-gradient(135deg, #F57C00, #E65100);"><i class="fa-solid fa-book-open"></i></div>
+                        <h4>Equipment Manuals</h4>
+                        <p>Download pre-operational safety checklists and implement guides.</p>
+                        <a href="javascript:alert('Downloading AgriShare Equipment Safety Guide PDF...')"><i class="fa-solid fa-download"></i> Safety Guide</a>
                     </div>
                 </div>
             </section>

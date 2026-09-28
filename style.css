@@ -1850,7 +1850,8 @@ body.dark-mode .step-icon {
     color: var(--alert-red);
 }
 
-.form-group input,
+.form-group input:not([type="checkbox"]):not([type="radio"]),
+.form-group select,
 .form-group textarea {
     width: 100%;
     padding: 0.75rem 1rem;
@@ -1858,14 +1859,18 @@ body.dark-mode .step-icon {
     border: 1px solid var(--border-color);
     border-radius: var(--radius-sm);
     color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.9rem;
     transition: var(--transition);
 }
 
-.form-group input:focus,
+.form-group input:not([type="checkbox"]):not([type="radio"]):focus,
+.form-group select:focus,
 .form-group textarea:focus {
     border-color: var(--primary-green);
     background-color: var(--bg-surface);
     box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.12);
+    outline: none;
 }
 
 .form-group.has-error input,
@@ -2471,7 +2476,10 @@ body.dark-mode .step-icon {
     font-weight: 600;
     display: none;
     margin-top: 8px;
-/* --- ABOUT SECTION & SEMANTIC ARTICLES --- */
+    text-align: center;
+}
+
+/* --- ABOUT SECTION --- */
 .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2488,6 +2496,7 @@ body.dark-mode .step-icon {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    transition: var(--transition);
 }
 
 .article-badge {
@@ -2519,15 +2528,6 @@ body.dark-mode .article-badge {
     line-height: 1.65;
 }
 
-.about-article code {
-    background-color: var(--bg-card-subtle);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    color: var(--primary-green);
-    border: 1px solid var(--border-color);
-}
-
 .article-highlights {
     display: flex;
     flex-direction: column;
@@ -2550,62 +2550,64 @@ body.dark-mode .article-badge {
     color: var(--primary-green);
 }
 
-/* --- ADVANCED HTML5 FORM ELEMENTS: SKILLS & EDITABLE AREA --- */
+/* --- SKILLS & MACHINERY CHECKBOXES --- */
 .field-subtitle {
-    font-size: 0.82rem;
+    font-size: 0.84rem;
     color: var(--text-muted);
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .skills-checkbox-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
 }
 
 .checkbox-pill {
-    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.85rem 1.1rem;
+    background-color: var(--bg-card-subtle);
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    display: block;
+    transition: var(--transition);
 }
 
-.checkbox-pill input {
-    position: absolute;
-    opacity: 0;
+.checkbox-pill input[type="checkbox"] {
+    width: 20px !important;
+    height: 20px !important;
+    accent-color: var(--primary-green);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin: 0 !important;
 }
 
 .checkbox-pill span {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 0.75rem 1rem;
-    background-color: var(--bg-card-subtle);
-    border: 1.5px solid var(--border-color);
-    border-radius: var(--radius-sm);
     font-size: 0.88rem;
     font-weight: 600;
-    color: var(--text-secondary);
-    transition: var(--transition);
+    color: var(--text-primary);
 }
 
-.checkbox-pill input:checked + span {
-    background-color: rgba(46, 125, 50, 0.12);
+.checkbox-pill:hover {
     border-color: var(--primary-green);
-    color: var(--primary-green);
+    background-color: rgba(46, 125, 50, 0.05);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
 }
 
-body.dark-mode .checkbox-pill input:checked + span {
-    background-color: rgba(129, 199, 132, 0.15);
-    color: var(--light-green);
-}
-
-/* 12. Editable Area (contenteditable="true") */
+/* --- EDITABLE FARMER NOTES AREA --- */
 .editable-content-box {
     width: 100%;
-    min-height: 90px;
-    padding: 0.9rem 1.1rem;
+    min-height: 95px;
+    padding: 1rem 1.25rem;
     background-color: var(--bg-card-subtle);
-    border: 1.5px dashed var(--primary-green);
+    border: 1.5px solid var(--border-color);
+    border-left: 4px solid var(--primary-green);
     border-radius: var(--radius-sm);
     color: var(--text-primary);
     font-family: inherit;
@@ -2618,26 +2620,18 @@ body.dark-mode .checkbox-pill input:checked + span {
 
 .editable-content-box:focus {
     background-color: var(--bg-surface);
-    border-style: solid;
     border-color: var(--primary-green);
     box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
 }
 
 .field-hint {
     display: block;
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     color: var(--text-muted);
-    margin-top: 5px;
+    margin-top: 6px;
 }
 
-.field-hint code {
-    background-color: var(--bg-card-subtle);
-    padding: 1px 4px;
-    border-radius: 3px;
-    color: var(--primary-green);
-}
-
-/* --- HELP SECTION --- */
+/* --- HELP & FAQ SECTION --- */
 .help-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -2647,32 +2641,50 @@ body.dark-mode .checkbox-pill input:checked + span {
 .help-card {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
+    border-top: 4px solid var(--primary-green);
     border-radius: var(--radius-md);
     padding: 1.6rem;
     box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
+    transition: var(--transition);
+}
+
+.help-card:nth-child(2) { border-top-color: var(--sky-blue); }
+.help-card:nth-child(3) { border-top-color: var(--alert-orange); }
+.help-card:nth-child(4) { border-top-color: var(--secondary-green); }
+
+.help-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
 }
 
 .help-icon {
     width: 44px;
     height: 44px;
-    border-radius: var(--radius-sm);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.25rem;
     color: #FFFFFF;
+    flex-shrink: 0;
 }
 
 .help-card h4 {
     font-size: 1.05rem;
     color: var(--text-primary);
+    font-weight: 700;
 }
 
 .help-card p {
-/* --- HTML5 DRAG AND DROP STYLES --- */
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* --- DRAG AND DROP SCHEDULER --- */
 .drag-drop-card {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -2690,17 +2702,9 @@ body.dark-mode .checkbox-pill input:checked + span {
     border-bottom: 1px dashed var(--border-color);
 }
 
-.drag-drop-intro code {
-    background-color: var(--bg-card-subtle);
-    padding: 2px 6px;
-    border-radius: 4px;
-    color: var(--primary-green);
-    border: 1px solid var(--border-color);
-}
-
 .drag-drop-container {
     display: grid;
-    grid-template-columns: 1.1fr 1fr;
+    grid-template-columns: 1.15fr 1fr;
     gap: 2rem;
 }
 
@@ -2718,11 +2722,6 @@ body.dark-mode .checkbox-pill input:checked + span {
     display: flex;
     align-items: center;
     gap: 8px;
-}
-
-.panel-subtitle {
-    font-size: 0.85rem;
-    color: var(--text-muted);
 }
 
 .drag-items-grid {
@@ -2786,7 +2785,6 @@ body.dark-mode .checkbox-pill input:checked + span {
     color: var(--text-muted);
 }
 
-/* Drop Target Box */
 .drop-target-box {
     border: 2px dashed var(--primary-green);
     background-color: rgba(46, 125, 50, 0.04);
@@ -2893,7 +2891,7 @@ body.dark-mode .checkbox-pill input:checked + span {
     justify-content: flex-end;
 }
 
-/* --- HTML5 WEB STORAGE STYLES --- */
+/* --- WEB STORAGE SECTION --- */
 .storage-btn-group {
     display: flex;
     gap: 10px;
@@ -2984,11 +2982,14 @@ body.dark-mode .checkbox-pill input:checked + span {
     color: var(--text-primary);
 }
 
-/* =========================================================================
-   ADVANCED CSS DEMONSTRATIONS (Experiment 05: Requirements 25 to 32)
-   ========================================================================= */
+.empty-storage-row td {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 2rem !important;
+    font-style: italic;
+}
 
-/* --- 25. CSS PSEUDO ELEMENTS (::before, ::after, ::first-letter, ::first-line, ::selection) --- */
+/* --- PSEUDO-ELEMENTS & TRANSFORMS --- */
 ::selection {
     background-color: var(--primary-green);
     color: #FFFFFF;
@@ -2999,7 +3000,6 @@ body.dark-mode .checkbox-pill input:checked + span {
     color: #FFFFFF;
 }
 
-/* ::first-letter drop cap on intro text */
 .intro-dropcap::first-letter {
     font-size: 2.8rem;
     font-weight: 800;
@@ -3011,115 +3011,12 @@ body.dark-mode .checkbox-pill input:checked + span {
     text-shadow: 2px 2px 0px rgba(46, 125, 50, 0.15);
 }
 
-/* ::first-line emphasis */
 .intro-dropcap::first-line {
     font-weight: 600;
     letter-spacing: 0.2px;
     color: var(--text-primary);
 }
 
-/* ::before & ::after decorative indicators */
-.section-title-adorned {
-    position: relative;
-    display: inline-block;
-}
-
-.section-title-adorned::before {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    left: 0;
-    width: 48px;
-    height: 4px;
-    background-color: var(--primary-green);
-    border-radius: var(--radius-pill);
-}
-
-.section-title-adorned::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    left: 54px;
-    width: 12px;
-    height: 4px;
-    background-color: var(--warm-amber);
-    border-radius: var(--radius-pill);
-}
-
-/* --- 26. CSS TRANSFORMATIONS (translate, rotate, scale, skew) --- */
-.transform-demo-box {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    margin: 1.5rem 0;
-}
-
-.transform-card {
-    padding: 1rem 1.4rem;
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
-}
-
-/* skew() effect */
-.skew-pill {
-    transform: skewX(-12deg);
-    background: linear-gradient(135deg, var(--primary-green), var(--primary-hover));
-    color: #FFFFFF;
-    border: none;
-}
-.skew-pill span {
-    transform: skewX(12deg);
-    display: inline-block;
-}
-.skew-pill:hover {
-    transform: skewX(0deg) scale(1.06);
-    box-shadow: var(--shadow-hover);
-}
-
-/* rotate() effect */
-.rotate-hover:hover {
-    transform: rotate(-6deg) scale(1.05);
-    box-shadow: var(--shadow-hover);
-}
-
-/* scale() effect */
-.scale-hover:hover {
-    transform: scale(1.08);
-    box-shadow: var(--shadow-hover);
-}
-
-/* translate() effect */
-.translate-hover:hover {
-    transform: translateY(-8px) translateX(4px);
-    box-shadow: var(--shadow-hover);
-}
-
-/* --- 28. CSS ICONS (Font Awesome with hover animations) --- */
-.feature-icon-box i,
-.stat-icon-wrapper i,
-.contact-icon i {
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.35s ease;
-}
-
-.feature-item:hover .feature-icon-box i {
-    transform: scale(1.25) rotate(8deg);
-    filter: drop-shadow(0 4px 8px rgba(46, 125, 50, 0.3));
-}
-
-.contact-card:hover .contact-icon i {
-    transform: scale(1.2) rotate(-8deg);
-}
-
-/* --- 29. IMAGE HOVER EFFECTS (Zoom, Grayscale, Blur, Opacity, Overlay using CSS only) --- */
 .machinery-card-media {
     overflow: hidden;
     position: relative;
@@ -3151,13 +3048,6 @@ body.dark-mode .checkbox-pill input:checked + span {
     opacity: 1;
 }
 
-/* --- 30. CSS POSITIONING (relative, absolute, fixed, sticky) --- */
-/* Sticky Topbar: position: sticky; top: 0; */
-/* Fixed Scroll-to-Top: position: fixed; bottom: 28px; right: 28px; */
-/* Relative Card: position: relative; */
-/* Absolute Badges: position: absolute; top: 12px; right: 12px; */
-
-/* --- 31. CSS PROGRESS BAR (Animations using keyframes) --- */
 @keyframes progressStripes {
     0% { background-position: 0 0; }
     100% { background-position: 40px 0; }
@@ -3179,7 +3069,6 @@ body.dark-mode .checkbox-pill input:checked + span {
     transition: width 1s ease-in-out;
 }
 
-/* --- 32. CSS TOOLTIP (Display tooltips using ONLY CSS on buttons or icons) --- */
 .tooltip {
     position: relative;
 }
@@ -3307,4 +3196,699 @@ body.dark-mode .tooltip::before {
         width: 100%;
         right: -100%;
     }
+}
+
+/* =========================================================================
+   USER ROLES & AUTHENTICATION STYLES
+   ========================================================================= */
+.user-role-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    background-color: rgba(46, 125, 50, 0.12);
+    color: var(--primary-green);
+}
+
+.user-role-tag.admin-tag {
+    background-color: rgba(25, 118, 210, 0.15);
+    color: var(--sky-blue);
+}
+
+.admin-indicator-pill {
+    margin-left: auto;
+    background: linear-gradient(135deg, #1976D2, #0D47A1);
+    color: #FFFFFF;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.modal-role-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1.25rem;
+    background-color: var(--bg-card-subtle);
+    padding: 4px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.role-tab-btn {
+    flex: 1;
+    padding: 0.65rem 1rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.role-tab-btn.active {
+    background-color: var(--primary-green);
+    color: #FFFFFF;
+    box-shadow: var(--shadow-sm);
+}
+
+.role-tab-btn.admin-tab.active {
+    background-color: var(--sky-blue);
+}
+
+/* Admin Restricted Card */
+.admin-locked-card {
+    background-color: var(--bg-card);
+    border: 2px dashed var(--alert-orange);
+    border-radius: var(--radius-lg);
+    padding: 3rem 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    max-width: 650px;
+    margin: 2rem auto;
+    box-shadow: var(--shadow-sm);
+}
+
+.admin-locked-card i.lock-icon {
+    font-size: 3.5rem;
+    color: var(--alert-orange);
+    animation: pulse 2s infinite;
+}
+
+.admin-locked-card h3 {
+    font-size: 1.4rem;
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+}
+
+.admin-locked-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: 520px;
+}
+
+/* =========================================================================
+   ABOUT SECTION REVAMP (Modern Story, Stats, 3 Pillars)
+   ========================================================================= */
+.about-hero-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+@media (max-width: 992px) {
+    .about-hero-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.about-story-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2.2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.about-story-card h3 {
+    font-size: 1.45rem;
+    color: var(--text-primary);
+    margin: 0.8rem 0 1rem 0;
+    font-family: var(--font-heading);
+}
+
+.about-story-card p {
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+    font-size: 0.94rem;
+}
+
+.about-stats-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+}
+
+.about-stat-box {
+    background: linear-gradient(135deg, rgba(46, 125, 50, 0.08), rgba(25, 118, 210, 0.04));
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.6rem 1.2rem;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.about-stat-box:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-green);
+}
+
+.about-stat-box .stat-num {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-green);
+    font-family: var(--font-heading);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.about-stat-box .stat-lbl {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.pillar-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.8rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.pillar-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-green), var(--sky-blue));
+}
+
+.pillar-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-green);
+}
+
+.pillar-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background-color: rgba(46, 125, 50, 0.1);
+    color: var(--primary-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+}
+
+.pillar-card h4 {
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.pillar-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+}
+
+/* =========================================================================
+   INTEGRATED DRAG AND DROP RENTAL FORM STYLES
+   ========================================================================= */
+.rental-dnd-section {
+    background-color: var(--bg-card-subtle);
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.rental-dnd-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.rental-dnd-header h4 {
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+}
+
+.rental-dnd-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+    .rental-dnd-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.dnd-source-palette {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.machinery-drag-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+@media (max-width: 560px) {
+    .machinery-drag-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.machinery-drag-item {
+    background-color: var(--bg-card);
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: grab;
+    transition: var(--transition);
+    user-select: none;
+}
+
+.machinery-drag-item:hover {
+    border-color: var(--primary-green);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    background-color: rgba(46, 125, 50, 0.05);
+}
+
+.machinery-drag-item.dragging {
+    opacity: 0.45;
+    border-style: dashed;
+    border-color: var(--primary-green);
+}
+
+.machinery-drag-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.machinery-drag-left i {
+    font-size: 1.25rem;
+    color: var(--primary-green);
+}
+
+.machinery-drag-text strong {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.machinery-drag-text small {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.machinery-drag-item .grip-handle {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+/* DROP TARGET IN FORM */
+.rental-drop-target {
+    border: 2px dashed var(--primary-green);
+    background-color: rgba(46, 125, 50, 0.04);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 180px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.rental-drop-target.drag-over {
+    border-color: var(--primary-hover);
+    background-color: rgba(46, 125, 50, 0.12);
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(46, 125, 50, 0.25);
+}
+
+.drop-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.drop-prompt i {
+    font-size: 2.2rem;
+    color: var(--primary-green);
+    animation: bounce 2s infinite;
+}
+
+.drop-prompt h5 {
+    font-size: 1rem;
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.drop-prompt p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    max-width: 260px;
+}
+
+.selected-machinery-basket {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.booked-machine-pill {
+    width: 100%;
+    background-color: var(--bg-surface);
+    border: 1.5px solid var(--primary-green);
+    border-radius: var(--radius-sm);
+    padding: 0.65rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: slideInDown 0.3s ease;
+}
+
+.booked-machine-pill .machine-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.booked-machine-pill .machine-info i {
+    color: var(--primary-green);
+    font-size: 1.1rem;
+}
+
+.booked-machine-pill .machine-info strong {
+    font-size: 0.88rem;
+    color: var(--text-primary);
+}
+
+.booked-machine-pill .machine-info span {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-left: 6px;
+}
+
+.booked-machine-pill .remove-machine-btn {
+    background: none;
+    border: none;
+    color: var(--alert-red);
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 0.95rem;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.booked-machine-pill .remove-machine-btn:hover {
+    background-color: rgba(211, 47, 47, 0.1);
+}
+
+/* =========================================================================
+   HELP CENTER REVAMP (Interactive FAQ Accordion & Support Grid)
+   ========================================================================= */
+.faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.faq-item.active {
+    border-color: var(--primary-green);
+    box-shadow: 0 4px 16px rgba(46, 125, 50, 0.12);
+}
+
+.faq-question {
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    border: none;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    text-align: left;
+    gap: 1rem;
+    transition: var(--transition);
+}
+
+.faq-question:hover {
+    color: var(--primary-green);
+}
+
+.faq-question i.faq-icon {
+    color: var(--primary-green);
+    font-size: 1.1rem;
+}
+
+.faq-question i.faq-chevron {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-chevron {
+    transform: rotate(180deg);
+    color: var(--primary-green);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.35s ease;
+    padding: 0 1.5rem;
+    color: var(--text-secondary);
+    font-size: 0.94rem;
+    line-height: 1.7;
+    background-color: var(--bg-card-subtle);
+}
+
+.faq-item.active .faq-answer {
+    max-height: 300px;
+    padding: 1.1rem 1.5rem 1.4rem 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.support-channels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+}
+
+.support-channel-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.6rem 1.4rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    transition: var(--transition);
+}
+
+.support-channel-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-green);
+}
+
+.support-channel-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-green), var(--primary-dark));
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+}
+
+.support-channel-card h4 {
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.support-channel-card p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.support-channel-card a {
+    color: var(--primary-green);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* =========================================================================
+   FULL-WIDTH SERVICES SECTION
+   ========================================================================= */
+.services-full-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.service-full-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.8rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: var(--transition);
+    position: relative;
+}
+
+.service-full-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-green);
+}
+
+.service-full-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.service-full-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background-color: rgba(46, 125, 50, 0.1);
+    color: var(--primary-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+}
+
+.service-full-card h4 {
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.service-full-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Equipment Thumbnail & Hourly Rate Badge Styles */
+.machinery-thumb-img {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.machinery-drag-item:hover .machinery-thumb-img {
+    transform: scale(1.06);
+}
+
+.price-hour-badge {
+    background: linear-gradient(135deg, rgba(46, 125, 50, 0.15), rgba(46, 125, 50, 0.25));
+    color: var(--primary-green);
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 3px 8px;
+    border-radius: var(--radius-pill);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+}
+
+.dropped-photo-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+}
+
+.dropped-photo-preview {
+    width: 68px;
+    height: 68px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+    border: 2px solid var(--primary-green);
+    box-shadow: 0 4px 10px rgba(46, 125, 50, 0.2);
 }
