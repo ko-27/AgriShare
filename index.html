@@ -96,6 +96,9 @@
         <div class="topbar-right">
             <button id="theme-toggle" class="icon-btn tooltip" title="Toggle Dark/Light Mode"><i class="fa-solid fa-moon"></i></button>
             <button id="notification-bell" class="icon-btn tooltip has-badge" title="Notifications"><i class="fa-solid fa-bell"></i><span class="bell-dot"></span></button>
+            <button id="admin-mode-pill" class="btn btn-sm btn-outline tooltip" title="Toggle Admin Mode to View Web Storage Audit Logs">
+                <i class="fa-solid fa-user-gear"></i> <span id="admin-toggle-text">Admin View</span>
+            </button>
             <div class="user-profile-widget" id="user-profile-widget">
                 <button class="profile-auth-btn" id="open-login-btn">
                     <i class="fa-solid fa-fingerprint"></i>
@@ -113,10 +116,9 @@
                 <ul>
                     <li><a href="#home" class="nav-item active"><i class="fa-solid fa-house"></i> <span>Home Portal</span></a></li>
                     <li><a href="#catalog-marketplace" class="nav-item"><i class="fa-solid fa-store"></i> <span>Machinery Catalog</span></a></li>
-                    <li><a href="#register-vehicle-section" class="nav-item"><i class="fa-solid fa-circle-plus"></i> <span>Register Vehicle (Form 1)</span></a></li>
-                    <li><a href="#booking-equipment-section" class="nav-item"><i class="fa-solid fa-calendar-check"></i> <span>Book Equipment (Form 2)</span></a></li>
+                    <li><a href="#register-vehicle-section" class="nav-item"><i class="fa-solid fa-circle-plus"></i> <span>Register Vehicle</span></a></li>
                     <li><a href="#awareness-quiz-section" class="nav-item"><i class="fa-solid fa-circle-play"></i> <span>Safety & Quiz (Exp 6)</span></a></li>
-                    <li><a href="#storage-audit-section" class="nav-item"><i class="fa-solid fa-database"></i> <span>Web Storage & DB</span></a></li>
+                    <li id="admin-storage-nav-item" style="display: none;"><a href="#storage-audit-section" class="nav-item"><i class="fa-solid fa-database"></i> <span>Web Storage & DB (Admin)</span></a></li>
                     <li><a href="#services-section" class="nav-item"><i class="fa-solid fa-handshake"></i> <span>Services</span></a></li>
                     <li><a href="#help-section" class="nav-item"><i class="fa-solid fa-circle-question"></i> <span>Help Center</span></a></li>
                     <li><a href="#contact-section" class="nav-item"><i class="fa-solid fa-headset"></i> <span>Contact & Support</span></a></li>
@@ -165,9 +167,6 @@
                             <a href="#register-vehicle-section" class="btn btn-secondary">
                                 <i class="fa-solid fa-circle-plus"></i> Register Your Vehicle
                             </a>
-                            <a href="#booking-equipment-section" class="btn btn-outline">
-                                <i class="fa-solid fa-calendar-check"></i> Book Equipment
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -185,12 +184,12 @@
                 </div>
 
                 <!-- Live Search & Category Filter Bar -->
-                <div class="card" style="padding: 1.2rem; display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem;">
-                    <div style="flex: 1; display: flex; align-items: center; gap: 8px; background: var(--bg-card-subtle); padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border-color);">
+                <div class="card" style="padding: 1.2rem; display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 260px; display: flex; align-items: center; gap: 8px; background: var(--bg-card-subtle); padding: 10px 16px; border-radius: 8px; border: 1px solid var(--border-color);">
                         <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted);"></i>
                         <input type="text" id="catalog-search-input" placeholder="Search equipment by name, HP, or owner..." style="border: none; background: transparent; width: 100%; outline: none; font-size: 0.95rem;">
                     </div>
-                    <select id="catalog-category-filter" style="padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color); font-weight: 600; outline: none;">
+                    <select id="catalog-category-filter" style="padding: 10px 16px; border-radius: 8px; border: 1px solid var(--border-color); font-weight: 600; outline: none; background: var(--bg-surface); color: var(--text-primary);">
                         <option value="all">All Categories</option>
                         <option value="Tractor">Tractors & Tillage</option>
                         <option value="Harvester">Combine Harvesters</option>
@@ -200,95 +199,105 @@
                     </select>
                 </div>
 
-                <!-- Machinery Catalog Grid (Wishlist Stars + Mouseover Preview + Book Now) -->
-                <div class="grid-layout-3col" id="main-catalog-grid">
+                <!-- Flipkart/Amazon Style Ecommerce Grid -->
+                <div class="ecommerce-catalog-grid" id="main-catalog-grid">
                     
                     <!-- Card 1: Mahindra Tractor -->
-                    <div class="card machinery-catalog-card equip-card-item" data-category="Tractor">
-                        <div style="position: relative;">
-                            <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=400&auto=format&fit=crop&q=80" alt="Mahindra Tractor" class="card-img">
-                            <span class="wishlist-star-btn" title="Add to Wishlist" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;"><i class="fa-regular fa-star"></i></span>
+                    <div class="ecommerce-card equip-card-item" data-category="Tractor">
+                        <div class="card-media-wrapper">
+                            <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=400&auto=format&fit=crop&q=80" alt="Mahindra Tractor" class="card-product-img">
+                            <span class="card-badge-tag"><i class="fa-solid fa-bolt"></i> 45 HP Heavy Tillage</span>
+                            <button class="wishlist-star-btn" title="Add to Wishlist"><i class="fa-regular fa-star"></i></button>
                         </div>
-                        <div class="card-body">
-                            <span class="badge badge-success">45 HP Heavy Tillage</span>
-                            <h3>Mahindra 575 DI Tractor</h3>
-                            <p><strong>Owner:</strong> Ramesh Kumar (Aadhar: 5481-8392-4015)</p>
-                            <p><strong>Location:</strong> Gobichettipalayam, Erode</p>
-                            <div class="price-tag">₹350 / hour</div>
+                        <div class="ecommerce-card-content">
+                            <h3 class="product-title">Mahindra 575 DI Tractor</h3>
+                            <p class="owner-meta"><i class="fa-solid fa-user-check"></i> <strong>Owner:</strong> Ramesh Kumar (Aadhar: 5481-8392-4015)</p>
+                            <p class="location-meta"><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> Gobichettipalayam, Erode</p>
+                            <div class="product-price-row">
+                                <span class="price-amount">₹350 <small>/ hour</small></span>
+                            </div>
                             <button class="catalog-book-btn" data-name="Mahindra 575 DI Tractor" data-price="350" data-owner="Ramesh Kumar (Aadhar: 5481-8392-4015)" data-img="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=400&auto=format&fit=crop&q=80">
-                                <i class="fa-solid fa-calendar-plus"></i> Book Now
+                                <i class="fa-solid fa-calendar-check"></i> Book Now
                             </button>
                         </div>
                     </div>
 
                     <!-- Card 2: John Deere Harvester -->
-                    <div class="card machinery-catalog-card equip-card-item" data-category="Harvester">
-                        <div style="position: relative;">
-                            <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=400&auto=format&fit=crop&q=80" alt="John Deere Harvester" class="card-img">
-                            <span class="wishlist-star-btn" title="Add to Wishlist" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;"><i class="fa-regular fa-star"></i></span>
+                    <div class="ecommerce-card equip-card-item" data-category="Harvester">
+                        <div class="card-media-wrapper">
+                            <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=400&auto=format&fit=crop&q=80" alt="John Deere Harvester" class="card-product-img">
+                            <span class="card-badge-tag"><i class="fa-solid fa-wheat-awn"></i> 100 HP Combine</span>
+                            <button class="wishlist-star-btn" title="Add to Wishlist"><i class="fa-regular fa-star"></i></button>
                         </div>
-                        <div class="card-body">
-                            <span class="badge badge-primary">100 HP Grain Combine</span>
-                            <h3>John Deere W70 Harvester</h3>
-                            <p><strong>Owner:</strong> Muthusamy V. (Aadhar: 7812-4091-6623)</p>
-                            <p><strong>Location:</strong> Karamadai, Coimbatore</p>
-                            <div class="price-tag">₹1,200 / hour</div>
+                        <div class="ecommerce-card-content">
+                            <h3 class="product-title">John Deere W70 Harvester</h3>
+                            <p class="owner-meta"><i class="fa-solid fa-user-check"></i> <strong>Owner:</strong> Muthusamy V. (Aadhar: 7812-4091-6623)</p>
+                            <p class="location-meta"><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> Karamadai, Coimbatore</p>
+                            <div class="product-price-row">
+                                <span class="price-amount">₹1,200 <small>/ hour</small></span>
+                            </div>
                             <button class="catalog-book-btn" data-name="John Deere W70 Harvester" data-price="1200" data-owner="Muthusamy V. (Aadhar: 7812-4091-6623)" data-img="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=400&auto=format&fit=crop&q=80">
-                                <i class="fa-solid fa-calendar-plus"></i> Book Now
+                                <i class="fa-solid fa-calendar-check"></i> Book Now
                             </button>
                         </div>
                     </div>
 
                     <!-- Card 3: Kirloskar Pump -->
-                    <div class="card machinery-catalog-card equip-card-item" data-category="Pump">
-                        <div style="position: relative;">
-                            <img src="https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?w=400&auto=format&fit=crop&q=80" alt="Kirloskar Pump" class="card-img">
-                            <span class="wishlist-star-btn" title="Add to Wishlist" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;"><i class="fa-regular fa-star"></i></span>
+                    <div class="ecommerce-card equip-card-item" data-category="Pump">
+                        <div class="card-media-wrapper">
+                            <img src="https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?w=400&auto=format&fit=crop&q=80" alt="Kirloskar Pump" class="card-product-img">
+                            <span class="card-badge-tag"><i class="fa-solid fa-droplet"></i> 10 HP Irrigation</span>
+                            <button class="wishlist-star-btn" title="Add to Wishlist"><i class="fa-regular fa-star"></i></button>
                         </div>
-                        <div class="card-body">
-                            <span class="badge badge-info">10 HP Irrigation</span>
-                            <h3>Kirloskar 10HP Pump</h3>
-                            <p><strong>Owner:</strong> Selvi R. (Aadhar: 3190-8821-5544)</p>
-                            <p><strong>Location:</strong> Anthiyur, Bhavani Taluk</p>
-                            <div class="price-tag">₹150 / hour</div>
+                        <div class="ecommerce-card-content">
+                            <h3 class="product-title">Kirloskar 10HP Pump</h3>
+                            <p class="owner-meta"><i class="fa-solid fa-user-check"></i> <strong>Owner:</strong> Selvi R. (Aadhar: 3190-8821-5544)</p>
+                            <p class="location-meta"><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> Anthiyur, Bhavani Taluk</p>
+                            <div class="product-price-row">
+                                <span class="price-amount">₹150 <small>/ hour</small></span>
+                            </div>
                             <button class="catalog-book-btn" data-name="Kirloskar 10HP Pump" data-price="150" data-owner="Selvi R. (Aadhar: 3190-8821-5544)" data-img="https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?w=400&auto=format&fit=crop&q=80">
-                                <i class="fa-solid fa-calendar-plus"></i> Book Now
+                                <i class="fa-solid fa-calendar-check"></i> Book Now
                             </button>
                         </div>
                     </div>
 
                     <!-- Card 4: Swaraj Rotavator -->
-                    <div class="card machinery-catalog-card equip-card-item" data-category="Rotavator">
-                        <div style="position: relative;">
-                            <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?w=400&auto=format&fit=crop&q=80" alt="Swaraj Rotavator" class="card-img">
-                            <span class="wishlist-star-btn" title="Add to Wishlist" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;"><i class="fa-regular fa-star"></i></span>
+                    <div class="ecommerce-card equip-card-item" data-category="Rotavator">
+                        <div class="card-media-wrapper">
+                            <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?w=400&auto=format&fit=crop&q=80" alt="Swaraj Rotavator" class="card-product-img">
+                            <span class="card-badge-tag"><i class="fa-solid fa-gears"></i> 48 HP Rotavator</span>
+                            <button class="wishlist-star-btn" title="Add to Wishlist"><i class="fa-regular fa-star"></i></button>
                         </div>
-                        <div class="card-body">
-                            <span class="badge badge-success">48 HP Soil Tillage</span>
-                            <h3>Swaraj 744 FE Rotavator</h3>
-                            <p><strong>Owner:</strong> Karthik Raja (Aadhar: 4912-7721-3094)</p>
-                            <p><strong>Location:</strong> Pollachi, Coimbatore</p>
-                            <div class="price-tag">₹280 / hour</div>
+                        <div class="ecommerce-card-content">
+                            <h3 class="product-title">Swaraj 744 FE Rotavator</h3>
+                            <p class="owner-meta"><i class="fa-solid fa-user-check"></i> <strong>Owner:</strong> Karthik Raja (Aadhar: 4912-7721-3094)</p>
+                            <p class="location-meta"><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> Pollachi, Coimbatore</p>
+                            <div class="product-price-row">
+                                <span class="price-amount">₹280 <small>/ hour</small></span>
+                            </div>
                             <button class="catalog-book-btn" data-name="Swaraj 744 FE Rotavator" data-price="280" data-owner="Karthik Raja (Aadhar: 4912-7721-3094)" data-img="https://images.unsplash.com/photo-1589923188900-85dae523342b?w=400&auto=format&fit=crop&q=80">
-                                <i class="fa-solid fa-calendar-plus"></i> Book Now
+                                <i class="fa-solid fa-calendar-check"></i> Book Now
                             </button>
                         </div>
                     </div>
 
                     <!-- Card 5: Agri-Drone Sprayer -->
-                    <div class="card machinery-catalog-card equip-card-item" data-category="Sprayer">
-                        <div style="position: relative;">
-                            <img src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=400&auto=format&fit=crop&q=80" alt="Agri-Drone Sprayer" class="card-img">
-                            <span class="wishlist-star-btn" title="Add to Wishlist" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;"><i class="fa-regular fa-star"></i></span>
+                    <div class="ecommerce-card equip-card-item" data-category="Sprayer">
+                        <div class="card-media-wrapper">
+                            <img src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=400&auto=format&fit=crop&q=80" alt="Agri-Drone Sprayer" class="card-product-img">
+                            <span class="card-badge-tag"><i class="fa-solid fa-helicopter"></i> 16L UAV Sprayer</span>
+                            <button class="wishlist-star-btn" title="Add to Wishlist"><i class="fa-regular fa-star"></i></button>
                         </div>
-                        <div class="card-body">
-                            <span class="badge badge-warning">16L UAV Precision</span>
-                            <h3>Agri-Drone Sprayer</h3>
-                            <p><strong>Owner:</strong> Vignesh K. (Aadhar: 9012-3841-7782)</p>
-                            <p><strong>Location:</strong> Salem Agricultural Hub</p>
-                            <div class="price-tag">₹500 / hour</div>
+                        <div class="ecommerce-card-content">
+                            <h3 class="product-title">Agri-Drone Sprayer</h3>
+                            <p class="owner-meta"><i class="fa-solid fa-user-check"></i> <strong>Owner:</strong> Vignesh K. (Aadhar: 9012-3841-7782)</p>
+                            <p class="location-meta"><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> Salem Agricultural Hub</p>
+                            <div class="product-price-row">
+                                <span class="price-amount">₹500 <small>/ hour</small></span>
+                            </div>
                             <button class="catalog-book-btn" data-name="Agri-Drone Sprayer" data-price="500" data-owner="Vignesh K. (Aadhar: 9012-3841-7782)" data-img="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=400&auto=format&fit=crop&q=80">
-                                <i class="fa-solid fa-calendar-plus"></i> Book Now
+                                <i class="fa-solid fa-calendar-check"></i> Book Now
                             </button>
                         </div>
                     </div>
@@ -296,13 +305,13 @@
             </section>
 
             <!-- =========================================================================
-                 SECTION 2: FORM 1 - FARMER VEHICLE REGISTRATION FORM (#register-vehicle-section)
+                 SECTION 2: FARMER VEHICLE REGISTRATION FORM (#register-vehicle-section)
                  ========================================================================= -->
             <section id="register-vehicle-section" class="section-padding">
                 <div class="section-header">
                     <div>
                         <span class="sub-heading">VEHICLE LISTING & REGISTRATION</span>
-                        <h2 class="section-title">Form 1: Farmer & Equipment Registration</h2>
+                        <h2 class="section-title">Farmer & Equipment Registration Form</h2>
                     </div>
                 </div>
 
@@ -390,7 +399,7 @@
                             <button type="submit" class="btn btn-primary btn-lg bounce" id="btn-submit-reg">
                                 <i class="fa-solid fa-circle-plus"></i> Register & List Equipment
                             </button>
-                            <button type="reset" class="btn btn-outline btn-lg">
+                            <button type="reset" class="btn btn-outline btn-lg" id="btn-reset-reg">
                                 <i class="fa-solid fa-rotate-left"></i> Reset Form
                             </button>
                         </div>
@@ -400,180 +409,7 @@
             </section>
 
             <!-- =========================================================================
-                 SECTION 3: FORM 2 - EQUIPMENT RENTAL BOOKING & LIVE CALCULATOR (#booking-equipment-section)
-                 ========================================================================= -->
-            <section id="booking-equipment-section" class="section-padding">
-                <div class="section-header">
-                    <div>
-                        <span class="sub-heading">HOURLY RENTAL BOOKING & PRICING</span>
-                        <h2 class="section-title">Form 2: Equipment Rental Booking Form</h2>
-                    </div>
-                </div>
-
-                <div class="form-container-card">
-                    <form id="equipment-booking-form" class="responsive-form" novalidate>
-                        
-                        <!-- STEP 1: DRAG / SELECT EQUIPMENT TARGET SLOT -->
-                        <div class="rental-dnd-section">
-                            <div class="rental-dnd-header">
-                                <h4><i class="fa-solid fa-arrows-up-down-left-right"></i> Step 1: Drag Equipment Picture Card or Select Machinery</h4>
-                                <span class="panel-subtitle">Drag any card below into the booking slot</span>
-                            </div>
-
-                            <div class="rental-dnd-grid">
-                                <!-- Source Palette -->
-                                <div class="dnd-source-palette">
-                                    <div class="machinery-drag-grid" id="drag-items-grid">
-                                        <!-- Card 1 -->
-                                        <div class="machinery-drag-item" draggable="true" id="drag-tractor" 
-                                             data-machinery="Mahindra 575 DI Tractor" 
-                                             data-category="Heavy Tillage Tractor" 
-                                             data-price="350" 
-                                             data-rate="₹350 / hour" 
-                                             data-owner="Ramesh Kumar"
-                                             data-img="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=300&auto=format&fit=crop&q=80">
-                                            <div class="machinery-drag-left">
-                                                <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=300&auto=format&fit=crop&q=80" alt="Mahindra Tractor" class="machinery-thumb-img">
-                                                <div class="machinery-drag-text">
-                                                    <strong>Mahindra 575 DI Tractor</strong>
-                                                    <small>45 HP • Owner: Ramesh Kumar</small>
-                                                    <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹350 / hour</span>
-                                                </div>
-                                            </div>
-                                            <i class="fa-solid fa-grip-vertical grip-handle"></i>
-                                        </div>
-
-                                        <!-- Card 2 -->
-                                        <div class="machinery-drag-item" draggable="true" id="drag-harvester" 
-                                             data-machinery="John Deere W70 Harvester" 
-                                             data-category="Multi-Crop Combine" 
-                                             data-price="1200" 
-                                             data-rate="₹1,200 / hour" 
-                                             data-owner="Muthusamy V."
-                                             data-img="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=300&auto=format&fit=crop&q=80">
-                                            <div class="machinery-drag-left">
-                                                <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=300&auto=format&fit=crop&q=80" alt="John Deere Harvester" class="machinery-thumb-img">
-                                                <div class="machinery-drag-text">
-                                                    <strong>John Deere W70 Harvester</strong>
-                                                    <small>100 HP • Owner: Muthusamy V.</small>
-                                                    <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹1,200 / hour</span>
-                                                </div>
-                                            </div>
-                                            <i class="fa-solid fa-grip-vertical grip-handle"></i>
-                                        </div>
-
-                                        <!-- Card 3 -->
-                                        <div class="machinery-drag-item" draggable="true" id="drag-pump" 
-                                             data-machinery="Kirloskar 10HP Pump" 
-                                             data-category="High-Discharge Irrigation" 
-                                             data-price="150" 
-                                             data-rate="₹150 / hour" 
-                                             data-owner="Selvi R."
-                                             data-img="https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?w=300&auto=format&fit=crop&q=80">
-                                            <div class="machinery-drag-left">
-                                                <img src="https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?w=300&auto=format&fit=crop&q=80" alt="Kirloskar Pump" class="machinery-thumb-img">
-                                                <div class="machinery-drag-text">
-                                                    <strong>Kirloskar 10HP Pump</strong>
-                                                    <small>High Discharge • Owner: Selvi R.</small>
-                                                    <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹150 / hour</span>
-                                                </div>
-                                            </div>
-                                            <i class="fa-solid fa-grip-vertical grip-handle"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Booking Drop Target Slot -->
-                                <div class="rental-drop-target" id="drop-target-box" aria-label="Drop equipment picture card here">
-                                    <div class="drop-prompt" id="drop-placeholder">
-                                        <i class="fa-solid fa-cart-flatbed-suitcases" style="font-size: 2.2rem; color: var(--swiggy-green);"></i>
-                                        <h5>Drop Equipment Card Here</h5>
-                                        <p>Drag any equipment card into this box to auto-fill details</p>
-                                    </div>
-                                    <div class="selected-machinery-basket" id="dropped-items-list"></div>
-                                    <div id="drop-status-msg" class="drop-status-msg" style="display: none; margin-top: 8px; font-weight: 600; font-size: 0.85rem;"></div>
-                                    <button type="button" class="btn btn-sm btn-outline" id="clear-drop-btn" style="margin-top: 10px; display: none;">
-                                        <i class="fa-solid fa-rotate-left"></i> Change Equipment
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- STEP 2: RENTER DETAILS & AADHAR -->
-                        <h4 style="color: var(--swiggy-green-dark); margin: 1.5rem 0 1rem 0;"><i class="fa-solid fa-user-check"></i> Step 2: Renting Person Details & Aadhar Verification</h4>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="book-renter-name"><i class="fa-solid fa-user"></i> Renting Person Full Name <span class="required-star">*</span></label>
-                                <input type="text" id="book-renter-name" name="renter_name" value="Selvi R." placeholder="Enter renting person name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="book-renter-phone"><i class="fa-solid fa-phone"></i> Mobile Number <span class="required-star">*</span></label>
-                                <input type="tel" id="book-renter-phone" name="renter_phone" value="9443210987" placeholder="10-digit mobile" maxlength="10" required>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="book-renter-aadhar"><i class="fa-solid fa-fingerprint"></i> Renting Person Aadhar ID <span class="required-star">*</span></label>
-                                <div class="aadhar-input-wrapper">
-                                    <input type="text" id="book-renter-aadhar" name="renter_aadhar" value="3190-8821-5544" placeholder="12-digit UIDAI (e.g. 3190-8821-5544)" maxlength="14" required>
-                                    <span class="aadhar-verify-badge" id="book-aadhar-status"><i class="fa-solid fa-shield-check"></i> Aadhar Verified ✓</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="book-renter-address"><i class="fa-solid fa-location-dot"></i> Farm Delivery Address <span class="required-star">*</span></label>
-                                <input type="text" id="book-renter-address" name="renter_address" value="Anthiyur, Bhavani Taluk" placeholder="Delivery farm location" required>
-                            </div>
-                        </div>
-
-                        <!-- STEP 3: RENT DURATION & PER HOUR PRICING -->
-                        <h4 style="color: var(--swiggy-green-dark); margin: 1.5rem 0 1rem 0;"><i class="fa-solid fa-clock-rotate-left"></i> Step 3: Rent Duration & Per Hour Rate Calculation</h4>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="equipment-name-field"><i class="fa-solid fa-tractor"></i> Selected Equipment <span class="required-star">*</span></label>
-                                <input type="text" id="equipment-name-field" name="selected_equip" value="Mahindra 575 DI Tractor" placeholder="Selected equipment" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="equipment-price-field"><i class="fa-solid fa-indian-rupee-sign"></i> Per Hour Rent Rate (₹/hr) <span class="required-star">*</span></label>
-                                <input type="number" id="equipment-price-field" name="rate_per_hour" value="350" readonly required>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="book-start-date"><i class="fa-solid fa-calendar"></i> Rental Start Date <span class="required-star">*</span></label>
-                                <input type="date" id="book-start-date" name="start_date" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="book-rent-duration"><i class="fa-solid fa-hourglass-half"></i> Rent Duration (in Hours) <span class="required-star">*</span></label>
-                                <input type="number" id="book-rent-duration" name="duration_hours" value="4" min="1" max="100" placeholder="e.g. 4 hours" required>
-                            </div>
-                        </div>
-
-                        <!-- DYNAMIC PRICE CALCULATOR CARD -->
-                        <div class="price-calculator-card" id="price-calc-card">
-                            <h4><i class="fa-solid fa-calculator"></i> Live Total Rent Price Calculation Breakdown</h4>
-                            <div class="calc-row"><span>Selected Equipment:</span><strong id="calc-equip-name">Mahindra 575 DI Tractor</strong></div>
-                            <div class="calc-row"><span>Per Hour Rent Rate:</span><span id="calc-equip-rate">₹350 / hour</span></div>
-                            <div class="calc-row"><span>Rent Duration:</span><span id="calc-equip-hours">4 Hours</span></div>
-                            <div class="calc-row total-row"><span>Total Estimated Rental Cost:</span><span id="calc-total-cost">₹1,400</span></div>
-                        </div>
-
-                        <div class="form-btn-group" style="margin-top: 1.5rem;">
-                            <button type="submit" class="btn btn-primary btn-lg bounce" id="btn-submit-booking">
-                                <i class="fa-solid fa-calendar-check"></i> Confirm & Book Equipment
-                            </button>
-                            <button type="reset" class="btn btn-outline btn-lg">
-                                <i class="fa-solid fa-arrow-rotate-left"></i> Reset Form
-                            </button>
-                        </div>
-                        <div id="booking-alert-box" class="form-submission-alert"></div>
-                    </form>
-                </div>
-            </section>
-
-            <!-- =========================================================================
-                 SECTION 4: EXPERIMENT 6 INTERACTIVE EVENT HANDLING (#awareness-quiz-section)
+                 SECTION 3: EXPERIMENT 6 INTERACTIVE EVENT HANDLING (#awareness-quiz-section)
                  ========================================================================= -->
             <section id="awareness-quiz-section" class="section-padding">
                 <div class="section-header">
@@ -587,8 +423,9 @@
                 <div class="card" style="padding: 1.8rem; margin-bottom: 2rem;">
                     <h3><i class="fa-solid fa-play-circle"></i> Farm Machinery Operation & Safety Awareness Video</h3>
                     <div style="position: relative; max-width: 720px; margin: 1rem 0;">
-                        <video id="custom-video-player" width="100%" poster="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80">
-                            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+                        <video id="custom-video-player" width="100%" poster="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80" style="border-radius: 12px; cursor: pointer;">
+                            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
 
@@ -633,21 +470,36 @@
                 </div>
 
                 <!-- 3. FARMER DISCUSSION & QUERY FORUM (Event Delegation & Dblclick Inline Edit) -->
-                <div class="card" style="padding: 1.8rem; margin-bottom: 2rem;">
-                    <h3><i class="fa-solid fa-comments"></i> Farmer Discussion Forum (Event Delegation)</h3>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Ask questions about machinery operation. Double-click any comment to edit inline.</p>
+                <div class="card forum-card-container" style="padding: 1.8rem; margin-bottom: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <div>
+                            <span class="badge badge-success"><i class="fa-solid fa-users"></i> Farmer Community Hub</span>
+                            <h3 style="margin-top: 4px;"><i class="fa-solid fa-comments"></i> Farmer Discussion Forum</h3>
+                        </div>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-solid fa-lightbulb"></i> Tip: Double-click any comment to edit inline</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 6px;">Ask operational questions, share field experiences, or reply to fellow regional farmers.</p>
 
                     <form id="forum-post-form" style="display: flex; gap: 10px; margin: 1.2rem 0;">
-                        <input type="text" id="forum-comment-input" placeholder="Type your farming query or equipment question..." style="flex: 1; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);" required>
-                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Post Comment</button>
+                        <input type="text" id="forum-comment-input" placeholder="Type your farming query or equipment operation question..." style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--text-primary);" required>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Post Question</button>
                     </form>
 
                     <!-- Discussion List Container (Event Delegation Target) -->
                     <div id="discussion-list-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
-                        <div class="comment-card-item" style="background: var(--bg-card-subtle); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--swiggy-green);">
-                            <strong style="color: var(--swiggy-green-dark);">Ramesh Kumar (Farmer)</strong>
-                            <p class="comment-text" style="margin: 6px 0;">What is the ideal per-acre fuel consumption for Mahindra 575 DI during heavy rotavation in wet clay soil?</p>
-                            <button type="button" class="reply-link-btn" style="background: none; border: none; color: var(--swiggy-green); cursor: pointer; font-weight: 600; font-size: 0.85rem;"><i class="fa-solid fa-reply"></i> Reply</button>
+                        <div class="comment-card-item" style="background: var(--bg-card-subtle); padding: 1.2rem; border-radius: 12px; border-left: 4px solid var(--primary-green); border: 1px solid var(--border-color);">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                                <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary-green); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700;">RK</div>
+                                <div>
+                                    <strong style="color: var(--text-primary);">Ramesh Kumar</strong>
+                                    <span class="badge badge-success" style="font-size: 0.7rem; margin-left: 6px;">Verified Farmer ✓</span>
+                                </div>
+                            </div>
+                            <p class="comment-text" style="margin: 8px 0; font-size: 0.95rem;">What is the ideal per-acre fuel consumption for Mahindra 575 DI during heavy rotavation in wet clay soil?</p>
+                            <div style="display: flex; gap: 1rem; align-items: center; margin-top: 8px;">
+                                <button type="button" class="forum-like-btn btn btn-sm btn-outline" style="border-radius: 20px; font-size: 0.8rem;"><i class="fa-regular fa-thumbs-up"></i> <span class="like-count">14</span> Likes</button>
+                                <button type="button" class="reply-link-btn" style="background: none; border: none; color: var(--primary-green); cursor: pointer; font-weight: 600; font-size: 0.85rem;"><i class="fa-solid fa-reply"></i> Reply</button>
+                            </div>
                             <div class="replies-wrapper" style="margin-left: 1.5rem; margin-top: 8px;"></div>
                         </div>
                     </div>
@@ -675,12 +527,13 @@
             </section>
 
             <!-- =========================================================================
-                 SECTION 5: WEB STORAGE & DATABASE AUDIT (#storage-audit-section)
+                 SECTION 4: WEB STORAGE & DATABASE AUDIT (#storage-audit-section)
+                 [Hdden by default for normal users; accessible via Admin View toggle]
                  ========================================================================= -->
-            <section id="storage-audit-section" class="section-padding">
+            <section id="storage-audit-section" class="section-padding admin-only-section" style="display: none;">
                 <div class="section-header">
                     <div>
-                        <span class="sub-heading">WEB STORAGE & DB AUDIT</span>
+                        <span class="sub-heading">ADMIN CONFIDENTIAL AUDIT LOGS</span>
                         <h2 class="section-title">Client Web Storage & Backend Records</h2>
                     </div>
                     <div class="storage-btn-group">
@@ -759,7 +612,7 @@
             </section>
 
             <!-- =========================================================================
-                 SECTION 6: SERVICES (#services-section)
+                 SECTION 5: SERVICES (#services-section)
                  ========================================================================= -->
             <section id="services-section" class="section-padding">
                 <div class="section-header">
@@ -788,7 +641,7 @@
             </section>
 
             <!-- =========================================================================
-                 SECTION 7: HELP CENTER (#help-section)
+                 SECTION 6: HELP CENTER (#help-section)
                  ========================================================================= -->
             <section id="help-section" class="section-padding">
                 <div class="section-header">
@@ -810,32 +663,61 @@
             </section>
 
             <!-- =========================================================================
-                 SECTION 8: CONTACT & SUPPORT (#contact-section)
+                 SECTION 7: CONTACT & SUPPORT (#contact-section)
                  ========================================================================= -->
             <section id="contact-section" class="section-padding">
                 <div class="section-header">
                     <div>
                         <span class="sub-heading">SUPPORT & CONTACT</span>
-                        <h2 class="section-title">Contact AgriShare Helpline</h2>
+                        <h2 class="section-title">Contact AgriShare Farmer Helpline</h2>
                     </div>
                 </div>
-                <div class="card" style="padding: 2rem; max-width: 650px;">
-                    <h3><i class="fa-solid fa-paper-plane"></i> Quick Farmer Inquiry</h3>
-                    <form style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
-                        <div class="form-group">
-                            <label>Your Name</label>
-                            <input type="text" placeholder="Enter full name" required>
+                <div class="contact-grid-2col">
+                    <!-- Left Form Column -->
+                    <div class="card" style="padding: 2rem;">
+                        <h3><i class="fa-solid fa-paper-plane"></i> Quick Farmer Inquiry</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">Have questions about equipment availability or doorstep delivery? Send us a message.</p>
+                        <form id="contact-inquiry-form" style="margin-top: 1.2rem; display: flex; flex-direction: column; gap: 1rem;">
+                            <div class="form-group">
+                                <label><i class="fa-solid fa-user"></i> Your Full Name</label>
+                                <input type="text" placeholder="Enter full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fa-solid fa-phone"></i> Mobile Number / Aadhar ID</label>
+                                <input type="text" placeholder="Mobile or 12-digit Aadhar ID" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fa-solid fa-message"></i> Inquiry Message</label>
+                                <textarea rows="3" placeholder="Tell us about the equipment or dates required..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary bounce"><i class="fa-solid fa-paper-plane"></i> Submit Inquiry</button>
+                        </form>
+                    </div>
+
+                    <!-- Right Column: Agricultural Support Illustration & Helpline Cards -->
+                    <div class="card" style="padding: 2rem; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <img src="https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?w=600&auto=format&fit=crop&q=80" alt="Farmer Helpline Support" style="width: 100%; height: 210px; object-fit: cover; border-radius: 12px; margin-bottom: 1.2rem;">
+                            <h3><i class="fa-solid fa-headset"></i> 24/7 Regional Assistance</h3>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 6px;">Our agricultural coordinators are available round-the-clock to guide farmers with equipment bookings and delivery.</p>
                         </div>
-                        <div class="form-group">
-                            <label>Mobile Number / Aadhar ID</label>
-                            <input type="text" placeholder="Mobile or 12-digit Aadhar ID" required>
+                        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 12px; background: var(--bg-card-subtle); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color);">
+                                <i class="fa-solid fa-phone-volume" style="font-size: 1.4rem; color: var(--primary-green);"></i>
+                                <div>
+                                    <strong>Toll-Free Helpline:</strong>
+                                    <div style="color: var(--primary-green); font-weight: 700;">1800-AGRI-SHARE (1800-247-4742)</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; background: var(--bg-card-subtle); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color);">
+                                <i class="fa-solid fa-location-dot" style="font-size: 1.4rem; color: #ef4444;"></i>
+                                <div>
+                                    <strong>Regional Support Hub:</strong>
+                                    <div style="font-size: 0.85rem; color: var(--text-secondary);">Coimbatore • Erode • Salem • Madurai</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Inquiry Message</label>
-                            <textarea rows="3" placeholder="Tell us about the equipment or dates required..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary bounce"><i class="fa-solid fa-paper-plane"></i> Submit Inquiry</button>
-                    </form>
+                    </div>
                 </div>
             </section>
         </main>

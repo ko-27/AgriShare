@@ -1749,17 +1749,19 @@ const videoProgressBar = document.getElementById('video-progress-bar');
 const videoVolumeSlider = document.getElementById('video-volume-slider');
 const videoTimeDisplay = document.getElementById('video-time-display');
 
-if (videoPlayer && videoPlayBtn) {
-    // 1. Play/Pause Click Event
-    videoPlayBtn.addEventListener('click', () => {
+if (videoPlayer) {
+    const toggleVideoPlay = () => {
         if (videoPlayer.paused) {
-            videoPlayer.play();
-            videoPlayBtn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause';
+            videoPlayer.play().catch(err => console.log('Video playback error:', err));
+            if (videoPlayBtn) videoPlayBtn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause';
         } else {
             videoPlayer.pause();
-            videoPlayBtn.innerHTML = '<i class="fa-solid fa-play"></i> Play';
+            if (videoPlayBtn) videoPlayBtn.innerHTML = '<i class="fa-solid fa-play"></i> Play';
         }
-    });
+    };
+
+    if (videoPlayBtn) videoPlayBtn.addEventListener('click', toggleVideoPlay);
+    videoPlayer.addEventListener('click', toggleVideoPlay);
 
     // 2. Volume Change Event
     if (videoVolumeSlider) {
@@ -1860,11 +1862,20 @@ if (forumForm && discussionContainer) {
 
         const commentItem = document.createElement('div');
         commentItem.className = 'comment-card-item';
-        commentItem.style.cssText = 'background: var(--bg-card-subtle); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--swiggy-green); margin-top: 10px;';
+        commentItem.style.cssText = 'background: var(--bg-card-subtle); padding: 1.2rem; border-radius: 12px; border-left: 4px solid var(--primary-green); border: 1px solid var(--border-color); margin-top: 10px;';
         commentItem.innerHTML = `
-            <strong style="color: var(--swiggy-green-dark);">Verified Farmer</strong>
-            <p class="comment-text" style="margin: 6px 0;">${escapeHtml(text)}</p>
-            <button type="button" class="reply-link-btn" style="background: none; border: none; color: var(--swiggy-green); cursor: pointer; font-weight: 600; font-size: 0.85rem;"><i class="fa-solid fa-reply"></i> Reply</button>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary-green); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700;">VF</div>
+                <div>
+                    <strong style="color: var(--text-primary);">Verified Farmer</strong>
+                    <span class="badge badge-success" style="font-size: 0.7rem; margin-left: 6px;">Farmer ✓</span>
+                </div>
+            </div>
+            <p class="comment-text" style="margin: 8px 0; font-size: 0.95rem;">${escapeHtml(text)}</p>
+            <div style="display: flex; gap: 1rem; align-items: center; margin-top: 8px;">
+                <button type="button" class="forum-like-btn btn btn-sm btn-outline" style="border-radius: 20px; font-size: 0.8rem;"><i class="fa-regular fa-thumbs-up"></i> <span class="like-count">1</span> Like</button>
+                <button type="button" class="reply-link-btn" style="background: none; border: none; color: var(--primary-green); cursor: pointer; font-weight: 600; font-size: 0.85rem;"><i class="fa-solid fa-reply"></i> Reply</button>
+            </div>
             <div class="replies-wrapper" style="margin-left: 1.5rem; margin-top: 8px;"></div>
         `;
 
@@ -1872,8 +1883,20 @@ if (forumForm && discussionContainer) {
         if (input) input.value = '';
     });
 
-    // 2. Event Delegation for Reply Button Click
+    // 2. Event Delegation for Reply Button & Like Button Click
     discussionContainer.addEventListener('click', (e) => {
+        const likeBtn = e.target.closest('.forum-like-btn');
+        if (likeBtn) {
+            const countSpan = likeBtn.querySelector('.like-count');
+            if (countSpan) {
+                let count = parseInt(countSpan.textContent, 10) || 0;
+                count++;
+                countSpan.textContent = count;
+                likeBtn.style.color = 'var(--primary-green)';
+                likeBtn.style.borderColor = 'var(--primary-green)';
+            }
+        }
+
         if (e.target.classList.contains('reply-link-btn') || e.target.closest('.reply-link-btn')) {
             const card = e.target.closest('.comment-card-item');
             const wrapper = card ? card.querySelector('.replies-wrapper') : null;
@@ -1881,7 +1904,7 @@ if (forumForm && discussionContainer) {
             if (wrapper && !wrapper.querySelector('.reply-input-box')) {
                 wrapper.innerHTML = `
                     <div class="reply-input-box" style="display: flex; gap: 8px; margin-top: 6px;">
-                        <input type="text" placeholder="Write a reply..." class="reply-input-field" style="flex: 1; padding: 6px; border-radius: 4px; border: 1px solid var(--border-color);">
+                        <input type="text" placeholder="Write a reply..." class="reply-input-field" style="flex: 1; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--text-primary);">
                         <button type="button" class="btn btn-sm btn-primary post-reply-btn">Post</button>
                     </div>
                 `;
@@ -1895,7 +1918,7 @@ if (forumForm && discussionContainer) {
 
             if (replyText && wrapper) {
                 const replyDiv = document.createElement('div');
-                replyDiv.style.cssText = 'font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; border-left: 2px solid var(--swiggy-green); padding-left: 8px;';
+                replyDiv.style.cssText = 'font-size: 0.85rem; color: var(--text-secondary); margin-top: 6px; border-left: 2px solid var(--primary-green); padding-left: 8px;';
                 replyDiv.innerHTML = `<strong>Reply:</strong> ${escapeHtml(replyText)}`;
                 wrapper.appendChild(replyDiv);
                 const inputBox = wrapper.querySelector('.reply-input-box');
@@ -1934,3 +1957,45 @@ if (trackerCheckboxes.length > 0) {
         });
     });
 }
+
+// G. Admin Mode Pill Toggle Logic
+const adminModePill = document.getElementById('admin-mode-pill');
+const adminStorageNavItem = document.getElementById('admin-storage-nav-item');
+const storageAuditSection = document.getElementById('storage-audit-section');
+const adminToggleText = document.getElementById('admin-toggle-text');
+
+if (adminModePill) {
+    adminModePill.addEventListener('click', () => {
+        const isHidden = !storageAuditSection || storageAuditSection.style.display === 'none';
+        if (isHidden) {
+            if (storageAuditSection) storageAuditSection.style.display = 'block';
+            if (adminStorageNavItem) adminStorageNavItem.style.display = 'list-item';
+            if (adminToggleText) adminToggleText.textContent = 'Admin Mode Active ✓';
+            adminModePill.classList.remove('btn-outline');
+            adminModePill.classList.add('btn-primary');
+            alert('🔐 Admin Access Granted: Web Storage & Backend DB Audit Logs are now visible.');
+            if (typeof renderWebStorageTables === 'function') renderWebStorageTables();
+            storageAuditSection?.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            if (storageAuditSection) storageAuditSection.style.display = 'none';
+            if (adminStorageNavItem) adminStorageNavItem.style.display = 'none';
+            if (adminToggleText) adminToggleText.textContent = 'Admin View';
+            adminModePill.classList.remove('btn-primary');
+            adminModePill.classList.add('btn-outline');
+            alert('Switched back to Farmer View.');
+        }
+    });
+}
+
+// H. Reset Form Event Handlers
+if (equipRegForm) {
+    equipRegForm.addEventListener('reset', () => {
+        uploadedEquipPhotoData = '';
+        if (equipPhotoPreviewContainer) equipPhotoPreviewContainer.style.display = 'none';
+        if (equipPhotoImgPreview) equipPhotoImgPreview.src = '';
+        if (equipPhotoFilename) equipPhotoFilename.textContent = '';
+        const alertBox = document.getElementById('reg-alert-box');
+        if (alertBox) alertBox.style.display = 'none';
+    });
+}
+
