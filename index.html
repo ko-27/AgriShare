@@ -235,71 +235,63 @@
             <nav class="sidebar-nav" aria-label="Main Application Navigation">
                 <ul>
                     <li>
-                        <a href="#home" class="nav-item active">
-                            <i class="fa-solid fa-house"></i>
-                            <span>Home</span>
+                        <a href="index.html" class="nav-item active">
+                            <i class="fa-solid fa-store"></i>
+                            <span>Home / Catalog</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#about" class="nav-item">
-                            <i class="fa-solid fa-circle-info"></i>
-                            <span>About Us</span>
+                        <a href="register.html" class="nav-item">
+                            <i class="fa-solid fa-circle-plus"></i>
+                            <span>Register Vehicle</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#dashboard" class="nav-item">
-                            <i class="fa-solid fa-chart-pie"></i>
-                            <span>Dashboard</span>
+                        <a href="book-equipment.html" class="nav-item">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            <span>Book Equipment</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#equipment-slider" class="nav-item">
+                        <a href="mybookings.html" class="nav-item">
+                            <i class="fa-solid fa-bookmark"></i>
+                            <span>My Bookings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="myvehicles.html" class="nav-item">
                             <i class="fa-solid fa-tractor"></i>
-                            <span>Machinery Fleet</span>
+                            <span>My Vehicles</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#services" class="nav-item">
+                        <a href="awareness.html" class="nav-item">
+                            <i class="fa-solid fa-circle-play"></i>
+                            <span>Safety & Video Quiz</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="services.html" class="nav-item">
                             <i class="fa-solid fa-handshake"></i>
                             <span>Services</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#register" class="nav-item">
-                            <i class="fa-solid fa-calendar-check"></i>
-                            <span>Rent Machinery</span>
-                        </a>
-                    </li>
-                    <li id="admin-sidebar-nav-item" style="display: none;">
-                        <a href="#storage" class="nav-item">
+                        <a href="reports.html" class="nav-item">
                             <i class="fa-solid fa-database"></i>
-                            <span>Admin Storage & Reports</span>
-                            <span class="admin-indicator-pill">Admin</span>
+                            <span>Reports</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#help" class="nav-item">
-                            <i class="fa-solid fa-circle-question"></i>
-                            <span>Help Center</span>
+                        <a href="about.html" class="nav-item">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>About Us</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#contact" class="nav-item">
-                            <i class="fa-solid fa-address-book"></i>
-                            <span>Contact</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-divider"></li>
-                    <li>
-                        <a href="javascript:void(0)" id="sidebar-role-toggle-btn" class="nav-item role-toggle-link">
-                            <i class="fa-solid fa-user-shield"></i>
-                            <span id="sidebar-role-text">Switch to Admin Mode</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" id="sidebar-logout-btn" class="nav-item logout-link">
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                            <span>Sign Out</span>
+                        <a href="contact.html" class="nav-item">
+                            <i class="fa-solid fa-headset"></i>
+                            <span>Support</span>
                         </a>
                     </li>
                 </ul>
@@ -478,115 +470,122 @@
             </section>
 
             <!-- =========================================================================
-                 DASHBOARD CARDS & DYNAMIC STATISTICS
+                 FLIPKART/SWIGGY-STYLE UNIFIED EQUIPMENT CATALOG MARKETPLACE
                  ========================================================================= -->
-            <section id="dashboard" class="dashboard-section section-padding">
+            <section id="catalog-marketplace" class="section-padding">
                 <div class="section-header">
                     <div>
-                        <span class="sub-heading">OPERATIONAL METRICS</span>
-                        <h2 class="section-title">Live Portal Statistics</h2>
-                    </div>
-                    <div class="header-action">
-                        <button class="btn btn-sm btn-outline" id="refresh-stats-btn">
-                            <i class="fa-solid fa-rotate"></i> Refresh Counters
-                        </button>
+                        <span class="sub-heading">VERIFIED FARM MACHINERY MARKETPLACE</span>
+                        <h2 class="section-title">Explore Available Equipment</h2>
                     </div>
                 </div>
 
-                <div class="stats-grid">
-                    <div class="stat-card hover-lift">
-                        <div class="stat-icon-wrapper bg-green-gradient">
-                            <i class="fa-solid fa-users"></i>
+                <!-- LIVE SEARCH & FILTER BAR -->
+                <div class="card" style="padding: 1.2rem; display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem;">
+                    <div style="flex: 1; display: flex; align-items: center; gap: 8px; background: var(--bg-card-subtle); padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted);"></i>
+                        <input type="text" id="catalog-search-input" placeholder="Search equipment by name, HP, or owner..." style="border: none; background: transparent; width: 100%; outline: none; font-size: 0.95rem;">
+                    </div>
+                    <select id="catalog-category-filter" style="padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color); font-weight: 600; outline: none;">
+                        <option value="all">All Categories</option>
+                        <option value="Tractor">Tractors & Tillage</option>
+                        <option value="Harvester">Combine Harvesters</option>
+                        <option value="Pump">Irrigation Pumps</option>
+                        <option value="Rotavator">Rotavators</option>
+                        <option value="Sprayer">Agri-Drones & Sprayers</option>
+                    </select>
+                </div>
+
+                <!-- EQUIPMENT GRID -->
+                <div class="grid-layout-3col" id="main-catalog-grid">
+                    
+                    <!-- Item 1: Mahindra Tractor -->
+                    <div class="card machinery-catalog-card equip-card-item" data-category="Tractor">
+                        <div style="position: relative;">
+                            <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=400&auto=format&fit=crop&q=80" alt="Mahindra Tractor" class="card-img">
+                            <span class="wishlist-star-btn" title="Add to Wishlist" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;"><i class="fa-regular fa-star"></i></span>
                         </div>
-                        <div class="stat-details">
-                            <div class="stat-number-wrapper">
-                                <span class="stat-counter" data-target="1450">0</span>
-                                <span class="stat-plus">+</span>
-                            </div>
-                            <span class="stat-label">Registered Farmers</span>
-                            <div class="stat-trend positive">
-                                <i class="fa-solid fa-arrow-trend-up"></i> +14% this month
-                            </div>
+                        <div class="card-body">
+                            <span class="badge badge-success">45 HP Heavy Tillage</span>
+                            <h3>Mahindra 575 DI Tractor</h3>
+                            <p><strong>Owner:</strong> Ramesh Kumar (Aadhar: 5481-8392-4015)</p>
+                            <p><strong>Location:</strong> Gobichettipalayam, Erode</p>
+                            <div class="price-tag">₹350 / hour</div>
+                            <button class="catalog-book-btn" data-name="Mahindra 575 DI Tractor" data-price="350" data-owner="Ramesh Kumar (Aadhar: 5481-8392-4015)" data-img="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=400&auto=format&fit=crop&q=80">
+                                <i class="fa-solid fa-calendar-plus"></i> Book Now
+                            </button>
                         </div>
                     </div>
 
-                    <div class="stat-card hover-lift">
-                        <div class="stat-icon-wrapper bg-brown-gradient">
-                            <i class="fa-solid fa-user-tie"></i>
+                    <!-- Item 2: John Deere Harvester -->
+                    <div class="card machinery-catalog-card equip-card-item" data-category="Harvester">
+                        <div style="position: relative;">
+                            <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=400&auto=format&fit=crop&q=80" alt="John Deere Harvester" class="card-img">
+                            <span class="wishlist-star-btn" title="Add to Wishlist" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;"><i class="fa-regular fa-star"></i></span>
                         </div>
-                        <div class="stat-details">
-                            <div class="stat-number-wrapper">
-                                <span class="stat-counter" data-target="380">0</span>
-                                <span class="stat-plus">+</span>
-                            </div>
-                            <span class="stat-label">Equipment Owners</span>
-                            <div class="stat-trend positive">
-                                <i class="fa-solid fa-arrow-trend-up"></i> +8% verified
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="stat-card hover-lift">
-                        <div class="stat-icon-wrapper bg-blue-gradient">
-                            <i class="fa-solid fa-tractor"></i>
-                        </div>
-                        <div class="stat-details">
-                            <div class="stat-number-wrapper">
-                                <span class="stat-counter" data-target="520">0</span>
-                                <span class="stat-unit">Units</span>
-                            </div>
-                            <span class="stat-label">Available Equipment</span>
-                            <div class="stat-trend info">
-                                <i class="fa-solid fa-circle-check"></i> Ready to rent
-                            </div>
+                        <div class="card-body">
+                            <span class="badge badge-primary">100 HP Grain Combine</span>
+                            <h3>John Deere W70 Harvester</h3>
+                            <p><strong>Owner:</strong> Muthusamy V. (Aadhar: 7812-4091-6623)</p>
+                            <p><strong>Location:</strong> Karamadai, Coimbatore</p>
+                            <div class="price-tag">₹1,200 / hour</div>
+                            <button class="catalog-book-btn" data-name="John Deere W70 Harvester" data-price="1200" data-owner="Muthusamy V. (Aadhar: 7812-4091-6623)" data-img="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=400&auto=format&fit=crop&q=80">
+                                <i class="fa-solid fa-calendar-plus"></i> Book Now
+                            </button>
                         </div>
                     </div>
 
-                    <div class="stat-card hover-lift">
-                        <div class="stat-icon-wrapper bg-orange-gradient">
-                            <i class="fa-solid fa-calendar-check"></i>
+                    <!-- Item 3: Kirloskar Pump -->
+                    <div class="card machinery-catalog-card equip-card-item" data-category="Pump">
+                        <div style="position: relative;">
+                            <img src="https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?w=400&auto=format&fit=crop&q=80" alt="Kirloskar Pump" class="card-img">
+                            <span class="wishlist-star-btn" title="Add to Wishlist" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;"><i class="fa-regular fa-star"></i></span>
                         </div>
-                        <div class="stat-details">
-                            <div class="stat-number-wrapper">
-                                <span class="stat-counter" data-target="94">0</span>
-                                <span class="stat-unit">Slots</span>
-                            </div>
-                            <span class="stat-label">Today's Bookings</span>
-                            <div class="stat-trend warning">
-                                <i class="fa-solid fa-clock"></i> 82% occupied
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="stat-card hover-lift">
-                        <div class="stat-icon-wrapper bg-red-gradient">
-                            <i class="fa-solid fa-hourglass-half"></i>
-                        </div>
-                        <div class="stat-details">
-                            <div class="stat-number-wrapper">
-                                <span class="stat-counter" data-target="18">0</span>
-                                <span class="stat-unit">Reqs</span>
-                            </div>
-                            <span class="stat-label">Pending Approvals</span>
-                            <div class="stat-trend pending">
-                                <i class="fa-solid fa-bolt"></i> Awaiting Owner
-                            </div>
+                        <div class="card-body">
+                            <span class="badge badge-info">10 HP Irrigation</span>
+                            <h3>Kirloskar 10HP Pump</h3>
+                            <p><strong>Owner:</strong> Selvi R. (Aadhar: 3190-8821-5544)</p>
+                            <p><strong>Location:</strong> Anthiyur, Bhavani Taluk</p>
+                            <div class="price-tag">₹150 / hour</div>
+                            <button class="catalog-book-btn" data-name="Kirloskar 10HP Pump" data-price="150" data-owner="Selvi R. (Aadhar: 3190-8821-5544)" data-img="https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?w=400&auto=format&fit=crop&q=80">
+                                <i class="fa-solid fa-calendar-plus"></i> Book Now
+                            </button>
                         </div>
                     </div>
 
-                    <div class="stat-card hover-lift">
-                        <div class="stat-icon-wrapper bg-emerald-gradient">
-                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <!-- Item 4: Swaraj Rotavator -->
+                    <div class="card machinery-catalog-card equip-card-item" data-category="Rotavator">
+                        <div style="position: relative;">
+                            <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?w=400&auto=format&fit=crop&q=80" alt="Swaraj Rotavator" class="card-img">
+                            <span class="wishlist-star-btn" title="Add to Wishlist" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;"><i class="fa-regular fa-star"></i></span>
                         </div>
-                        <div class="stat-details">
-                            <div class="stat-number-wrapper">
-                                <span class="stat-counter" data-target="1120">0</span>
-                                <span class="stat-plus">+</span>
-                            </div>
-                            <span class="stat-label">Completed Rentals</span>
-                            <div class="stat-trend success">
-                                <i class="fa-solid fa-circle-check"></i> 99.4% rated 5★
-                            </div>
+                        <div class="card-body">
+                            <span class="badge badge-success">48 HP Soil Tillage</span>
+                            <h3>Swaraj 744 FE Rotavator</h3>
+                            <p><strong>Owner:</strong> Karthik Raja (Aadhar: 4912-7721-3094)</p>
+                            <p><strong>Location:</strong> Pollachi, Coimbatore</p>
+                            <div class="price-tag">₹280 / hour</div>
+                            <button class="catalog-book-btn" data-name="Swaraj 744 FE Rotavator" data-price="280" data-owner="Karthik Raja (Aadhar: 4912-7721-3094)" data-img="https://images.unsplash.com/photo-1589923188900-85dae523342b?w=400&auto=format&fit=crop&q=80">
+                                <i class="fa-solid fa-calendar-plus"></i> Book Now
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Item 5: Precision Drone Sprayer -->
+                    <div class="card machinery-catalog-card equip-card-item" data-category="Sprayer">
+                        <div style="position: relative;">
+                            <img src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=400&auto=format&fit=crop&q=80" alt="Agri-Drone Sprayer" class="card-img">
+                            <span class="wishlist-star-btn" title="Add to Wishlist" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;"><i class="fa-regular fa-star"></i></span>
+                        </div>
+                        <div class="card-body">
+                            <span class="badge badge-warning">16L UAV Precision</span>
+                            <h3>Agri-Drone Sprayer</h3>
+                            <p><strong>Owner:</strong> Vignesh K. (Aadhar: 9012-3841-7782)</p>
+                            <p><strong>Location:</strong> Salem Agricultural Hub</p>
+                            <div class="price-tag">₹500 / hour</div>
+                            <button class="catalog-book-btn" data-name="Agri-Drone Sprayer" data-price="500" data-owner="Vignesh K. (Aadhar: 9012-3841-7782)" data-img="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=400&auto=format&fit=crop&q=80">
+                                <i class="fa-solid fa-calendar-plus"></i> Book Now
+                            </button>
                         </div>
                     </div>
                 </div>

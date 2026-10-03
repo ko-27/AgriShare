@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriShare – Book Farm Equipment & Machinery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode">
+
+    <!-- Topbar Header -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <a href="index.html" class="brand-logo"><i class="fa-solid fa-tractor"></i> AgriShare</a>
+            <span class="location-badge"><i class="fa-solid fa-location-dot"></i> Tamil Nadu Agricultural Hub</span>
+        </div>
+        <div class="topbar-center">
+            <span id="live-clock">Loading live time...</span>
+        </div>
+        <div class="topbar-right">
+            <button id="theme-toggle" class="icon-btn" title="Toggle Dark/Light Mode"><i class="fa-solid fa-moon"></i></button>
+            <a href="profile.html" class="role-switch-pill"><i class="fa-solid fa-fingerprint"></i> Aadhar Verified ✓</a>
+        </div>
+    </header>
+
+    <div class="app-layout">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fa-solid fa-store"></i> Home / Catalog</a></li>
+                    <li><a href="register.html"><i class="fa-solid fa-circle-plus"></i> Register Vehicle</a></li>
+                    <li><a href="book-equipment.html" class="active"><i class="fa-solid fa-calendar-check"></i> Book Equipment</a></li>
+                    <li><a href="mybookings.html"><i class="fa-solid fa-bookmark"></i> My Bookings</a></li>
+                    <li><a href="myvehicles.html"><i class="fa-solid fa-tractor"></i> My Vehicles</a></li>
+                    <li><a href="awareness.html"><i class="fa-solid fa-circle-play"></i> Safety & Video Quiz</a></li>
+                    <li><a href="services.html"><i class="fa-solid fa-handshake"></i> Services</a></li>
+                    <li><a href="reports.html"><i class="fa-solid fa-database"></i> Web Storage Reports</a></li>
+                    <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Portal</a></li>
+                    <li><a href="contact.html"><i class="fa-solid fa-headset"></i> Support & Help</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="standalone-page-header">
+                <h1><i class="fa-solid fa-calendar-check"></i> Equipment Rental Booking Form</h1>
+                <p>Select or drag equipment cards into the drop slot, enter renter details with 12-digit Aadhar ID verification, choose rental duration, and calculate total cost live.</p>
+            </div>
+
+            <section class="section-padding">
+                <div class="form-container-card" style="max-width: 850px; margin: 0 auto;">
+                    <form id="equipment-booking-form" class="responsive-form" novalidate>
+                        
+                        <!-- STEP 1: DRAG / SELECT EQUIPMENT TARGET SLOT -->
+                        <div class="rental-dnd-section">
+                            <div class="rental-dnd-header">
+                                <h4><i class="fa-solid fa-arrows-up-down-left-right"></i> Step 1: Drag Equipment Picture Card or Select Machinery</h4>
+                                <span class="panel-subtitle">Drag any card below into the booking slot</span>
+                            </div>
+
+                            <div class="rental-dnd-grid">
+                                <!-- Source Palette -->
+                                <div class="dnd-source-palette">
+                                    <div class="machinery-drag-grid" id="drag-items-grid">
+                                        <!-- Card 1 -->
+                                        <div class="machinery-drag-item" draggable="true" id="drag-tractor" 
+                                             data-machinery="Mahindra 575 DI Tractor" 
+                                             data-category="Heavy Tillage Tractor" 
+                                             data-price="350" 
+                                             data-rate="₹350 / hour" 
+                                             data-owner="Ramesh Kumar"
+                                             data-img="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=300&auto=format&fit=crop&q=80">
+                                            <div class="machinery-drag-left">
+                                                <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=300&auto=format&fit=crop&q=80" alt="Mahindra Tractor" class="machinery-thumb-img">
+                                                <div class="machinery-drag-text">
+                                                    <strong>Mahindra 575 DI Tractor</strong>
+                                                    <small>45 HP • Owner: Ramesh Kumar</small>
+                                                    <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹350 / hour</span>
+                                                </div>
+                                            </div>
+                                            <i class="fa-solid fa-grip-vertical grip-handle"></i>
+                                        </div>
+
+                                        <!-- Card 2 -->
+                                        <div class="machinery-drag-item" draggable="true" id="drag-harvester" 
+                                             data-machinery="John Deere W70 Harvester" 
+                                             data-category="Multi-Crop Combine" 
+                                             data-price="1200" 
+                                             data-rate="₹1,200 / hour" 
+                                             data-owner="Muthusamy V."
+                                             data-img="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=300&auto=format&fit=crop&q=80">
+                                            <div class="machinery-drag-left">
+                                                <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=300&auto=format&fit=crop&q=80" alt="John Deere Harvester" class="machinery-thumb-img">
+                                                <div class="machinery-drag-text">
+                                                    <strong>John Deere W70 Harvester</strong>
+                                                    <small>100 HP • Owner: Muthusamy V.</small>
+                                                    <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹1,200 / hour</span>
+                                                </div>
+                                            </div>
+                                            <i class="fa-solid fa-grip-vertical grip-handle"></i>
+                                        </div>
+
+                                        <!-- Card 3 -->
+                                        <div class="machinery-drag-item" draggable="true" id="drag-pump" 
+                                             data-machinery="Kirloskar 10HP Pump" 
+                                             data-category="High-Discharge Irrigation" 
+                                             data-price="150" 
+                                             data-rate="₹150 / hour" 
+                                             data-owner="Selvi R."
+                                             data-img="https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?w=300&auto=format&fit=crop&q=80">
+                                            <div class="machinery-drag-left">
+                                                <img src="https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?w=300&auto=format&fit=crop&q=80" alt="Kirloskar Pump" class="machinery-thumb-img">
+                                                <div class="machinery-drag-text">
+                                                    <strong>Kirloskar 10HP Pump</strong>
+                                                    <small>High Discharge • Owner: Selvi R.</small>
+                                                    <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹150 / hour</span>
+                                                </div>
+                                            </div>
+                                            <i class="fa-solid fa-grip-vertical grip-handle"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Booking Drop Target Slot -->
+                                <div class="rental-drop-target" id="drop-target-box" aria-label="Drop equipment picture card here">
+                                    <div class="drop-prompt" id="drop-placeholder">
+                                        <i class="fa-solid fa-cart-flatbed-suitcases" style="font-size: 2.2rem; color: var(--swiggy-green);"></i>
+                                        <h5>Drop Equipment Card Here</h5>
+                                        <p>Drag any equipment card into this box to auto-fill details</p>
+                                    </div>
+                                    <div class="selected-machinery-basket" id="dropped-items-list"></div>
+                                    <div id="drop-status-msg" class="drop-status-msg" style="display: none; margin-top: 8px; font-weight: 600; font-size: 0.85rem;"></div>
+                                    <button type="button" class="btn btn-sm btn-outline" id="clear-drop-btn" style="margin-top: 10px; display: none;">
+                                        <i class="fa-solid fa-rotate-left"></i> Change Equipment
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 2: RENTER DETAILS & AADHAR -->
+                        <h4 style="color: var(--swiggy-green-dark); margin: 1.5rem 0 1rem 0;"><i class="fa-solid fa-user-check"></i> Step 2: Renting Person Details & Aadhar Verification</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="book-renter-name"><i class="fa-solid fa-user"></i> Renting Person Full Name <span class="required-star">*</span></label>
+                                <input type="text" id="book-renter-name" name="renter_name" value="Selvi R." placeholder="Enter renting person name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="book-renter-phone"><i class="fa-solid fa-phone"></i> Mobile Number <span class="required-star">*</span></label>
+                                <input type="tel" id="book-renter-phone" name="renter_phone" value="9443210987" placeholder="10-digit mobile" maxlength="10" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="book-renter-aadhar"><i class="fa-solid fa-fingerprint"></i> Renting Person Aadhar ID <span class="required-star">*</span></label>
+                                <div class="aadhar-input-wrapper">
+                                    <input type="text" id="book-renter-aadhar" name="renter_aadhar" value="3190-8821-5544" placeholder="12-digit UIDAI (e.g. 3190-8821-5544)" maxlength="14" required>
+                                    <span class="aadhar-verify-badge" id="book-aadhar-status"><i class="fa-solid fa-shield-check"></i> Aadhar Verified ✓</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="book-renter-address"><i class="fa-solid fa-location-dot"></i> Farm Delivery Address <span class="required-star">*</span></label>
+                                <input type="text" id="book-renter-address" name="renter_address" value="Anthiyur, Bhavani Taluk" placeholder="Delivery farm location" required>
+                            </div>
+                        </div>
+
+                        <!-- STEP 3: RENT DURATION & PER HOUR PRICING -->
+                        <h4 style="color: var(--swiggy-green-dark); margin: 1.5rem 0 1rem 0;"><i class="fa-solid fa-clock-rotate-left"></i> Step 3: Rent Duration & Per Hour Rate Calculation</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="equipment-name-field"><i class="fa-solid fa-tractor"></i> Selected Equipment <span class="required-star">*</span></label>
+                                <input type="text" id="equipment-name-field" name="selected_equip" value="Mahindra 575 DI Tractor" placeholder="Selected equipment" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="equipment-price-field"><i class="fa-solid fa-indian-rupee-sign"></i> Per Hour Rent Rate (₹/hr) <span class="required-star">*</span></label>
+                                <input type="number" id="equipment-price-field" name="rate_per_hour" value="350" readonly required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="book-start-date"><i class="fa-solid fa-calendar"></i> Rental Start Date <span class="required-star">*</span></label>
+                                <input type="date" id="book-start-date" name="start_date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="book-rent-duration"><i class="fa-solid fa-hourglass-half"></i> Rent Duration (in Hours) <span class="required-star">*</span></label>
+                                <input type="number" id="book-rent-duration" name="duration_hours" value="4" min="1" max="100" placeholder="e.g. 4 hours" required>
+                            </div>
+                        </div>
+
+                        <!-- DYNAMIC PRICE CALCULATOR CARD -->
+                        <div class="price-calculator-card" id="price-calc-card">
+                            <h4><i class="fa-solid fa-calculator"></i> Live Total Rent Price Calculation Breakdown</h4>
+                            <div class="calc-row"><span>Selected Equipment:</span><strong id="calc-equip-name">Mahindra 575 DI Tractor</strong></div>
+                            <div class="calc-row"><span>Per Hour Rent Rate:</span><span id="calc-equip-rate">₹350 / hour</span></div>
+                            <div class="calc-row"><span>Rent Duration:</span><span id="calc-equip-hours">4 Hours</span></div>
+                            <div class="calc-row total-row"><span>Total Estimated Rental Cost:</span><span id="calc-total-cost">₹1,400</span></div>
+                        </div>
+
+                        <div class="form-btn-group" style="margin-top: 1.5rem;">
+                            <button type="submit" class="btn btn-primary btn-lg bounce" id="btn-submit-booking">
+                                <i class="fa-solid fa-calendar-check"></i> Confirm & Book Equipment
+                            </button>
+                            <button type="reset" class="btn btn-outline btn-lg">
+                                <i class="fa-solid fa-arrow-rotate-left"></i> Reset Form
+                            </button>
+                        </div>
+                        <div id="booking-alert-box" class="form-submission-alert"></div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-bottom-bar">
+            <p>&copy; 2026 <strong>AgriShare</strong>. Developed by <strong>Kohila M</strong> (Reg No: 2303717620522027), Coimbatore Institute of Technology.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

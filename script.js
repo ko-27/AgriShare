@@ -1679,3 +1679,258 @@ if (modalBookingForm) {
         }, 1500);
     });
 }
+
+
+/* =========================================================================
+   19. ASSIGNMENT 6 - EVENT HANDLING IMPLEMENTATIONS (EXP NO: 06)
+   ========================================================================= */
+
+// A. Catalog Wishlist Star Toggle (Click Event)
+document.addEventListener('click', (e) => {
+    const starBtn = e.target.closest('.wishlist-star-btn');
+    if (starBtn) {
+        const starIcon = starBtn.querySelector('i');
+        if (starIcon) {
+            if (starIcon.classList.contains('fa-regular')) {
+                starIcon.classList.remove('fa-regular');
+                starIcon.classList.add('fa-solid');
+                starBtn.style.color = '#f59e0b'; // Gold
+            } else {
+                starIcon.classList.remove('fa-solid');
+                starIcon.classList.add('fa-regular');
+                starBtn.style.color = '#ffffff';
+            }
+        }
+    }
+});
+
+// B. Live Search & Filter Bar (Input, Change, Keydown Events)
+const catalogSearchInput = document.getElementById('catalog-search-input');
+const catalogCategoryFilter = document.getElementById('catalog-category-filter');
+
+function filterCatalogGrid() {
+    const query = catalogSearchInput ? catalogSearchInput.value.toLowerCase().trim() : '';
+    const category = catalogCategoryFilter ? catalogCategoryFilter.value : 'all';
+    const cards = document.querySelectorAll('.equip-card-item');
+
+    cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        const cardCat = card.getAttribute('data-category') || '';
+        
+        const matchesQuery = !query || text.includes(query);
+        const matchesCat = category === 'all' || cardCat.toLowerCase().includes(category.toLowerCase());
+
+        if (matchesQuery && matchesCat) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+if (catalogSearchInput) {
+    catalogSearchInput.addEventListener('input', filterCatalogGrid);
+    catalogSearchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            filterCatalogGrid();
+        }
+    });
+}
+
+if (catalogCategoryFilter) {
+    catalogCategoryFilter.addEventListener('change', filterCatalogGrid);
+}
+
+// C. Custom Video Player Event Handlers (Click, Change, Timeupdate Events)
+const videoPlayer = document.getElementById('custom-video-player');
+const videoPlayBtn = document.getElementById('video-play-btn');
+const videoProgressBar = document.getElementById('video-progress-bar');
+const videoVolumeSlider = document.getElementById('video-volume-slider');
+const videoTimeDisplay = document.getElementById('video-time-display');
+
+if (videoPlayer && videoPlayBtn) {
+    // 1. Play/Pause Click Event
+    videoPlayBtn.addEventListener('click', () => {
+        if (videoPlayer.paused) {
+            videoPlayer.play();
+            videoPlayBtn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause';
+        } else {
+            videoPlayer.pause();
+            videoPlayBtn.innerHTML = '<i class="fa-solid fa-play"></i> Play';
+        }
+    });
+
+    // 2. Volume Change Event
+    if (videoVolumeSlider) {
+        videoVolumeSlider.addEventListener('change', (e) => {
+            videoPlayer.volume = e.target.value;
+        });
+    }
+
+    // 3. Timeupdate Progress Bar Event
+    videoPlayer.addEventListener('timeupdate', () => {
+        if (!isNaN(videoPlayer.duration)) {
+            const pct = (videoPlayer.currentTime / videoPlayer.duration) * 100;
+            if (videoProgressBar) videoProgressBar.value = pct;
+            
+            const curMins = Math.floor(videoPlayer.currentTime / 60);
+            const curSecs = Math.floor(videoPlayer.currentTime % 60);
+            const durMins = Math.floor(videoPlayer.duration / 60);
+            const durSecs = Math.floor(videoPlayer.duration % 60);
+
+            const fmtCur = `${curMins < 10 ? '0' : ''}${curMins}:${curSecs < 10 ? '0' : ''}${curSecs}`;
+            const fmtDur = `${durMins < 10 ? '0' : ''}${durMins}:${durSecs < 10 ? '0' : ''}${durSecs}`;
+
+            if (videoTimeDisplay) videoTimeDisplay.textContent = `${fmtCur} / ${fmtDur}`;
+        }
+    });
+
+    // 4. Seek Progress Bar Click Event
+    if (videoProgressBar) {
+        videoProgressBar.addEventListener('input', (e) => {
+            if (!isNaN(videoPlayer.duration)) {
+                videoPlayer.currentTime = (e.target.value / 100) * videoPlayer.duration;
+            }
+        });
+    }
+}
+
+// D. Machinery Safety Quiz Module (Change, Click, SetInterval Countdown Timer)
+const quizForm = document.getElementById('machinery-quiz-form');
+const startQuizBtn = document.getElementById('start-quiz-btn');
+const quizTimerBadge = document.getElementById('quiz-timer-badge');
+let quizTimerInterval = null;
+let quizSecondsLeft = 60;
+
+if (startQuizBtn && quizTimerBadge) {
+    startQuizBtn.addEventListener('click', () => {
+        clearInterval(quizTimerInterval);
+        quizSecondsLeft = 60;
+        startQuizBtn.disabled = true;
+        
+        quizTimerInterval = setInterval(() => {
+            quizSecondsLeft--;
+            quizTimerBadge.innerHTML = `<i class="fa-solid fa-clock"></i> Time Left: ${quizSecondsLeft}s`;
+            if (quizSecondsLeft <= 0) {
+                clearInterval(quizTimerInterval);
+                alert('Time expired! Auto-submitting Machinery Safety Quiz.');
+                submitQuizLogic();
+            }
+        }, 1000);
+    });
+}
+
+if (quizForm) {
+    quizForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        clearInterval(quizTimerInterval);
+        submitQuizLogic();
+    });
+}
+
+function submitQuizLogic() {
+    const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+    const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+    const resultsBox = document.getElementById('quiz-results-box');
+
+    let score = 0;
+    if (q1 === 'A') score++;
+    if (q2 === 'B') score++;
+
+    if (resultsBox) {
+        resultsBox.className = 'form-submission-alert success';
+        resultsBox.innerHTML = `<i class="fa-solid fa-award"></i> <strong>Quiz Score:</strong> You scored ${score} / 2! Safety certificate issued.`;
+        resultsBox.style.display = 'block';
+    }
+}
+
+// E. Farmer Discussion Forum (Event Delegation & Inline Dblclick Editing)
+const forumForm = document.getElementById('forum-post-form');
+const discussionContainer = document.getElementById('discussion-list-container');
+
+if (forumForm && discussionContainer) {
+    // 1. Submit Event
+    forumForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const input = document.getElementById('forum-comment-input');
+        const text = input ? input.value.trim() : '';
+
+        if (!text) return;
+
+        const commentItem = document.createElement('div');
+        commentItem.className = 'comment-card-item';
+        commentItem.style.cssText = 'background: var(--bg-card-subtle); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--swiggy-green); margin-top: 10px;';
+        commentItem.innerHTML = `
+            <strong style="color: var(--swiggy-green-dark);">Verified Farmer</strong>
+            <p class="comment-text" style="margin: 6px 0;">${escapeHtml(text)}</p>
+            <button type="button" class="reply-link-btn" style="background: none; border: none; color: var(--swiggy-green); cursor: pointer; font-weight: 600; font-size: 0.85rem;"><i class="fa-solid fa-reply"></i> Reply</button>
+            <div class="replies-wrapper" style="margin-left: 1.5rem; margin-top: 8px;"></div>
+        `;
+
+        discussionContainer.prepend(commentItem);
+        if (input) input.value = '';
+    });
+
+    // 2. Event Delegation for Reply Button Click
+    discussionContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('reply-link-btn') || e.target.closest('.reply-link-btn')) {
+            const card = e.target.closest('.comment-card-item');
+            const wrapper = card ? card.querySelector('.replies-wrapper') : null;
+
+            if (wrapper && !wrapper.querySelector('.reply-input-box')) {
+                wrapper.innerHTML = `
+                    <div class="reply-input-box" style="display: flex; gap: 8px; margin-top: 6px;">
+                        <input type="text" placeholder="Write a reply..." class="reply-input-field" style="flex: 1; padding: 6px; border-radius: 4px; border: 1px solid var(--border-color);">
+                        <button type="button" class="btn btn-sm btn-primary post-reply-btn">Post</button>
+                    </div>
+                `;
+            }
+        }
+
+        if (e.target.classList.contains('post-reply-btn')) {
+            const wrapper = e.target.closest('.replies-wrapper');
+            const field = wrapper ? wrapper.querySelector('.reply-input-field') : null;
+            const replyText = field ? field.value.trim() : '';
+
+            if (replyText && wrapper) {
+                const replyDiv = document.createElement('div');
+                replyDiv.style.cssText = 'font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; border-left: 2px solid var(--swiggy-green); padding-left: 8px;';
+                replyDiv.innerHTML = `<strong>Reply:</strong> ${escapeHtml(replyText)}`;
+                wrapper.appendChild(replyDiv);
+                const inputBox = wrapper.querySelector('.reply-input-box');
+                if (inputBox) inputBox.remove();
+            }
+        }
+    });
+
+    // 3. Double-Click (Dblclick Event) for Inline Comment Editing
+    discussionContainer.addEventListener('dblclick', (e) => {
+        const commentText = e.target.closest('.comment-text');
+        if (commentText) {
+            const currentText = commentText.textContent;
+            const newText = prompt('Edit your comment inline:', currentText);
+            if (newText !== null && newText.trim() !== '') {
+                commentText.textContent = newText.trim();
+            }
+        }
+    });
+}
+
+// F. Rental Progress Tracker (Mouseover Tooltip & Checkbox Change Events)
+const trackerCheckboxes = document.querySelectorAll('.tracker-chk');
+const trackerFill = document.getElementById('tracker-progress-fill');
+const trackerText = document.getElementById('tracker-percentage-text');
+
+if (trackerCheckboxes.length > 0) {
+    trackerCheckboxes.forEach(chk => {
+        chk.addEventListener('change', () => {
+            const total = trackerCheckboxes.length;
+            const checked = document.querySelectorAll('.tracker-chk:checked').length;
+            const pct = Math.round((checked / total) * 100);
+
+            if (trackerFill) trackerFill.style.width = `${pct}%`;
+            if (trackerText) trackerText.textContent = `${pct}% Completed`;
+        });
+    });
+}
