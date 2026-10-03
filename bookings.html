@@ -2,11 +2,104 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=index.html#dashboard">
-    <title>Redirecting to AgriShare Bookings...</title>
-    <script>window.location.replace("index.html#dashboard");</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriShare – Bookings & Rental Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <p>Redirecting to <a href="index.html#dashboard">AgriShare Bookings</a>...</p>
+<body class="light-mode">
+
+    <!-- Topbar Header -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <a href="index.html" class="brand-logo"><i class="fa-solid fa-tractor"></i> AgriShare</a>
+            <span class="location-badge"><i class="fa-solid fa-location-dot"></i> Tamil Nadu Agricultural Hub</span>
+        </div>
+        <div class="topbar-center">
+            <span id="live-clock">Loading live time...</span>
+        </div>
+        <div class="topbar-right">
+            <button id="theme-toggle" class="icon-btn" title="Toggle Dark/Light Mode"><i class="fa-solid fa-moon"></i></button>
+            <a href="profile.html" class="role-switch-pill"><i class="fa-solid fa-fingerprint"></i> Aadhar Verified ✓</a>
+        </div>
+    </header>
+
+    <div class="app-layout">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="equipment.html"><i class="fa-solid fa-tractor"></i> Equipment Catalog</a></li>
+                    <li><a href="bookings.html" class="active"><i class="fa-solid fa-calendar-check"></i> Bookings & Rentals</a></li>
+                    <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                    <li><a href="services.html"><i class="fa-solid fa-handshake"></i> Services</a></li>
+                    <li><a href="reports.html"><i class="fa-solid fa-database"></i> Web Storage Reports</a></li>
+                    <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Portal</a></li>
+                    <li><a href="contact.html"><i class="fa-solid fa-headset"></i> Support & Help</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="standalone-page-header">
+                <h1><i class="fa-solid fa-calendar-check"></i> Equipment Bookings & Active Rentals</h1>
+                <p>Manage your hourly tractor, harvester, and pump bookings with renter Aadhar verification, duration breakdown, and total rent calculations.</p>
+            </div>
+
+            <section class="section-padding">
+                <div class="card" style="padding: 1.8rem; margin-bottom: 2rem;">
+                    <h3><i class="fa-solid fa-clock-history"></i> Recent Booking Records</h3>
+                    <div class="table-responsive" style="margin-top: 1rem;">
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>Renter Name</th>
+                                    <th>Aadhar ID</th>
+                                    <th>Equipment</th>
+                                    <th>Rate (₹/hr)</th>
+                                    <th>Duration</th>
+                                    <th>Total Rent</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>BK-9041</strong></td>
+                                    <td>Selvi R.</td>
+                                    <td><span class="badge badge-info">3190-8821-5544</span></td>
+                                    <td>Mahindra 575 DI Tractor</td>
+                                    <td>₹350 / hr</td>
+                                    <td>4 Hours</td>
+                                    <td><strong style="color: var(--swiggy-green-dark);">₹1,400</strong></td>
+                                    <td><span class="badge badge-success">Confirmed ✓</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>BK-8902</strong></td>
+                                    <td>Muthusamy V.</td>
+                                    <td><span class="badge badge-info">7812-4091-6623</span></td>
+                                    <td>John Deere W70 Harvester</td>
+                                    <td>₹1,200 / hr</td>
+                                    <td>8 Hours</td>
+                                    <td><strong style="color: var(--swiggy-green-dark);">₹9,600</strong></td>
+                                    <td><span class="badge badge-success">Completed ✓</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-bottom-bar">
+            <p>&copy; 2026 <strong>AgriShare</strong>. Developed by <strong>Kohila M</strong> (Reg No: 2303717620522027), Coimbatore Institute of Technology.</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>

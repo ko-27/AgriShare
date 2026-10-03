@@ -2,11 +2,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=index.html#home">
-    <title>Redirecting to AgriShare Home...</title>
-    <script>window.location.replace("index.html#home");</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriShare – About Academic Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <p>Redirecting to <a href="index.html#home">AgriShare Home</a>...</p>
+<body class="light-mode">
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <a href="index.html" class="brand-logo"><i class="fa-solid fa-tractor"></i> AgriShare</a>
+            <span class="location-badge"><i class="fa-solid fa-graduation-cap"></i> CIT Information Technology</span>
+        </div>
+        <div class="topbar-center">
+            <span id="live-clock">Loading live time...</span>
+        </div>
+        <div class="topbar-right">
+            <button id="theme-toggle" class="icon-btn" title="Toggle Dark/Light Mode"><i class="fa-solid fa-moon"></i></button>
+            <a href="profile.html" class="role-switch-pill"><i class="fa-solid fa-fingerprint"></i> Aadhar Verified ✓</a>
+        </div>
+    </header>
+
+    <div class="app-layout">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="equipment.html"><i class="fa-solid fa-tractor"></i> Equipment Catalog</a></li>
+                    <li><a href="bookings.html"><i class="fa-solid fa-calendar-check"></i> Bookings & Rentals</a></li>
+                    <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                    <li><a href="services.html"><i class="fa-solid fa-handshake"></i> Services</a></li>
+                    <li><a href="reports.html"><i class="fa-solid fa-database"></i> Web Storage Reports</a></li>
+                    <li><a href="about.html" class="active"><i class="fa-solid fa-circle-info"></i> About Portal</a></li>
+                    <li><a href="contact.html"><i class="fa-solid fa-headset"></i> Support & Help</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="standalone-page-header">
+                <h1><i class="fa-solid fa-circle-info"></i> About AgriShare Platform</h1>
+                <p>Advanced Farmer Equipment Sharing & Rental Portal designed for modern agricultural machinery deployment and resource sharing.</p>
+            </div>
+
+            <section class="section-padding">
+                <div class="card" style="padding: 2rem;">
+                    <h2>Academic & Development Project Metadata</h2>
+                    <ul style="list-style: none; margin-top: 1rem; line-height: 2;">
+                        <li><strong>Student Developer:</strong> Kohila M</li>
+                        <li><strong>Register Number:</strong> 2303717620522027</li>
+                        <li><strong>Institution:</strong> Coimbatore Institute of Technology</li>
+                        <li><strong>Department:</strong> Department of Information Technology</li>
+                        <li><strong>Course:</strong> Full Stack Development Laboratory (23IT721)</li>
+                        <li><strong>Assignment:</strong> Assignment 4 – HTML5 Drag and Drop & Web Storage Portal</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-bottom-bar">
+            <p>&copy; 2026 <strong>AgriShare</strong>. Developed by <strong>Kohila M</strong> (Reg No: 2303717620522027), Coimbatore Institute of Technology.</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>

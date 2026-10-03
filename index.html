@@ -334,24 +334,7 @@
                 </marquee>
             </div>
 
-            
-                <div class="css-badges-row">
-                    <!-- 1. External CSS demonstration badge -->
-                    <span class="badge-external-css tooltip" data-tooltip="Loaded via external style.css file">
-                        <i class="fa-solid fa-file-code"></i> External CSS
-                    </span>
 
-                    <!-- 2. Internal CSS demonstration badge with skewX transform -->
-                    <span class="badge-internal-css tooltip" data-tooltip="Defined inside &lt;style&gt; block in &lt;head&gt;">
-                        <i class="fa-solid fa-code"></i> <span>Internal CSS (skewX)</span>
-                    </span>
-
-                    <!-- 3. Inline CSS demonstration badge with inline style attribute -->
-                    <span class="tooltip" data-tooltip="Applied directly via HTML style attribute" style="display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #EF6C00, #E65100); color: #FFFFFF; padding: 6px 14px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; box-shadow: 0 4px 10px rgba(239, 108, 0, 0.25); cursor: pointer;">
-                        <i class="fa-solid fa-paintbrush"></i> Inline CSS (style="")
-                    </span>
-                </div>
-            </div>
 
             <!-- =========================================================================
                  WELCOME BANNER (Hero Section with Animations) [<section>]
@@ -1289,139 +1272,204 @@
             <section id="register" class="register-section section-padding">
                 <div class="section-header">
                     <div>
-                        <span class="sub-heading">EQUIPMENT RENTAL & LISTING HUB</span>
-                        <h2 class="section-title">Farmer Equipment Listing & Rental Portal</h2>
+                        <span class="sub-heading">EQUIPMENT REGISTRATION & BOOKING HUB</span>
+                        <h2 class="section-title">Farmer Equipment Listing & Rental Booking Forms</h2>
                     </div>
                 </div>
 
-                <div class="form-container-card">
+                <!-- FORM 1: VEHICLE / EQUIPMENT REGISTRATION FORM -->
+                <div class="form-container-card" id="form1-registration-container" style="margin-bottom: 2rem;">
                     <div class="form-intro">
-                        <div class="intro-icon"><i class="fa-solid fa-tractor"></i></div>
+                        <div class="intro-icon"><i class="fa-solid fa-file-pen"></i></div>
                         <div>
-                            <h3>Rent Out Your Machinery or Book Equipment</h3>
-                            <p>Farmers can list their tractors, pumps, and harvesters for hourly rental, or book verified implements. Drag any equipment photo card below into the booking slot to auto-fill specifications and hourly rates.</p>
+                            <h3>Form 1: Farmer & Vehicle / Equipment Registration Form</h3>
+                            <p>Register your tractor, harvester, rotavator, or pump with farmer details, Aadhar ID verification, equipment specifications, hourly rent rate, and HTML5 Drag & Drop equipment photo upload.</p>
                         </div>
                     </div>
 
-                    <form id="registration-form" class="responsive-form" novalidate>
+                    <form id="equipment-registration-form" class="responsive-form" novalidate>
+                        <h4 style="color: var(--swiggy-green-dark); margin-bottom: 1rem;"><i class="fa-solid fa-id-card"></i> Section A: Farmer / Owner Details & Aadhar Authentication</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="reg-farmer-name"><i class="fa-solid fa-user"></i> Farmer / Owner Name <span class="required-star">*</span></label>
+                                <input type="text" id="reg-farmer-name" name="farmer_name" value="Ramesh Kumar" placeholder="Enter full name" required>
+                                <span class="error-msg" id="err-farmer-name"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-farmer-phone"><i class="fa-solid fa-phone"></i> Mobile Number <span class="required-star">*</span></label>
+                                <input type="tel" id="reg-farmer-phone" name="farmer_phone" value="9842109876" placeholder="10-digit mobile" maxlength="10" required>
+                                <span class="error-msg" id="err-farmer-phone"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="reg-farmer-aadhar"><i class="fa-solid fa-fingerprint"></i> Farmer Aadhar ID <span class="required-star">*</span></label>
+                                <div class="aadhar-input-wrapper">
+                                    <input type="text" id="reg-farmer-aadhar" name="farmer_aadhar" value="5481-8392-4015" placeholder="12-digit UIDAI (e.g. 5481-8392-4015)" maxlength="14" required>
+                                    <span class="aadhar-verify-badge" id="reg-aadhar-status"><i class="fa-solid fa-shield-check"></i> Aadhar Verified ✓</span>
+                                </div>
+                                <span class="error-msg" id="err-farmer-aadhar"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-farmer-location"><i class="fa-solid fa-location-dot"></i> Village & District Location <span class="required-star">*</span></label>
+                                <input type="text" id="reg-farmer-location" name="farmer_location" value="Gobichettipalayam, Erode" placeholder="Village / District" required>
+                                <span class="error-msg" id="err-farmer-location"></span>
+                            </div>
+                        </div>
+
+                        <h4 style="color: var(--swiggy-green-dark); margin: 1.5rem 0 1rem 0;"><i class="fa-solid fa-tractor"></i> Section B: Vehicle / Equipment Specifications & Rent Rate</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="reg-equip-title"><i class="fa-solid fa-gears"></i> Equipment / Vehicle Name <span class="required-star">*</span></label>
+                                <input type="text" id="reg-equip-title" name="equip_title" value="Mahindra 575 DI Tractor" placeholder="e.g., Mahindra 575 DI Tractor" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-equip-cat"><i class="fa-solid fa-layer-group"></i> Category / Type <span class="required-star">*</span></label>
+                                <select id="reg-equip-cat" name="equip_cat" required>
+                                    <option value="Heavy Tillage Tractor" selected>Tractor / Heavy Tillage</option>
+                                    <option value="Multi-Crop Combine">Harvester / Grain Combine</option>
+                                    <option value="High-Discharge Irrigation">Irrigation Water Pump</option>
+                                    <option value="Soil Tillage Implement">Rotavator / Cultivator</option>
+                                    <option value="Precision Spraying">Agri-Drone / Sprayer</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="reg-equip-hp"><i class="fa-solid fa-bolt"></i> Horsepower / Capacity <span class="required-star">*</span></label>
+                                <input type="text" id="reg-equip-hp" name="equip_hp" value="45 HP" placeholder="e.g. 45 HP / 10 HP Pump" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-equip-rate"><i class="fa-solid fa-indian-rupee-sign"></i> Rent Rate Per Hour (₹/hr) <span class="required-star">*</span></label>
+                                <input type="number" id="reg-equip-rate" name="equip_rate" value="350" min="50" max="10000" placeholder="e.g., 350" required>
+                            </div>
+                        </div>
+
+                        <!-- HTML5 DRAG & DROP PHOTO UPLOAD ZONE FOR EQUIPMENT -->
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-image"></i> Drag & Drop Equipment / Vehicle Photo <span class="required-star">*</span></label>
+                            <div class="file-drag-drop-zone" id="equip-photo-dropzone" draggable="true">
+                                <i class="fa-solid fa-cloud-arrow-up drop-icon"></i>
+                                <h5>Drag & Drop Vehicle / Equipment Picture Here</h5>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">Drag any equipment image file from your computer or click to select sample pictures</p>
+                                <input type="file" id="equip-photo-file" accept="image/*" style="display: none;">
+                                <div id="equip-photo-preview-container" style="margin-top: 12px; display: none;">
+                                    <img id="equip-photo-img-preview" src="" alt="Equipment Preview" style="max-height: 120px; border-radius: 8px; border: 2px solid var(--swiggy-green);">
+                                    <div id="equip-photo-filename" style="font-weight: 700; font-size: 0.85rem; color: var(--swiggy-green-dark); margin-top: 6px;"></div>
+                                </div>
+                            </div>
+                            <small class="field-hint"><i class="fa-solid fa-circle-info"></i> Supports JPG, PNG, WEBP equipment pictures up to 5MB.</small>
+                        </div>
+
+                        <div class="form-btn-group">
+                            <button type="submit" class="btn btn-primary btn-lg bounce" id="btn-submit-reg">
+                                <i class="fa-solid fa-circle-plus"></i> Register & List Equipment
+                            </button>
+                            <button type="reset" class="btn btn-outline btn-lg">
+                                <i class="fa-solid fa-rotate-left"></i> Reset Form
+                            </button>
+                        </div>
+                        <div id="reg-alert-box" class="form-submission-alert"></div>
+                    </form>
+                </div>
+
+                <!-- FORM 2: EQUIPMENT / VEHICLE BOOKING FORM -->
+                <div class="form-container-card" id="form2-booking-container">
+                    <div class="form-intro" style="background: linear-gradient(135deg, rgba(0, 184, 82, 0.12), rgba(16, 185, 129, 0.08)); border-left-color: var(--swiggy-green);">
+                        <div class="intro-icon" style="background: var(--swiggy-green); color: white;"><i class="fa-solid fa-calendar-check"></i></div>
+                        <div>
+                            <h3>Form 2: Equipment Rental Booking Form & Hourly Price Calculator</h3>
+                            <p>Book farming equipment for hourly rentals. Select or drag any machine card into the booking slot, enter renting person details with Aadhar ID, set rental duration, and calculate total cost dynamically.</p>
+                        </div>
+                    </div>
+
+                    <form id="equipment-booking-form" class="responsive-form" novalidate>
                         
-                        <!-- =========================================================================
-                             STEP 1: DRAG & DROP EQUIPMENT PICTURE & HOURLY RATE
-                             ========================================================================= -->
+                        <!-- STEP 1: DRAG / SELECT EQUIPMENT TARGET SLOT -->
                         <div class="rental-dnd-section">
                             <div class="rental-dnd-header">
-                                <h4><i class="fa-solid fa-arrows-up-down-left-right"></i> Step 1: Drag & Drop Machinery Picture & Hourly Rate</h4>
-                                <span class="panel-subtitle">Drag any machine picture into the drop slot, or click to select</span>
+                                <h4><i class="fa-solid fa-arrows-up-down-left-right"></i> Step 1: Drag Equipment Picture Card or Select from Catalog</h4>
+                                <span class="panel-subtitle">Drag any card below into the booking drop slot or click "Book Now" on catalog cards</span>
                             </div>
 
                             <div class="rental-dnd-grid">
-                                <!-- Source Palette: Draggable Equipment Picture Cards -->
+                                <!-- Source Palette -->
                                 <div class="dnd-source-palette">
                                     <div class="machinery-drag-grid" id="drag-items-grid">
                                         
-                                        <!-- Item 1: Mahindra Tractor -->
+                                        <!-- Card 1 -->
                                         <div class="machinery-drag-item" draggable="true" id="drag-tractor" 
                                              data-machinery="Mahindra 575 DI Tractor" 
                                              data-category="Heavy Tillage Tractor" 
                                              data-price="350" 
                                              data-rate="₹350 / hour" 
+                                             data-owner="Ramesh Kumar"
                                              data-img="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=300&auto=format&fit=crop&q=80">
                                             <div class="machinery-drag-left">
                                                 <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=300&auto=format&fit=crop&q=80" alt="Mahindra Tractor" class="machinery-thumb-img">
                                                 <div class="machinery-drag-text">
                                                     <strong>Mahindra 575 DI Tractor</strong>
-                                                    <small>45 HP • Heavy Tillage</small>
+                                                    <small>45 HP • Owner: Ramesh Kumar</small>
                                                     <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹350 / hour</span>
                                                 </div>
                                             </div>
                                             <i class="fa-solid fa-grip-vertical grip-handle"></i>
                                         </div>
 
-                                        <!-- Item 2: John Deere Harvester -->
+                                        <!-- Card 2 -->
                                         <div class="machinery-drag-item" draggable="true" id="drag-harvester" 
                                              data-machinery="John Deere W70 Harvester" 
                                              data-category="Multi-Crop Combine" 
                                              data-price="1200" 
                                              data-rate="₹1,200 / hour" 
+                                             data-owner="Muthusamy V."
                                              data-img="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=300&auto=format&fit=crop&q=80">
                                             <div class="machinery-drag-left">
                                                 <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=300&auto=format&fit=crop&q=80" alt="John Deere Harvester" class="machinery-thumb-img">
                                                 <div class="machinery-drag-text">
                                                     <strong>John Deere W70 Harvester</strong>
-                                                    <small>100 HP • Grain Combine</small>
+                                                    <small>100 HP • Owner: Muthusamy V.</small>
                                                     <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹1,200 / hour</span>
                                                 </div>
                                             </div>
                                             <i class="fa-solid fa-grip-vertical grip-handle"></i>
                                         </div>
 
-                                        <!-- Item 3: Kirloskar Pump -->
+                                        <!-- Card 3 -->
                                         <div class="machinery-drag-item" draggable="true" id="drag-pump" 
                                              data-machinery="Kirloskar 10HP Pump" 
                                              data-category="High-Discharge Irrigation" 
                                              data-price="150" 
                                              data-rate="₹150 / hour" 
+                                             data-owner="Selvi R."
                                              data-img="https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?w=300&auto=format&fit=crop&q=80">
                                             <div class="machinery-drag-left">
                                                 <img src="https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?w=300&auto=format&fit=crop&q=80" alt="Kirloskar Pump" class="machinery-thumb-img">
                                                 <div class="machinery-drag-text">
                                                     <strong>Kirloskar 10HP Pump</strong>
-                                                    <small>High Discharge • Diesel/Solar</small>
+                                                    <small>High Discharge • Owner: Selvi R.</small>
                                                     <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹150 / hour</span>
                                                 </div>
                                             </div>
                                             <i class="fa-solid fa-grip-vertical grip-handle"></i>
                                         </div>
 
-                                        <!-- Item 4: Shaktiman Rotavator -->
+                                        <!-- Card 4 -->
                                         <div class="machinery-drag-item" draggable="true" id="drag-rotavator" 
-                                             data-machinery="Shaktiman Rotavator" 
-                                             data-category="Rotary Tillage" 
-                                             data-price="200" 
-                                             data-rate="₹200 / hour" 
+                                             data-machinery="Swaraj 744 FE Rotavator" 
+                                             data-category="Soil Tillage Implement" 
+                                             data-price="280" 
+                                             data-rate="₹280 / hour" 
+                                             data-owner="Karthik Raja"
                                              data-img="https://images.unsplash.com/photo-1589923188900-85dae523342b?w=300&auto=format&fit=crop&q=80">
                                             <div class="machinery-drag-left">
                                                 <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?w=300&auto=format&fit=crop&q=80" alt="Rotavator" class="machinery-thumb-img">
                                                 <div class="machinery-drag-text">
-                                                    <strong>Shaktiman Rotavator</strong>
-                                                    <small>6ft Soil Cultivator</small>
-                                                    <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹200 / hour</span>
-                                                </div>
-                                            </div>
-                                            <i class="fa-solid fa-grip-vertical grip-handle"></i>
-                                        </div>
-
-                                        <!-- Item 5: National Seed Drill -->
-                                        <div class="machinery-drag-item" draggable="true" id="drag-seeder" 
-                                             data-machinery="National 9-Row Seed Drill" 
-                                             data-category="Precision Sowing" 
-                                             data-price="180" 
-                                             data-rate="₹180 / hour" 
-                                             data-img="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=300&auto=format&fit=crop&q=80">
-                                            <div class="machinery-drag-left">
-                                                <img src="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=300&auto=format&fit=crop&q=80" alt="Seed Drill" class="machinery-thumb-img">
-                                                <div class="machinery-drag-text">
-                                                    <strong>National Seed Drill</strong>
-                                                    <small>9-Row Seed & Fertilizer</small>
-                                                    <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹180 / hour</span>
-                                                </div>
-                                            </div>
-                                            <i class="fa-solid fa-grip-vertical grip-handle"></i>
-                                        </div>
-
-                                        <!-- Item 6: Agri-Drone Sprayer -->
-                                        <div class="machinery-drag-item" draggable="true" id="drag-drone" 
-                                             data-machinery="Agri-Drone Sprayer" 
-                                             data-category="Precision Spraying" 
-                                             data-price="500" 
-                                             data-rate="₹500 / hour" 
-                                             data-img="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=300&auto=format&fit=crop&q=80">
-                                            <div class="machinery-drag-left">
-                                                <img src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=300&auto=format&fit=crop&q=80" alt="Agri-Drone" class="machinery-thumb-img">
-                                                <div class="machinery-drag-text">
-                                                    <strong>Agri-Drone Sprayer</strong>
-                                                    <small>16L Tank • Precision UAV</small>
-                                                    <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹500 / hour</span>
+                                                    <strong>Swaraj 744 FE Rotavator</strong>
+                                                    <small>48 HP • Owner: Karthik Raja</small>
+                                                    <span class="price-hour-badge"><i class="fa-solid fa-tag"></i> ₹280 / hour</span>
                                                 </div>
                                             </div>
                                             <i class="fa-solid fa-grip-vertical grip-handle"></i>
@@ -1429,172 +1477,107 @@
                                     </div>
                                 </div>
 
-                                <!-- Drop Target Box in Form (HTML5 Drop Target) -->
-                                <div class="rental-drop-target" id="drop-target-box" aria-label="Drop equipment picture here">
+                                <!-- Booking Drop Target Slot -->
+                                <div class="rental-drop-target" id="drop-target-box" aria-label="Drop equipment picture card here">
                                     <div class="drop-prompt" id="drop-placeholder">
-                                        <i class="fa-solid fa-cloud-arrow-down"></i>
-                                        <h5>Drop Equipment Picture Here</h5>
-                                        <p>Drag any machinery picture from the left and drop here to assign image and auto-fill price/hour</p>
+                                        <i class="fa-solid fa-cart-flatbed-suitcases" style="font-size: 2.2rem; color: var(--swiggy-green);"></i>
+                                        <h5>Drop Equipment Card Here</h5>
+                                        <p>Drag any equipment card into this box to auto-fill vehicle details and hourly rental rates</p>
                                     </div>
                                     <div class="selected-machinery-basket" id="dropped-items-list"></div>
                                     <div id="drop-status-msg" class="drop-status-msg" style="display: none; margin-top: 8px; font-weight: 600; font-size: 0.85rem;"></div>
                                     <button type="button" class="btn btn-sm btn-outline" id="clear-drop-btn" style="margin-top: 10px; display: none;">
-                                        <i class="fa-solid fa-rotate-left"></i> Change Equipment Picture
+                                        <i class="fa-solid fa-rotate-left"></i> Change Selected Equipment
                                     </button>
                                 </div>
                             </div>
-                            <input type="hidden" id="selected-machinery-input" name="selected_machinery" value="">
-                            <input type="hidden" id="selected-machinery-price" name="selected_price" value="">
-                            <span class="error-msg" id="err-machinery" style="display: none; margin-top: 8px; font-weight: 600;"></span>
                         </div>
 
-                        <!-- =========================================================================
-                             STEP 2: FARMER CONTACT & EQUIPMENT PRICING
-                             ========================================================================= -->
-                        <h4 style="margin: 1.5rem 0 1rem 0; font-size: 1.05rem; color: var(--text-primary);"><i class="fa-solid fa-user-pen"></i> Step 2: Farmer & Rental Listing Details</h4>
-
-                        <!-- Row 1: Name & Mobile -->
+                        <!-- STEP 2: RENTER DETAILS & AADHAR -->
+                        <h4 style="color: var(--swiggy-green-dark); margin: 1.5rem 0 1rem 0;"><i class="fa-solid fa-user-check"></i> Step 2: Renting Person Details & Aadhar Verification</h4>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="reg-name"><i class="fa-solid fa-user"></i> Farmer / Owner Name <span class="required-star">*</span></label>
-                                <input type="text" id="reg-name" name="name" placeholder="Enter your full name (e.g., Ramesh Kumar)" required>
-                                <span class="error-msg" id="err-name"></span>
+                                <label for="book-renter-name"><i class="fa-solid fa-user"></i> Renting Person Full Name <span class="required-star">*</span></label>
+                                <input type="text" id="book-renter-name" name="renter_name" value="Selvi R." placeholder="Enter renting person name" required>
+                                <span class="error-msg" id="err-renter-name"></span>
                             </div>
-
                             <div class="form-group">
-                                <label for="reg-phone"><i class="fa-solid fa-phone"></i> 10-Digit Mobile Number <span class="required-star">*</span></label>
-                                <input type="tel" id="reg-phone" name="phone" placeholder="9842109876" pattern="[6-9][0-9]{9}" maxlength="10" required>
-                                <span class="error-msg" id="err-phone"></span>
+                                <label for="book-renter-phone"><i class="fa-solid fa-phone"></i> Mobile Number <span class="required-star">*</span></label>
+                                <input type="tel" id="book-renter-phone" name="renter_phone" value="9443210987" placeholder="10-digit mobile" maxlength="10" required>
+                                <span class="error-msg" id="err-renter-phone"></span>
                             </div>
                         </div>
 
-                        <!-- Row 2: Email & Equipment Model -->
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="reg-email"><i class="fa-solid fa-envelope"></i> Email Address <span class="required-star">*</span></label>
-                                <input type="email" id="reg-email" name="email" placeholder="farmer@agrishare.portal.in" required>
-                                <span class="error-msg" id="err-email"></span>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="equipment-name-field"><i class="fa-solid fa-gear"></i> Equipment Name & Model <span class="required-star">*</span></label>
-                                <input type="text" id="equipment-name-field" name="equipment_name" placeholder="Drag picture above or type (e.g. Mahindra 575 DI)" required>
-                                <span class="error-msg" id="err-equip-name"></span>
-                            </div>
-                        </div>
-
-                        <!-- Row 3: Hourly Rental Rate & Password -->
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="equipment-price-field"><i class="fa-solid fa-indian-rupee-sign"></i> Rental Price per Hour (₹/hr) <span class="required-star">*</span></label>
-                                <input type="number" id="equipment-price-field" name="price_hour" min="50" max="10000" placeholder="e.g., 350" required>
-                                <span class="error-msg" id="err-price"></span>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="reg-password"><i class="fa-solid fa-lock"></i> Account Password <span class="required-star">*</span></label>
-                                <input type="password" id="reg-password" name="password" placeholder="At least 8 characters" required>
-                                <div class="password-meter-bar">
-                                    <div class="meter-fill" id="meter-fill" style="width: 75%;"></div>
+                                <label for="book-renter-aadhar"><i class="fa-solid fa-fingerprint"></i> Renting Person Aadhar ID <span class="required-star">*</span></label>
+                                <div class="aadhar-input-wrapper">
+                                    <input type="text" id="book-renter-aadhar" name="renter_aadhar" value="3190-8821-5544" placeholder="12-digit UIDAI (e.g. 3190-8821-5544)" maxlength="14" required>
+                                    <span class="aadhar-verify-badge" id="book-aadhar-status"><i class="fa-solid fa-shield-check"></i> Aadhar Verified ✓</span>
                                 </div>
-                                <span class="error-msg" id="err-password"></span>
+                                <span class="error-msg" id="err-renter-aadhar"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="book-renter-address"><i class="fa-solid fa-location-dot"></i> Farm Delivery Address <span class="required-star">*</span></label>
+                                <input type="text" id="book-renter-address" name="renter_address" value="Anthiyur, Bhavani Taluk" placeholder="Delivery farm location" required>
+                                <span class="error-msg" id="err-renter-address"></span>
                             </div>
                         </div>
 
-                        <!-- Row 4: Gender & Age -->
+                        <!-- STEP 3: RENT DURATION & PER HOUR PRICING -->
+                        <h4 style="color: var(--swiggy-green-dark); margin: 1.5rem 0 1rem 0;"><i class="fa-solid fa-clock-rotate-left"></i> Step 3: Rent Duration (Hours) & Per Hour Rate Calculation</h4>
                         <div class="form-row">
                             <div class="form-group">
-                                <label><i class="fa-solid fa-venus-mars"></i> Gender <span class="required-star">*</span></label>
-                                <div class="radio-pill-group">
-                                    <label class="radio-pill">
-                                        <input type="radio" name="gender" value="Male" checked required>
-                                        <span><i class="fa-solid fa-person"></i> Male</span>
-                                    </label>
-                                    <label class="radio-pill">
-                                        <input type="radio" name="gender" value="Female">
-                                        <span><i class="fa-solid fa-person-dress"></i> Female</span>
-                                    </label>
-                                    <label class="radio-pill">
-                                        <input type="radio" name="gender" value="Other">
-                                        <span><i class="fa-solid fa-genderless"></i> Other</span>
-                                    </label>
-                                </div>
-                                <span class="error-msg" id="err-gender"></span>
+                                <label for="equipment-name-field"><i class="fa-solid fa-tractor"></i> Selected Equipment <span class="required-star">*</span></label>
+                                <input type="text" id="equipment-name-field" name="selected_equip" value="Mahindra 575 DI Tractor" placeholder="Selected equipment" readonly>
                             </div>
-
                             <div class="form-group">
-                                <label for="reg-age"><i class="fa-solid fa-id-badge"></i> Age (Years) <span class="required-star">*</span></label>
-                                <input type="number" id="reg-age" name="age" min="18" max="100" value="38" placeholder="e.g., 38" required>
-                                <span class="error-msg" id="err-age"></span>
+                                <label for="equipment-price-field"><i class="fa-solid fa-indian-rupee-sign"></i> Per Hour Rent Rate (₹/hr) <span class="required-star">*</span></label>
+                                <input type="number" id="equipment-price-field" name="rate_per_hour" value="350" readonly required>
                             </div>
                         </div>
 
-                        <!-- Row 5: Date & Preferred Shift Time -->
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="reg-dob"><i class="fa-solid fa-calendar-day"></i> Available From / Rental Date <span class="required-star">*</span></label>
-                                <input type="date" id="reg-dob" name="dob" required>
-                                <span class="error-msg" id="err-dob"></span>
+                                <label for="book-start-date"><i class="fa-solid fa-calendar"></i> Rental Start Date <span class="required-star">*</span></label>
+                                <input type="date" id="book-start-date" name="start_date" required>
                             </div>
-
                             <div class="form-group">
-                                <label for="reg-time"><i class="fa-solid fa-clock"></i> Preferred Operating Shift Time <span class="required-star">*</span></label>
-                                <input type="time" id="reg-time" name="preferred_time" value="07:00" required>
-                                <span class="error-msg" id="err-time"></span>
+                                <label for="book-rent-duration"><i class="fa-solid fa-hourglass-half"></i> Rent Duration (in Hours) <span class="required-star">*</span></label>
+                                <input type="number" id="book-rent-duration" name="duration_hours" value="4" min="1" max="100" placeholder="e.g. 4 hours" required>
                             </div>
                         </div>
 
-                        <!-- Row 6: Included Implements Checkboxes -->
-                        <div class="form-group">
-                            <label><i class="fa-solid fa-list-check"></i> Included Implements & Farm Services</label>
-                            <div class="skills-checkbox-grid">
-                                <label class="checkbox-pill">
-                                    <input type="checkbox" name="skills" value="Certified Tractor Operator">
-                                    <span><i class="fa-solid fa-user-gear"></i> Certified Operator Included</span>
-                                </label>
-                                <label class="checkbox-pill">
-                                    <input type="checkbox" name="skills" value="Laser Land Leveling">
-                                    <span><i class="fa-solid fa-layer-group"></i> Laser Land Leveler</span>
-                                </label>
-                                <label class="checkbox-pill">
-                                    <input type="checkbox" name="skills" value="Doorstep Trailer Transport">
-                                    <span><i class="fa-solid fa-truck"></i> Doorstep Transport Trailer</span>
-                                </label>
-                                <label class="checkbox-pill">
-                                    <input type="checkbox" name="skills" value="Field Agronomy Advisory">
-                                    <span><i class="fa-solid fa-seedling"></i> Fuel & Diesel Policy</span>
-                                </label>
+                        <!-- DYNAMIC PRICE CALCULATOR CARD -->
+                        <div class="price-calculator-card" id="price-calc-card">
+                            <h4><i class="fa-solid fa-calculator"></i> Live Total Rent Price Calculation Breakdown</h4>
+                            <div class="calc-row">
+                                <span>Selected Equipment:</span>
+                                <strong id="calc-equip-name">Mahindra 575 DI Tractor</strong>
                             </div>
-                            <span class="error-msg" id="err-skills"></span>
-                        </div>
-
-                        <!-- Address Field -->
-                        <div class="form-group">
-                            <label for="reg-address"><i class="fa-solid fa-location-dot"></i> Village & Farm Location / Equipment Station <span class="required-star">*</span></label>
-                            <textarea id="reg-address" name="address" rows="3" placeholder="Enter door number, street, village, taluk, and district..." required spellcheck="true"></textarea>
-                            <span class="error-msg" id="err-address"></span>
-                        </div>
-
-                        <!-- Delivery Notes -->
-                        <div class="form-group">
-                            <label><i class="fa-solid fa-pen-to-square"></i> Equipment Specifications & Field Delivery Notes</label>
-                            <div id="editable-notes" class="editable-content-box" contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true">
-                                Machine is serviced with dual-clutch transmission and radial tires. Ready for immediate dispatch across district hubs.
+                            <div class="calc-row">
+                                <span>Per Hour Rent Rate:</span>
+                                <span id="calc-equip-rate">₹350 / hour</span>
                             </div>
-                            <small class="field-hint"><i class="fa-solid fa-circle-info"></i> Enter specific implement details or field access landmarks.</small>
+                            <div class="calc-row">
+                                <span>Rent Duration:</span>
+                                <span id="calc-equip-hours">4 Hours</span>
+                            </div>
+                            <div class="calc-row total-row">
+                                <span>Total Estimated Rental Cost:</span>
+                                <span id="calc-total-cost">₹1,400</span>
+                            </div>
                         </div>
 
-                        <!-- Action Buttons -->
-                        <div class="form-btn-group">
-                            <button type="submit" class="btn btn-primary btn-lg bounce" id="submit-btn">
-                                <i class="fa-solid fa-check-circle"></i> Submit Rental Listing
+                        <div class="form-btn-group" style="margin-top: 1.5rem;">
+                            <button type="submit" class="btn btn-primary btn-lg bounce" id="btn-submit-booking">
+                                <i class="fa-solid fa-calendar-check"></i> Confirm & Book Equipment
                             </button>
-                            <button type="reset" class="btn btn-outline btn-lg" id="reset-btn">
+                            <button type="reset" class="btn btn-outline btn-lg">
                                 <i class="fa-solid fa-arrow-rotate-left"></i> Reset Form
                             </button>
                         </div>
-
-                        <div id="form-alert-box" class="form-submission-alert"></div>
+                        <div id="booking-alert-box" class="form-submission-alert"></div>
                     </form>
                 </div>
             </section>

@@ -1,0 +1,108 @@
+{
+  "users": [
+    {
+      "id": "usr_001",
+      "name": "Ramesh Kumar",
+      "email": "ramesh.farmer@gmail.com",
+      "phone": "9842109876",
+      "aadhar": "5481-8392-4015",
+      "role": "farmer",
+      "gender": "Male",
+      "age": 38,
+      "address": "Main Road, Gobichettipalayam, Erode"
+    },
+    {
+      "id": "usr_002",
+      "name": "Muthusamy V.",
+      "email": "muthu.farm@gmail.com",
+      "phone": "9786543210",
+      "aadhar": "7812-4091-6623",
+      "role": "farmer",
+      "gender": "Male",
+      "age": 44,
+      "address": "Karamadai, Coimbatore"
+    },
+    {
+      "id": "usr_003",
+      "name": "Selvi R.",
+      "email": "selvi.organic@gmail.com",
+      "phone": "9443210987",
+      "aadhar": "3190-8821-5544",
+      "role": "renter",
+      "gender": "Female",
+      "age": 32,
+      "address": "Anthiyur, Bhavani Taluk"
+    }
+  ],
+  "equipment": [
+    {
+      "id": "eq_001",
+      "name": "Mahindra 575 DI Tractor",
+      "category": "Heavy Tillage Tractor",
+      "hp": "45 HP",
+      "rate": 350,
+      "ownerName": "Ramesh Kumar",
+      "ownerPhone": "9842109876",
+      "ownerAadhar": "5481-8392-4015",
+      "location": "Gobichettipalayam, Erode",
+      "img": "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=400&auto=format&fit=crop&q=80",
+      "status": "Available"
+    },
+    {
+      "id": "eq_002",
+      "name": "John Deere W70 Harvester",
+      "category": "Multi-Crop Combine",
+      "hp": "100 HP",
+      "rate": 1200,
+      "ownerName": "Muthusamy V.",
+      "ownerPhone": "9786543210",
+      "ownerAadhar": "7812-4091-6623",
+      "location": "Karamadai, Coimbatore",
+      "img": "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=400&auto=format&fit=crop&q=80",
+      "status": "Available"
+    },
+    {
+      "id": "eq_003",
+      "name": "Kirloskar 10HP Pump",
+      "category": "High-Discharge Irrigation",
+      "hp": "10 HP",
+      "rate": 150,
+      "ownerName": "Selvi R.",
+      "ownerPhone": "9443210987",
+      "ownerAadhar": "3190-8821-5544",
+      "location": "Anthiyur, Bhavani Taluk",
+      "img": "https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?w=400&auto=format&fit=crop&q=80",
+      "status": "Available"
+    },
+    {
+      "id": "eq_004",
+      "name": "Swaraj 744 FE Rotavator",
+      "category": "Soil Tillage Implement",
+      "hp": "48 HP",
+      "rate": 280,
+      "ownerName": "Karthik Raja",
+      "ownerPhone": "9629104820",
+      "ownerAadhar": "4912-7721-3094",
+      "location": "Pollachi, Coimbatore",
+      "img": "https://images.unsplash.com/photo-1589923188900-85dae523342b?w=400&auto=format&fit=crop&q=80",
+      "status": "Available"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "bk_001",
+      "equipmentName": "Mahindra 575 DI Tractor",
+      "renterName": "Selvi R.",
+      "renterPhone": "9443210987",
+      "renterAadhar": "3190-8821-5544",
+      "location": "Anthiyur, Bhavani Taluk",
+      "rate": 350,
+      "durationHours": 4,
+      "totalCost": 1400,
+      "startDate": "2026-10-04",
+      "startTime": "08:00",
+      "status": "Confirmed",
+      "createdAt": "2026-10-03T18:30:00Z"
+    }
+  ]
+}

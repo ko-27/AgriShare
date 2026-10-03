@@ -2,11 +2,79 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=index.html#services">
-    <title>Redirecting to AgriShare Services...</title>
-    <script>window.location.replace("index.html#services");</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriShare – Agricultural Portal Services</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <p>Redirecting to <a href="index.html#services">AgriShare Services</a>...</p>
+<body class="light-mode">
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <a href="index.html" class="brand-logo"><i class="fa-solid fa-tractor"></i> AgriShare</a>
+            <span class="location-badge"><i class="fa-solid fa-handshake"></i> Farming Services Hub</span>
+        </div>
+        <div class="topbar-center">
+            <span id="live-clock">Loading live time...</span>
+        </div>
+        <div class="topbar-right">
+            <button id="theme-toggle" class="icon-btn" title="Toggle Dark/Light Mode"><i class="fa-solid fa-moon"></i></button>
+            <a href="profile.html" class="role-switch-pill"><i class="fa-solid fa-fingerprint"></i> Aadhar Verified ✓</a>
+        </div>
+    </header>
+
+    <div class="app-layout">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="equipment.html"><i class="fa-solid fa-tractor"></i> Equipment Catalog</a></li>
+                    <li><a href="bookings.html"><i class="fa-solid fa-calendar-check"></i> Bookings & Rentals</a></li>
+                    <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                    <li><a href="services.html" class="active"><i class="fa-solid fa-handshake"></i> Portal Services</a></li>
+                    <li><a href="reports.html"><i class="fa-solid fa-database"></i> Web Storage Reports</a></li>
+                    <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Portal</a></li>
+                    <li><a href="contact.html"><i class="fa-solid fa-headset"></i> Support & Help</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="standalone-page-header">
+                <h1><i class="fa-solid fa-handshake"></i> AgriShare Platform Services</h1>
+                <p>Comprehensive agricultural machinery rental services, doorstep equipment transport, certified operator support, and Aadhar-verified farmer security.</p>
+            </div>
+
+            <section class="section-padding">
+                <div class="grid-layout-3col">
+                    <div class="card" style="padding: 1.8rem;">
+                        <i class="fa-solid fa-clock" style="font-size: 2.2rem; color: var(--swiggy-green);"></i>
+                        <h3 style="margin-top: 12px;">Flexible Hourly Rentals</h3>
+                        <p style="color: var(--text-secondary); margin-top: 6px;">Rent tractors, harvesters, and pumps on a flexible hourly basis with real-time price calculators.</p>
+                    </div>
+                    <div class="card" style="padding: 1.8rem;">
+                        <i class="fa-solid fa-truck-ramp-box" style="font-size: 2.2rem; color: var(--swiggy-green);"></i>
+                        <h3 style="margin-top: 12px;">Doorstep Farm Transport</h3>
+                        <p style="color: var(--text-secondary); margin-top: 6px;">Equipment trailer transport delivered right to your farm gate across all Tamil Nadu districts.</p>
+                    </div>
+                    <div class="card" style="padding: 1.8rem;">
+                        <i class="fa-solid fa-id-card-clip" style="font-size: 2.2rem; color: var(--swiggy-green);"></i>
+                        <h3 style="margin-top: 12px;">Aadhar UIDAI Security</h3>
+                        <p style="color: var(--text-secondary); margin-top: 6px;">All farmers, machinery owners, and renters are authenticated via 12-digit Aadhar ID UIDAI verification.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-bottom-bar">
+            <p>&copy; 2026 <strong>AgriShare</strong>. Developed by <strong>Kohila M</strong> (Reg No: 2303717620522027), Coimbatore Institute of Technology.</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>

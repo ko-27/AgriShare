@@ -1,0 +1,16 @@
+{
+  "name": "agrishare",
+  "version": "1.0.0",
+  "description": "AgriShare - Farmer Equipment Sharing & Rental Portal",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  },
+  "author": "Kohila M (Reg: 2303717620522027)",
+  "license": "ISC"
+}

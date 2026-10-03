@@ -2,11 +2,112 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=index.html#reports">
-    <title>Redirecting to AgriShare Reports...</title>
-    <script>window.location.replace("index.html#reports");</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriShare – Web Storage & System Audit Reports</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <p>Redirecting to <a href="index.html#reports">AgriShare Reports</a>...</p>
+<body class="light-mode">
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <a href="index.html" class="brand-logo"><i class="fa-solid fa-tractor"></i> AgriShare</a>
+            <span class="location-badge"><i class="fa-solid fa-database"></i> Web Storage Audit Hub</span>
+        </div>
+        <div class="topbar-center">
+            <span id="live-clock">Loading live time...</span>
+        </div>
+        <div class="topbar-right">
+            <button id="theme-toggle" class="icon-btn" title="Toggle Dark/Light Mode"><i class="fa-solid fa-moon"></i></button>
+            <a href="profile.html" class="role-switch-pill"><i class="fa-solid fa-fingerprint"></i> Aadhar Verified ✓</a>
+        </div>
+    </header>
+
+    <div class="app-layout">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="equipment.html"><i class="fa-solid fa-tractor"></i> Equipment Catalog</a></li>
+                    <li><a href="bookings.html"><i class="fa-solid fa-calendar-check"></i> Bookings & Rentals</a></li>
+                    <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                    <li><a href="services.html"><i class="fa-solid fa-handshake"></i> Services</a></li>
+                    <li><a href="reports.html" class="active"><i class="fa-solid fa-database"></i> Web Storage Reports</a></li>
+                    <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Portal</a></li>
+                    <li><a href="contact.html"><i class="fa-solid fa-headset"></i> Support & Help</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="standalone-page-header">
+                <h1><i class="fa-solid fa-database"></i> Web Storage & Database Audit Console</h1>
+                <p>Client-side HTML5 <strong>localStorage</strong>, <strong>sessionStorage</strong>, and backend Node.js Express Database (`db.json`) audit tables matching FS_exp4 lab requirements.</p>
+            </div>
+
+            <section class="section-padding">
+                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                    <button id="retrieve-storage-btn" class="btn btn-primary bounce"><i class="fa-solid fa-rotate"></i> Retrieve & Refresh Data</button>
+                    <button id="clear-storage-btn" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Clear Stored Data</button>
+                </div>
+
+                <!-- Local Storage Table -->
+                <div class="card" style="padding: 1.8rem; margin-bottom: 2rem;">
+                    <h3><i class="fa-solid fa-hard-drive"></i> LOCAL STORAGE (All Registered Farmers & Equipment Listings)</h3>
+                    <div class="table-responsive" style="margin-top: 1rem;">
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Gender</th>
+                                    <th>Age</th>
+                                    <th>DOB</th>
+                                    <th>Time</th>
+                                    <th>Equipment</th>
+                                    <th>Location</th>
+                                </tr>
+                            </thead>
+                            <tbody id="local-storage-tbody">
+                                <!-- Populated dynamically by script.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Session Storage Table -->
+                <div class="card" style="padding: 1.8rem;">
+                    <h3><i class="fa-solid fa-clock"></i> SESSION STORAGE (Active Current User Session)</h3>
+                    <div class="table-responsive" style="margin-top: 1rem;">
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Gender</th>
+                                    <th>Current Equipment Booking Draft</th>
+                                </tr>
+                            </thead>
+                            <tbody id="session-storage-tbody">
+                                <!-- Populated dynamically by script.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-bottom-bar">
+            <p>&copy; 2026 <strong>AgriShare</strong>. Developed by <strong>Kohila M</strong> (Reg No: 2303717620522027), Coimbatore Institute of Technology.</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>

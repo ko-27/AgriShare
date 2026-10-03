@@ -2,11 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=index.html#register">
-    <title>Redirecting to AgriShare Profile...</title>
-    <script>window.location.replace("index.html#register");</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriShare – Farmer Aadhar Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <p>Redirecting to <a href="index.html#register">AgriShare Profile</a>...</p>
+<body class="light-mode">
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <a href="index.html" class="brand-logo"><i class="fa-solid fa-tractor"></i> AgriShare</a>
+            <span class="location-badge"><i class="fa-solid fa-fingerprint"></i> UIDAI Verified Account</span>
+        </div>
+        <div class="topbar-center">
+            <span id="live-clock">Loading live time...</span>
+        </div>
+        <div class="topbar-right">
+            <button id="theme-toggle" class="icon-btn" title="Toggle Dark/Light Mode"><i class="fa-solid fa-moon"></i></button>
+            <a href="profile.html" class="role-switch-pill"><i class="fa-solid fa-fingerprint"></i> Aadhar Verified ✓</a>
+        </div>
+    </header>
+
+    <div class="app-layout">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="equipment.html"><i class="fa-solid fa-tractor"></i> Equipment Catalog</a></li>
+                    <li><a href="bookings.html"><i class="fa-solid fa-calendar-check"></i> Bookings & Rentals</a></li>
+                    <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                    <li><a href="services.html"><i class="fa-solid fa-handshake"></i> Services</a></li>
+                    <li><a href="reports.html"><i class="fa-solid fa-database"></i> Web Storage Reports</a></li>
+                    <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Portal</a></li>
+                    <li><a href="contact.html"><i class="fa-solid fa-headset"></i> Support & Help</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="standalone-page-header">
+                <h1><i class="fa-solid fa-user-shield"></i> Verified Farmer Profile</h1>
+                <p>Authenticated UIDAI Aadhar Profile for Ramesh Kumar. Active equipment listings, rental history, and session state.</p>
+            </div>
+
+            <section class="section-padding">
+                <div class="card" style="padding: 2rem; max-width: 650px;">
+                    <div style="display: flex; align-items: center; gap: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem;">
+                        <div style="width: 80px; height: 80px; background: var(--swiggy-green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--swiggy-green-dark);">
+                            <i class="fa-solid fa-user-check"></i>
+                        </div>
+                        <div>
+                            <h2>Ramesh Kumar</h2>
+                            <p style="color: var(--text-secondary);"><i class="fa-solid fa-location-dot"></i> Gobichettipalayam, Erode District</p>
+                            <span class="badge badge-success" style="margin-top: 6px;"><i class="fa-solid fa-shield-check"></i> UIDAI Aadhar Verified: 5481-8392-4015</span>
+                        </div>
+                    </div>
+
+                    <ul style="list-style: none; margin-top: 1.5rem; line-height: 2;">
+                        <li><strong>Mobile Number:</strong> +91 98421 09876</li>
+                        <li><strong>Email Address:</strong> ramesh.farmer@gmail.com</li>
+                        <li><strong>Registered Equipment:</strong> Mahindra 575 DI Tractor (₹350/hr)</li>
+                        <li><strong>Active Session:</strong> HTML5 SessionStorage Token Valid</li>
+                        <li><strong>Backend Database Status:</strong> Synchronized with Node.js Server DB (`db.json`)</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-bottom-bar">
+            <p>&copy; 2026 <strong>AgriShare</strong>. Developed by <strong>Kohila M</strong> (Reg No: 2303717620522027), Coimbatore Institute of Technology.</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>

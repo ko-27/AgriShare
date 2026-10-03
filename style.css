@@ -3892,3 +3892,170 @@ body.dark-mode .tooltip::before {
     border: 2px solid var(--primary-green);
     box-shadow: 0 4px 10px rgba(46, 125, 50, 0.2);
 }
+
+
+/* =========================================================================
+   SWIGGY / BLINKIT GREENISH THEME & ADVANCED ASSIGNMENT 4 ENHANCEMENTS
+   ========================================================================= */
+
+:root {
+    --swiggy-green: #00b852;
+    --swiggy-green-dark: #009340;
+    --swiggy-green-light: #e6f7ed;
+    --blinkit-accent: #0c831f;
+    --blinkit-yellow: #f7c325;
+}
+
+/* Blinkit / Swiggy Green UI Accent Overrides */
+.btn-primary, .badge-success, .role-switch-pill {
+    background-color: var(--swiggy-green) !important;
+    border-color: var(--swiggy-green) !important;
+    color: #ffffff !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--swiggy-green-dark) !important;
+}
+
+.sub-heading {
+    color: var(--swiggy-green) !important;
+}
+
+/* Aadhar Verification Badge & Input Group */
+.aadhar-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.aadhar-input-wrapper input {
+    padding-right: 140px;
+}
+
+.aadhar-verify-badge {
+    position: absolute;
+    right: 12px;
+    background: #e6f7ed;
+    color: var(--swiggy-green-dark);
+    border: 1px solid var(--swiggy-green);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.aadhar-verify-badge.unverified {
+    background: #fff3cd;
+    color: #856404;
+    border-color: #ffeeba;
+}
+
+/* File Upload & Equipment Photo Drag & Drop Zone */
+.file-drag-drop-zone {
+    border: 2px dashed var(--swiggy-green);
+    background: var(--swiggy-green-light);
+    border-radius: var(--radius-md);
+    padding: 1.8rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.file-drag-drop-zone:hover, .file-drag-drop-zone.drag-over {
+    background: #d0f0de;
+    border-color: var(--swiggy-green-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 184, 82, 0.15);
+}
+
+.file-drag-drop-zone i.drop-icon {
+    font-size: 2.5rem;
+    color: var(--swiggy-green);
+    margin-bottom: 8px;
+}
+
+/* Live Total Price Calculation Card */
+.price-calculator-card {
+    background: linear-gradient(135deg, #111827, #1f2937);
+    color: #ffffff;
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-top: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--swiggy-green);
+}
+
+.price-calculator-card h4 {
+    color: var(--swiggy-green);
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.calc-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+    font-size: 0.9rem;
+}
+
+.calc-row.total-row {
+    border-bottom: none;
+    border-top: 2px solid var(--swiggy-green);
+    margin-top: 8px;
+    padding-top: 12px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #34d399;
+}
+
+/* Catalog Card "Book Now" Green Button */
+.catalog-book-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--swiggy-green), var(--swiggy-green-dark));
+    color: #ffffff;
+    font-weight: 700;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-top: 12px;
+}
+
+.catalog-book-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 184, 82, 0.3);
+}
+
+/* Standalone Page Container Styles */
+.standalone-page-header {
+    background: var(--bg-surface);
+    padding: 2.5rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.standalone-page-header h1 {
+    font-size: 2.2rem;
+    color: var(--swiggy-green-dark);
+}
+
+.standalone-page-header p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    margin-top: 8px;
+}

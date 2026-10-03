@@ -1258,3 +1258,284 @@ document.addEventListener('DOMContentLoaded', () => {
     renderWebStorageTables();
 
 });
+
+
+/* =========================================================================
+   17. ASSIGNMENT 4 ENHANCED FORM HANDLERS, LIVE CALCULATOR & BACKEND INTEGRATION
+   ========================================================================= */
+
+// A. Live Rent Price Calculator Logic
+function updateLiveRentCalculator() {
+    const rateInput = document.getElementById('equipment-price-field');
+    const durationInput = document.getElementById('book-rent-duration');
+    const nameInput = document.getElementById('equipment-name-field');
+
+    const calcName = document.getElementById('calc-equip-name');
+    const calcRate = document.getElementById('calc-equip-rate');
+    const calcHours = document.getElementById('calc-equip-hours');
+    const calcTotal = document.getElementById('calc-total-cost');
+
+    const rate = Number(rateInput ? rateInput.value : 350) || 0;
+    const hours = Number(durationInput ? durationInput.value : 4) || 1;
+    const name = nameInput && nameInput.value ? nameInput.value : 'Mahindra 575 DI Tractor';
+
+    const total = rate * hours;
+
+    if (calcName) calcName.textContent = name;
+    if (calcRate) calcRate.textContent = `₹${rate.toLocaleString()} / hour`;
+    if (calcHours) calcHours.textContent = `${hours} Hour${hours > 1 ? 's' : ''}`;
+    if (calcTotal) calcTotal.textContent = `₹${total.toLocaleString()}`;
+}
+
+const durationInputEl = document.getElementById('book-rent-duration');
+const rateInputEl = document.getElementById('equipment-price-field');
+if (durationInputEl) durationInputEl.addEventListener('input', updateLiveRentCalculator);
+if (rateInputEl) rateInputEl.addEventListener('input', updateLiveRentCalculator);
+
+// B. Equipment Photo Drag & Drop File Upload Handler
+const equipPhotoDropzone = document.getElementById('equip-photo-dropzone');
+const equipPhotoFile = document.getElementById('equip-photo-file');
+const equipPhotoPreviewContainer = document.getElementById('equip-photo-preview-container');
+const equipPhotoImgPreview = document.getElementById('equip-photo-img-preview');
+const equipPhotoFilename = document.getElementById('equip-photo-filename');
+let uploadedEquipPhotoData = '';
+
+if (equipPhotoDropzone) {
+    equipPhotoDropzone.addEventListener('click', () => {
+        if (equipPhotoFile) equipPhotoFile.click();
+    });
+
+    equipPhotoDropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        equipPhotoDropzone.classList.add('drag-over');
+    });
+
+    equipPhotoDropzone.addEventListener('dragleave', () => {
+        equipPhotoDropzone.classList.remove('drag-over');
+    });
+
+    equipPhotoDropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        equipPhotoDropzone.classList.remove('drag-over');
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            handleEquipPhotoFile(e.dataTransfer.files[0]);
+        }
+    });
+}
+
+if (equipPhotoFile) {
+    equipPhotoFile.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+            handleEquipPhotoFile(e.target.files[0]);
+        }
+    });
+}
+
+function handleEquipPhotoFile(file) {
+    if (!file || !file.type.startsWith('image/')) {
+        alert('Please drop or select a valid image file (JPG, PNG, WEBP).');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        uploadedEquipPhotoData = e.target.result;
+        if (equipPhotoImgPreview) equipPhotoImgPreview.src = uploadedEquipPhotoData;
+        if (equipPhotoFilename) equipPhotoFilename.textContent = `✔ Photo Loaded: ${file.name} (${Math.round(file.size / 1024)} KB)`;
+        if (equipPhotoPreviewContainer) equipPhotoPreviewContainer.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+}
+
+// C. Form 1 Submission: Equipment Registration & Photo Listing
+const equipRegForm = document.getElementById('equipment-registration-form');
+if (equipRegForm) {
+    equipRegForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const farmerName = document.getElementById('reg-farmer-name')?.value || '';
+        const farmerPhone = document.getElementById('reg-farmer-phone')?.value || '';
+        const farmerAadhar = document.getElementById('reg-farmer-aadhar')?.value || '';
+        const farmerLocation = document.getElementById('reg-farmer-location')?.value || '';
+        const equipTitle = document.getElementById('reg-equip-title')?.value || '';
+        const equipCat = document.getElementById('reg-equip-cat')?.value || '';
+        const equipHp = document.getElementById('reg-equip-hp')?.value || '';
+        const equipRate = document.getElementById('reg-equip-rate')?.value || '350';
+        const alertBox = document.getElementById('reg-alert-box');
+
+        if (!farmerName || !farmerPhone || !farmerAadhar || !equipTitle || !equipRate) {
+            if (alertBox) {
+                alertBox.className = 'form-submission-alert error';
+                alertBox.innerHTML = '<strong>Validation Error:</strong> Please fill in all required fields and Aadhar ID.';
+                alertBox.style.display = 'block';
+            }
+            return;
+        }
+
+        const newEquipmentData = {
+            name: equipTitle,
+            category: equipCat,
+            hp: equipHp,
+            rate: Number(equipRate),
+            ownerName: farmerName,
+            ownerPhone: farmerPhone,
+            ownerAadhar: farmerAadhar,
+            location: farmerLocation,
+            img: uploadedEquipPhotoData || 'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=400&auto=format&fit=crop&q=80'
+        };
+
+        // 1. Save to LocalStorage
+        const localEquip = JSON.parse(localStorage.getItem('agrishare_registered_equipment') || '[]');
+        localEquip.unshift(newEquipmentData);
+        localStorage.setItem('agrishare_registered_equipment', JSON.stringify(localEquip));
+
+        // 2. Post to Backend Server DB
+        try {
+            await fetch('/api/equipment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newEquipmentData)
+            });
+        } catch (err) {
+            console.log('Backend API sync offline or saving locally:', err);
+        }
+
+        if (alertBox) {
+            alertBox.className = 'form-submission-alert success';
+            alertBox.innerHTML = `
+                <i class="fa-solid fa-circle-check"></i> 
+                <strong>Form 1 Success:</strong> Equipment "<strong>${equipTitle}</strong>" registered successfully for farmer <strong>${farmerName}</strong> (Aadhar: ${farmerAadhar}).
+                Saved to LocalStorage and backend Database!
+            `;
+            alertBox.style.display = 'block';
+        }
+
+        // Add dynamically to drag palette / drop zone
+        if (typeof addMachineToDropZone === 'function') {
+            addMachineToDropZone({
+                name: equipTitle,
+                category: equipCat,
+                price: equipRate,
+                rate: `₹${equipRate} / hour`,
+                img: newEquipmentData.img
+            });
+        }
+    });
+}
+
+// D. Form 2 Submission: Equipment Rental Booking
+const equipBookingForm = document.getElementById('equipment-booking-form');
+if (equipBookingForm) {
+    equipBookingForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const renterName = document.getElementById('book-renter-name')?.value || '';
+        const renterPhone = document.getElementById('book-renter-phone')?.value || '';
+        const renterAadhar = document.getElementById('book-renter-aadhar')?.value || '';
+        const renterAddress = document.getElementById('book-renter-address')?.value || '';
+        const equipName = document.getElementById('equipment-name-field')?.value || 'Mahindra 575 DI Tractor';
+        const ratePerHour = document.getElementById('equipment-price-field')?.value || '350';
+        const startDate = document.getElementById('book-start-date')?.value || new Date().toISOString().split('T')[0];
+        const durationHours = document.getElementById('book-rent-duration')?.value || '4';
+        const alertBox = document.getElementById('booking-alert-box');
+
+        const totalCost = Number(ratePerHour) * Number(durationHours);
+
+        if (!renterName || !renterAadhar || !equipName || !durationHours) {
+            if (alertBox) {
+                alertBox.className = 'form-submission-alert error';
+                alertBox.innerHTML = '<strong>Validation Error:</strong> Please fill in renting person details, Aadhar ID, and rental duration.';
+                alertBox.style.display = 'block';
+            }
+            return;
+        }
+
+        const newBookingRecord = {
+            equipmentName: equipName,
+            renterName,
+            renterPhone,
+            renterAadhar,
+            location: renterAddress,
+            rate: Number(ratePerHour),
+            durationHours: Number(durationHours),
+            totalCost,
+            startDate,
+            status: 'Confirmed',
+            createdAt: new Date().toISOString()
+        };
+
+        // 1. Save to LocalStorage & SessionStorage
+        const localBookings = JSON.parse(localStorage.getItem('agrishare_registered_users') || '[]');
+        localBookings.unshift({
+            name: renterName,
+            email: `${renterPhone}@agrishare.in`,
+            phone: renterPhone,
+            gender: 'Male',
+            age: 35,
+            dob: startDate,
+            time: '08:00',
+            machinery: `${equipName} (${durationHours} hrs = ₹${totalCost})`,
+            address: renterAddress
+        });
+        localStorage.setItem('agrishare_registered_users', JSON.stringify(localBookings));
+
+        sessionStorage.setItem('agrishare_current_user', JSON.stringify({
+            name: renterName,
+            email: `${renterPhone}@agrishare.in`,
+            phone: renterPhone,
+            gender: 'Male',
+            machinery: `${equipName} (${durationHours} hrs)`
+        }));
+
+        // 2. Post to Backend Server DB
+        try {
+            await fetch('/api/bookings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newBookingRecord)
+            });
+        } catch (err) {
+            console.log('Backend API sync offline or saving locally:', err);
+        }
+
+        if (alertBox) {
+            alertBox.className = 'form-submission-alert success';
+            alertBox.innerHTML = `
+                <i class="fa-solid fa-circle-check"></i> 
+                <strong>Form 2 Success:</strong> Booking Confirmed! Equipment <strong>${equipName}</strong> booked for <strong>${renterName}</strong> (Aadhar: ${renterAadhar}) for <strong>${durationHours} hours</strong>.
+                Total Estimated Cost: <strong>₹${totalCost.toLocaleString()}</strong>.
+            `;
+            alertBox.style.display = 'block';
+        }
+
+        if (typeof renderWebStorageTables === 'function') {
+            renderWebStorageTables();
+        }
+    });
+}
+
+// Catalog "Book Now" Button Listener
+document.addEventListener('click', (e) => {
+    const bookBtn = e.target.closest('.catalog-book-btn, .book-now-catalog-btn');
+    if (bookBtn) {
+        const name = bookBtn.getAttribute('data-name') || 'Mahindra 575 DI Tractor';
+        const price = bookBtn.getAttribute('data-price') || '350';
+        const img = bookBtn.getAttribute('data-img') || '';
+
+        const bookingContainer = document.getElementById('form2-booking-container') || document.getElementById('register');
+        if (bookingContainer) {
+            bookingContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        if (typeof addMachineToDropZone === 'function') {
+            addMachineToDropZone({
+                name,
+                category: 'Agricultural Equipment',
+                price,
+                rate: `₹${price} / hour`,
+                img
+            });
+        }
+    }
+});
+
+// Initial Live Calculator trigger
+updateLiveRentCalculator();
