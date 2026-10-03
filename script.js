@@ -1539,3 +1539,143 @@ document.addEventListener('click', (e) => {
 
 // Initial Live Calculator trigger
 updateLiveRentCalculator();
+
+
+/* =========================================================================
+   18. ASSIGNMENT 5 - POP-UP BOOKING MODAL & DYNAMIC STORAGE RENDERERS
+   ========================================================================= */
+
+const bookingModalOverlay = document.getElementById('booking-modal-overlay');
+const closeBookingModalBtn = document.getElementById('close-booking-modal-btn');
+const modalBookingForm = document.getElementById('modal-booking-form');
+
+let activeModalRate = 350;
+let activeModalEquipName = 'Mahindra 575 DI Tractor';
+
+// Open Modal Pop-Up when "Book Now" clicked anywhere
+document.addEventListener('click', (e) => {
+    const bookBtn = e.target.closest('.catalog-book-btn, .book-now-catalog-btn');
+    if (bookBtn && bookingModalOverlay) {
+        const name = bookBtn.getAttribute('data-name') || 'Mahindra 575 DI Tractor';
+        const price = Number(bookBtn.getAttribute('data-price')) || 350;
+        const img = bookBtn.getAttribute('data-img') || 'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=300&auto=format&fit=crop&q=80';
+        const owner = bookBtn.getAttribute('data-owner') || 'Ramesh Kumar (Aadhar: 5481-8392-4015)';
+
+        activeModalRate = price;
+        activeModalEquipName = name;
+
+        const modalTitle = document.getElementById('modal-equip-title');
+        const modalOwner = document.getElementById('modal-equip-owner');
+        const modalRate = document.getElementById('modal-equip-rate');
+        const modalImg = document.getElementById('modal-equip-img');
+
+        if (modalTitle) modalTitle.textContent = name;
+        if (modalOwner) modalOwner.innerHTML = `<i class="fa-solid fa-user"></i> Owner: ${owner}`;
+        if (modalRate) modalRate.textContent = `₹${price.toLocaleString()} / hour`;
+        if (modalImg) modalImg.src = img;
+
+        updateModalPriceCalculator();
+        bookingModalOverlay.classList.add('active');
+    }
+});
+
+// Close Modal
+if (closeBookingModalBtn && bookingModalOverlay) {
+    closeBookingModalBtn.addEventListener('click', () => {
+        bookingModalOverlay.classList.remove('active');
+    });
+    bookingModalOverlay.addEventListener('click', (e) => {
+        if (e.target === bookingModalOverlay) {
+            bookingModalOverlay.classList.remove('active');
+        }
+    });
+}
+
+// Modal Live Calculator
+function updateModalPriceCalculator() {
+    const hoursInput = document.getElementById('modal-rent-hours');
+    const hours = Number(hoursInput ? hoursInput.value : 4) || 1;
+    const total = activeModalRate * hours;
+
+    const popName = document.getElementById('pop-calc-name');
+    const popRate = document.getElementById('pop-calc-rate');
+    const popHours = document.getElementById('pop-calc-hours');
+    const popTotal = document.getElementById('pop-calc-total');
+
+    if (popName) popName.textContent = activeModalEquipName;
+    if (popRate) popRate.textContent = `₹${activeModalRate.toLocaleString()} / hour`;
+    if (popHours) popHours.textContent = `${hours} Hour${hours > 1 ? 's' : ''}`;
+    if (popTotal) popTotal.textContent = `₹${total.toLocaleString()}`;
+}
+
+const modalHoursEl = document.getElementById('modal-rent-hours');
+if (modalHoursEl) modalHoursEl.addEventListener('input', updateModalPriceCalculator);
+
+// Modal Form Submission
+if (modalBookingForm) {
+    modalBookingForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('modal-renter-name')?.value || '';
+        const phone = document.getElementById('modal-renter-phone')?.value || '';
+        const aadhar = document.getElementById('modal-renter-aadhar')?.value || '';
+        const location = document.getElementById('modal-renter-location')?.value || '';
+        const date = document.getElementById('modal-rent-date')?.value || new Date().toISOString().split('T')[0];
+        const hours = Number(document.getElementById('modal-rent-hours')?.value) || 4;
+        const alertBox = document.getElementById('modal-alert-box');
+
+        const totalCost = activeModalRate * hours;
+
+        if (!name || !aadhar || !hours) {
+            if (alertBox) {
+                alertBox.className = 'form-submission-alert error';
+                alertBox.innerHTML = 'Please fill in all details & Aadhar ID.';
+                alertBox.style.display = 'block';
+            }
+            return;
+        }
+
+        const newBooking = {
+            id: 'BK-' + Math.floor(1000 + Math.random() * 9000),
+            equipmentName: activeModalEquipName,
+            renterName: name,
+            renterPhone: phone,
+            renterAadhar: aadhar,
+            location,
+            rate: activeModalRate,
+            durationHours: hours,
+            totalCost,
+            startDate: date,
+            status: 'Confirmed'
+        };
+
+        // 1. Save to LocalStorage
+        const localBookings = JSON.parse(localStorage.getItem('agrishare_user_bookings') || '[]');
+        localBookings.unshift(newBooking);
+        localStorage.setItem('agrishare_user_bookings', JSON.stringify(localBookings));
+
+        // 2. Post to Backend DB
+        try {
+            await fetch('/api/bookings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newBooking)
+            });
+        } catch (err) {
+            console.log('Backend sync offline, saved locally:', err);
+        }
+
+        if (alertBox) {
+            alertBox.className = 'form-submission-alert success';
+            alertBox.innerHTML = `
+                <i class="fa-solid fa-circle-check"></i> 
+                <strong>Booking Confirmed!</strong> ${activeModalEquipName} booked for ${name} (Aadhar: ${aadhar}) for ${hours} hours. Total: ₹${totalCost.toLocaleString()}.
+            `;
+            alertBox.style.display = 'block';
+        }
+
+        setTimeout(() => {
+            if (bookingModalOverlay) bookingModalOverlay.classList.remove('active');
+            window.location.href = 'mybookings.html';
+        }, 1500);
+    });
+}

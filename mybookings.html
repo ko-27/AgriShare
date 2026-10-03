@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriShare – My Equipment Bookings</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode">
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <a href="index.html" class="brand-logo"><i class="fa-solid fa-tractor"></i> AgriShare</a>
+            <span class="location-badge"><i class="fa-solid fa-location-dot"></i> Tamil Nadu Agricultural Hub</span>
+        </div>
+        <div class="topbar-center">
+            <span id="live-clock">Loading live time...</span>
+        </div>
+        <div class="topbar-right">
+            <button id="theme-toggle" class="icon-btn" title="Toggle Dark/Light Mode"><i class="fa-solid fa-moon"></i></button>
+            <a href="profile.html" class="role-switch-pill"><i class="fa-solid fa-fingerprint"></i> Aadhar Verified ✓</a>
+        </div>
+    </header>
+
+    <div class="app-layout">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fa-solid fa-store"></i> Equipment Catalog</a></li>
+                    <li><a href="register.html"><i class="fa-solid fa-circle-plus"></i> Register Vehicle</a></li>
+                    <li><a href="mybookings.html" class="active"><i class="fa-solid fa-calendar-check"></i> My Bookings</a></li>
+                    <li><a href="myvehicles.html"><i class="fa-solid fa-tractor"></i> My Registered Vehicles</a></li>
+                    <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                    <li><a href="services.html"><i class="fa-solid fa-handshake"></i> Services</a></li>
+                    <li><a href="reports.html"><i class="fa-solid fa-database"></i> Web Storage Reports</a></li>
+                    <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Portal</a></li>
+                    <li><a href="contact.html"><i class="fa-solid fa-headset"></i> Support & Help</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="standalone-page-header">
+                <h1><i class="fa-solid fa-calendar-check"></i> My Equipment Bookings</h1>
+                <p>View all your confirmed equipment rentals, booking IDs, duration breakdowns, Aadhar verification status, and total prices.</p>
+            </div>
+
+            <section class="section-padding">
+                <div class="subnav-pills">
+                    <a href="mybookings.html" class="subnav-pill-btn active"><i class="fa-solid fa-calendar-check"></i> Renter Bookings</a>
+                    <a href="myvehicles.html" class="subnav-pill-btn"><i class="fa-solid fa-tractor"></i> My Registered Vehicles</a>
+                </div>
+
+                <div class="card" style="padding: 1.8rem;">
+                    <h3><i class="fa-solid fa-clock-rotate-left"></i> Active & Past Equipment Rental Bookings</h3>
+                    <div class="table-responsive" style="margin-top: 1.2rem;">
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>Equipment Title</th>
+                                    <th>Renter Name</th>
+                                    <th>Aadhar ID</th>
+                                    <th>Rate (₹/hr)</th>
+                                    <th>Duration</th>
+                                    <th>Total Cost</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="my-bookings-tbody">
+                                <tr>
+                                    <td><strong>BK-9041</strong></td>
+                                    <td><strong>Mahindra 575 DI Tractor</strong></td>
+                                    <td>Selvi R.</td>
+                                    <td><span class="badge badge-info">3190-8821-5544</span></td>
+                                    <td>₹350 / hr</td>
+                                    <td>4 Hours</td>
+                                    <td><strong style="color: var(--swiggy-green-dark);">₹1,400</strong></td>
+                                    <td><span class="badge badge-success">Confirmed ✓</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>BK-8902</strong></td>
+                                    <td><strong>John Deere W70 Harvester</strong></td>
+                                    <td>Muthusamy V.</td>
+                                    <td><span class="badge badge-info">7812-4091-6623</span></td>
+                                    <td>₹1,200 / hr</td>
+                                    <td>8 Hours</td>
+                                    <td><strong style="color: var(--swiggy-green-dark);">₹9,600</strong></td>
+                                    <td><span class="badge badge-success">Completed ✓</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-bottom-bar">
+            <p>&copy; 2026 <strong>AgriShare</strong>. Developed by <strong>Kohila M</strong> (Reg No: 2303717620522027), Coimbatore Institute of Technology.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

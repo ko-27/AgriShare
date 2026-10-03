@@ -110,6 +110,77 @@
         </div>
     </footer>
 
+    <!-- BOOKING POP-UP MODAL -->
+    <div class="modal-backdrop-overlay" id="booking-modal-overlay">
+        <div class="booking-modal-card">
+            <div class="booking-modal-header">
+                <h3><i class="fa-solid fa-calendar-check"></i> Book Equipment & Hourly Rental</h3>
+                <button type="button" class="modal-close-btn" id="close-booking-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="booking-modal-body">
+                <div class="modal-equip-summary-box">
+                    <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=300&auto=format&fit=crop&q=80" alt="Equipment" class="modal-equip-thumb" id="modal-equip-img">
+                    <div class="modal-equip-info">
+                        <h4 id="modal-equip-title">Mahindra 575 DI Tractor</h4>
+                        <p id="modal-equip-owner"><i class="fa-solid fa-user"></i> Owner: Ramesh Kumar (Aadhar: 5481-8392-4015)</p>
+                        <span class="price-tag-pill" id="modal-equip-rate">₹350 / hour</span>
+                    </div>
+                </div>
+
+                <form id="modal-booking-form" class="responsive-form">
+                    <h4 style="color: var(--swiggy-green-dark); margin-bottom: 1rem;"><i class="fa-solid fa-user-check"></i> Renting Person Details & Aadhar Authentication</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-user"></i> Renting Person Name <span class="required-star">*</span></label>
+                            <input type="text" id="modal-renter-name" value="Selvi R." required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-phone"></i> Mobile Number <span class="required-star">*</span></label>
+                            <input type="tel" id="modal-renter-phone" value="9443210987" maxlength="10" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-fingerprint"></i> Renting Person Aadhar ID <span class="required-star">*</span></label>
+                            <div class="aadhar-input-wrapper">
+                                <input type="text" id="modal-renter-aadhar" value="3190-8821-5544" maxlength="14" required>
+                                <span class="aadhar-verify-badge"><i class="fa-solid fa-shield-check"></i> Aadhar Verified ✓</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-location-dot"></i> Delivery Address / Farm <span class="required-star">*</span></label>
+                            <input type="text" id="modal-renter-location" value="Anthiyur, Bhavani Taluk" required>
+                        </div>
+                    </div>
+                    <h4 style="color: var(--swiggy-green-dark); margin: 1.2rem 0 1rem 0;"><i class="fa-solid fa-clock"></i> Rental Start Date & Duration</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-calendar"></i> Start Date <span class="required-star">*</span></label>
+                            <input type="date" id="modal-rent-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-hourglass-half"></i> Duration (Hours) <span class="required-star">*</span></label>
+                            <input type="number" id="modal-rent-hours" value="4" min="1" max="100" required>
+                        </div>
+                    </div>
+                    <div class="price-calculator-card" style="margin-top: 1rem;">
+                        <h4><i class="fa-solid fa-calculator"></i> Live Total Rent Price Calculation Breakdown</h4>
+                        <div class="calc-row"><span>Selected Equipment:</span><strong id="pop-calc-name">Mahindra 575 DI Tractor</strong></div>
+                        <div class="calc-row"><span>Per Hour Rent Rate:</span><span id="pop-calc-rate">₹350 / hour</span></div>
+                        <div class="calc-row"><span>Rent Duration:</span><span id="pop-calc-hours">4 Hours</span></div>
+                        <div class="calc-row total-row"><span>Total Estimated Rental Cost:</span><span id="pop-calc-total">₹1,400</span></div>
+                    </div>
+                    <div class="form-btn-group" style="margin-top: 1.5rem;">
+                        <button type="submit" class="btn btn-primary btn-lg bounce" style="width: 100%;">
+                            <i class="fa-solid fa-check-circle"></i> Confirm & Book Equipment
+                        </button>
+                    </div>
+                    <div id="modal-alert-box" class="form-submission-alert"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

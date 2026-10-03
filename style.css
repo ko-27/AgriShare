@@ -4059,3 +4059,156 @@ body.dark-mode .tooltip::before {
     font-size: 1.05rem;
     margin-top: 8px;
 }
+
+
+/* =========================================================================
+   ASSIGNMENT 5 - BOOKING POP-UP MODAL & MY VEHICLES / MY BOOKINGS STYLES
+   ========================================================================= */
+
+/* Booking Pop-up Modal Backdrop */
+.modal-backdrop-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 19, 0.75);
+    backdrop-filter: blur(6px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    padding: 1rem;
+}
+
+.modal-backdrop-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.booking-modal-card {
+    background: var(--bg-surface);
+    width: 100%;
+    max-width: 680px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--swiggy-green);
+    transform: translateY(20px) scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-backdrop-overlay.active .booking-modal-card {
+    transform: translateY(0) scale(1);
+}
+
+.booking-modal-header {
+    background: linear-gradient(135deg, var(--swiggy-green), var(--swiggy-green-dark));
+    color: #ffffff;
+    padding: 1.25rem 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.booking-modal-header h3 {
+    color: #ffffff;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modal-close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #ffffff;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: background 0.2s ease;
+}
+
+.modal-close-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.booking-modal-body {
+    padding: 1.8rem;
+}
+
+.modal-equip-summary-box {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    background: var(--swiggy-green-light);
+    border: 1px solid var(--swiggy-green);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+}
+
+.modal-equip-thumb {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+    border: 2px solid var(--swiggy-green);
+}
+
+.modal-equip-info h4 {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+}
+
+.modal-equip-info p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.modal-equip-info .price-tag-pill {
+    display: inline-block;
+    background: var(--swiggy-green);
+    color: white;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: var(--radius-pill);
+    font-size: 0.8rem;
+    margin-top: 6px;
+}
+
+/* Page Sub-Header Badge for My Bookings & My Vehicles */
+.subnav-pills {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.subnav-pill-btn {
+    padding: 8px 18px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.subnav-pill-btn.active, .subnav-pill-btn:hover {
+    background: var(--swiggy-green);
+    color: white;
+    border-color: var(--swiggy-green);
+}
